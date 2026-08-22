@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ödev Takip</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --bg: #f4f8f7;
+        --card: rgba(255,255,255,0.82);
+        --text: #263b3d;
+        --muted: #7c8d8e;
+        --green: #a9dfcf;
+        --green-dark: #4e8f80;
+        --blue: #d9e5ff;
+        --pink: #f7dce8;
+        --yellow: #f9edc8;
+        --border: rgba(38,59,61,0.09);
+        --shadow: 0 10px 30px rgba(38,59,61,0.08);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                     "Segoe UI", sans-serif;
+        background:
+            radial-gradient(circle at top left, #e5f5ef, transparent 35%),
+            radial-gradient(circle at bottom right, #e5ebff, transparent 35%),
+            var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 20px 14px 40px;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    header {
+        text-align: center;
+        margin: 10px 0 22px;
+    }
+
+    .cat {
+        font-size: 42px;
+        margin-bottom: 5px;
+    }
+
+    h1 {
+        font-size: 29px;
+        letter-spacing: -1px;
+    }
+
+    .subtitle {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    /* İLERLEME */
+
+    .progress-card {
+        background: var(--card);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        border-radius: 22px;
+        padding: 18px;
+        margin-bottom: 20px;
+    }
+
+    .progress-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .progress-title {
+        font-weight: 800;
+    }
+
+    #percentage {
+        font-weight: 800;
+        color: var(--green-dark);
+    }
+
+    .progress-bar {
+        height: 11px;
+        background: #e7eeee;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    #progressFill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #9fd9c9, #78b9aa);
+        border-radius: 20px;
+        transition: width .3s ease;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 13px;
+    }
+
+    .stat {
+        background: rgba(255,255,255,.65);
+        border-radius: 14px;
+        padding: 10px 5px;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .stat-label {
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 2px;
+    }
+
+    /* GÜN */
+
+    .day-section {
+        margin-bottom: 20px;
+    }
+
+    .day-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 4px 9px;
+    }
+
+    .day-title h2 {
+        font-size: 17px;
+    }
+
+    .date-badge {
+        font-size: 11px;
+        padding: 4px 8px;
+        border-radius: 10px;
+        background: var(--green);
+        color: #35675d;
+        font-weight: 800;
+    }
+
+    /* ÖDEV */
+
+    .homework {
+        background: var(--card);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--border);
+        box-shadow: 0 6px 20px rgba(38,59,61,.05);
+        border-radius: 18px;
+        padding: 14px;
+        margin-bottom: 9px;
+        transition: .2s;
+    }
+
+    .homework.done {
+        opacity: .65;
+    }
+
+    .homework.done .homework-name {
+        text-decoration: line-through;
+    }
+
+    .homework-main {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    /* ÖZEL CHECKBOX */
+
+    .check {
+        appearance: none;
+        width: 27px;
+        height: 27px;
+        min-width: 27px;
+        border: 2px solid #b6c7c5;
+        border-radius: 9px;
+        background: white;
+        cursor: pointer;
+        position: relative;
+        transition: .2s;
+    }
+
+    .check:checked {
+        background: var(--green-dark);
+        border-color: var(--green-dark);
+    }
+
+    .check:checked::after {
+        content: "✓";
+        position: absolute;
+        color: white;
+        font-size: 17px;
+        font-weight: 900;
+        left: 5px;
+        top: 1px;
+    }
+
+    .homework-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .homework-name {
+        font-size: 15px;
+        font-weight: 750;
+    }
+
+    .homework-sub {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 3px;
+    }
+
+    /* DOĞRU YANLIŞ */
+
+    .score-area {
+        display: flex;
+        gap: 7px;
+        margin-top: 12px;
+        padding-left: 38px;
+    }
+
+    .score {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .score label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+    }
+
+    .score input {
+        width: 58px;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,.75);
+        border-radius: 10px;
+        padding: 8px 5px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+        outline: none;
+    }
+
+    .score input:focus {
+        border-color: var(--green-dark);
+    }
+
+    /* ALT */
+
+    .bottom {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .reset {
+        border: none;
+        background: rgba(255,255,255,.7);
+        color: #8b6666;
+        padding: 11px 18px;
+        border-radius: 13px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .reset:active {
+        transform: scale(.97);
+    }
+
+    .empty {
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        padding: 15px;
+    }
+
+    @media (max-width: 430px) {
+        h1 {
+            font-size: 26px;
+        }
+
+        .homework {
+            padding: 13px;
+        }
+
+        .score-area {
+            padding-left: 0;
+        }
+
+        .score input {
+            width: 52px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="cat">🐱</div>
+        <h1>Ödev Takip</h1>
+        <div class="subtitle">Hepsini bitir, tikleri doldur ✨</div>
+    </header>
+
+    <div class="progress-card">
+
+        <div class="progress-top">
+            <span class="progress-title">Genel İlerleme</span>
+            <span id="percentage">0%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progressFill"></div>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <div class="stat-number" id="doneCount">0</div>
+                <div class="stat-label">Tamamlandı</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number" id="correctCount">0</div>
+                <div class="stat-label">Doğru</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number" id="wrongCount">0</div>
+                <div class="stat-label">Yanlış</div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- PAZARTESİ -->
+
+    <section class="day-section">
+
+        <div class="day-title">
+            <h2>🔴 Pazartesi</h2>
+            <span class="date-badge">24 Ağustos</span>
+        </div>
+
+        <div class="homework" data-id="turkce100">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Türkçe — 100. sayfaya kadar</div>
+                    <div class="homework-sub">Pazartesi teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score">
+                    <label>✓ Doğru</label>
+                    <input class="correct" type="number" min="0" value="0">
+                </div>
+
+                <div class="score">
+                    <label>✕ Yanlış</label>
+                    <input class="wrong" type="number" min="0" value="0">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- SALI -->
+
+    <section class="day-section">
+
+        <div class="day-title">
+            <h2>🟠 Salı</h2>
+            <span class="date-badge">25 Ağustos</span>
+        </div>
+
+        <div class="homework" data-id="ulti1">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Ulti — 1. Deneme</div>
+                    <div class="homework-sub">Salı teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="gizli1">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Gizli — 1. Ünite</div>
+                    <div class="homework-sub">Salı teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="fasikul1">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Fasikül — 1. Ünite</div>
+                    <div class="homework-sub">Salı teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- PERŞEMBE -->
+
+    <section class="day-section">
+
+        <div class="day-title">
+            <h2>🟡 Perşembe</h2>
+            <span class="date-badge">27 Ağustos</span>
+        </div>
+
+
+        <div class="homework" data-id="mat5">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">5 Deneme — Matematik</div>
+                    <div class="homework-sub">Perşembe teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="berkay123">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Berkay — 1-2-3. Denemeler</div>
+                    <div class="homework-sub">Perşembe teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="ultigenel">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Ulti — Genel Deneme</div>
+                    <div class="homework-sub">Perşembe teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="ucdortbesturkce">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">ÜçDörtBeş — Türkçe</div>
+                    <div class="homework-sub">Perşembe teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- CUMA -->
+
+    <section class="day-section">
+
+        <div class="day-title">
+            <h2>🟢 Cuma</h2>
+            <span class="date-badge">28 Ağustos</span>
+        </div>
+
+
+        <div class="homework" data-id="yazi">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">Yazı Ödevi</div>
+                    <div class="homework-sub">Cuma teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="din">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">ÜçDörtBeş — Din</div>
+                    <div class="homework-sub">Cuma teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="ucdortbesingilizce">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">ÜçDörtBeş — İngilizce</div>
+                    <div class="homework-sub">Cuma teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- 1 EYLÜL -->
+
+    <section class="day-section">
+
+        <div class="day-title">
+            <h2>🔵 Salı</h2>
+            <span class="date-badge">1 Eylül</span>
+        </div>
+
+
+        <div class="homework" data-id="inkilap">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">ÜçDörtBeş — İnkılap</div>
+                    <div class="homework-sub">1 Eylül teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+
+        <div class="homework" data-id="fen">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">ÜçDörtBeş — Fen</div>
+                    <div class="homework-sub">1 Eylül teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- 4 EYLÜL -->
+
+    <section class="day-section">
+
+        <div class="day-title">
+            <h2>🟣 Cuma</h2>
+            <span class="date-badge">4 Eylül</span>
+        </div>
+
+
+        <div class="homework" data-id="moreandmore">
+            <div class="homework-main">
+                <input class="check" type="checkbox">
+                <div class="homework-info">
+                    <div class="homework-name">More and More — 1. Ünite</div>
+                    <div class="homework-sub">4 Eylül teslim</div>
+                </div>
+            </div>
+
+            <div class="score-area">
+                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
+                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <div class="bottom">
+        <button class="reset" onclick="resetAll()">
+            ↻ Tüm verileri sıfırla
+        </button>
+    </div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY = "beyza_odev_takip_v1";
+
+let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+
+function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+}
+
+
+function loadData() {
+
+    document.querySelectorAll(".homework").forEach(homework => {
+
+        const id = homework.dataset.id;
+        const check = homework.querySelector(".check");
+        const correct = homework.querySelector(".correct");
+        const wrong = homework.querySelector(".wrong");
+
+        if (savedData[id]) {
+
+            check.checked = savedData[id].done || false;
+            correct.value = savedData[id].correct ?? 0;
+            wrong.value = savedData[id].wrong ?? 0;
+
+        }
+
+        updateCard(homework);
+    });
+
+    updateStats();
+}
+
+
+function updateCard(homework) {
+
+    const id = homework.dataset.id;
+    const check = homework.querySelector(".check");
+
+    if (check.checked) {
+        homework.classList.add("done");
+    } else {
+        homework.classList.remove("done");
+    }
+
+    savedData[id] = {
+        done: check.checked,
+        correct: Number(homework.querySelector(".correct").value) || 0,
+        wrong: Number(homework.querySelector(".wrong").value) || 0
+    };
+
+    save();
+}
+
+
+function updateStats() {
+
+    const all = document.querySelectorAll(".homework");
+    const done = document.querySelectorAll(".homework .check:checked");
+
+    let correctTotal = 0;
+    let wrongTotal = 0;
+
+    all.forEach(homework => {
+
+        correctTotal += Number(
+            homework.querySelector(".correct").value
+        ) || 0;
+
+        wrongTotal += Number(
+            homework.querySelector(".wrong").value
+        ) || 0;
+
+    });
+
+    const percentage = all.length
+        ? Math.round((done.length / all.length) * 100)
+        : 0;
+
+    document.getElementById("doneCount").textContent =
+        `${done.length}/${all.length}`;
+
+    document.getElementById("correctCount").textContent =
+        correctTotal;
+
+    document.getElementById("wrongCount").textContent =
+        wrongTotal;
+
+    document.getElementById("percentage").textContent =
+        percentage + "%";
+
+    document.getElementById("progressFill").style.width =
+        percentage + "%";
+}
+
+
+document.querySelectorAll(".homework").forEach(homework => {
+
+    const check = homework.querySelector(".check");
+    const correct = homework.querySelector(".correct");
+    const wrong = homework.querySelector(".wrong");
+
+    check.addEventListener("change", () => {
+        updateCard(homework);
+        updateStats();
+    });
+
+    correct.addEventListener("input", () => {
+        updateCard(homework);
+        updateStats();
+    });
+
+    wrong.addEventListener("input", () => {
+        updateCard(homework);
+        updateStats();
+    });
+
+});
+
+
+function resetAll() {
+
+    const answer = confirm(
+        "Bütün tikler ve doğru/yanlış sayıları silinsin mi?"
+    );
+
+    if (!answer) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    savedData = {};
+
+    document.querySelectorAll(".homework").forEach(homework => {
+
+        homework.querySelector(".check").checked = false;
+        homework.querySelector(".correct").value = 0;
+        homework.querySelector(".wrong").value = 0;
+
+        homework.classList.remove("done");
+
+    });
+
+    updateStats();
+}
+
+
+loadData();
+
+</script>
+
+</body>
+</html>
