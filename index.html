@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🍭 Ödev Takip</title>
+<title>🌿 Ödev Takip</title>
 <style>
-/* ===== TATLI TEMA ===== */
+/* ===== MODERN TATLI TEMA ===== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,12 +13,12 @@
 }
 
 body {
-    font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, sans-serif;
-    background: #fef9f4;
-    background-image: radial-gradient(circle at 10% 30%, #fff5e9 0%, #fdeff2 100%);
+    font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+    background: #f5f7ff;
+    background-image: radial-gradient(circle at 0% 0%, #f0f4ff 0%, #faf5ff 100%);
     min-height: 100vh;
     padding: 20px 10px 90px;
-    color: #4a3f5c;
+    color: #2d3748;
 }
 
 .app {
@@ -32,13 +32,13 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    padding: 0 6px;
+    padding: 0 4px;
 }
 
 .title-area h1 {
     font-size: 32px;
     font-weight: 800;
-    background: linear-gradient(135deg, #f9a8d4, #f472b6);
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
@@ -46,22 +46,22 @@ body {
 
 .title-area p {
     font-size: 14px;
-    color: #a78e9e;
+    color: #8b8fa7;
     font-weight: 500;
     margin-top: 2px;
-    -webkit-text-fill-color: #a78e9e;
+    -webkit-text-fill-color: #8b8fa7;
 }
 
 .add-btn {
-    background: #f8b4d9;
+    background: #6c5ce7;
     border: none;
-    color: #4a2c3a;
+    color: white;
     font-weight: 700;
     font-size: 15px;
     padding: 12px 20px;
     border-radius: 40px;
     cursor: pointer;
-    box-shadow: 0 6px 0 #d48eb0;
+    box-shadow: 0 6px 0 #4a3f8a;
     transition: all 0.1s ease;
     display: flex;
     align-items: center;
@@ -70,17 +70,17 @@ body {
 
 .add-btn:active {
     transform: translateY(4px);
-    box-shadow: 0 2px 0 #d48eb0;
+    box-shadow: 0 2px 0 #4a3f8a;
 }
 
 /* ===== PROGRESS KARTI ===== */
 .progress-card {
-    background: linear-gradient(145deg, #ffe2f0, #ffd9e8);
+    background: linear-gradient(145deg, #e8edff, #dfe6ff);
     border-radius: 40px;
     padding: 24px 28px;
     margin-bottom: 18px;
-    box-shadow: 0 12px 28px rgba(241, 154, 188, 0.25);
-    border: 2px solid #fff3f9;
+    box-shadow: 0 12px 28px rgba(108, 92, 231, 0.15);
+    border: 2px solid #ffffff;
 }
 
 .progress-top {
@@ -92,12 +92,12 @@ body {
 .progress-title {
     font-size: 20px;
     font-weight: 800;
-    color: #5f3b4e;
+    color: #3d3566;
 }
 
 .progress-sub {
     font-size: 13px;
-    color: #9b6f84;
+    color: #7a72a0;
     font-weight: 500;
     margin-top: 2px;
 }
@@ -105,22 +105,22 @@ body {
 .percent {
     font-size: 34px;
     font-weight: 900;
-    color: #ad4c7a;
+    color: #6c5ce7;
 }
 
 .progress-bar {
     height: 16px;
-    background: #fce4ef;
+    background: #d5ddff;
     border-radius: 30px;
     margin-top: 16px;
     overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
 }
 
 .progress-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #f9a8d4, #f472b6);
+    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
     border-radius: 30px;
     transition: width 0.4s ease;
 }
@@ -134,23 +134,23 @@ body {
 }
 
 .stat {
-    background: #fff9fc;
+    background: #ffffff;
     padding: 16px 10px;
     border-radius: 28px;
     text-align: center;
-    border: 2px solid #fce4ef;
-    box-shadow: 0 6px 0 #f5d6e4;
+    border: 2px solid #e8edff;
+    box-shadow: 0 6px 0 #d5ddff;
 }
 
 .stat-number {
     font-size: 26px;
     font-weight: 900;
-    color: #5f3b4e;
+    color: #3d3566;
 }
 
 .stat-label {
     font-size: 12px;
-    color: #b28b9e;
+    color: #8b8fa7;
     font-weight: 600;
     margin-top: 2px;
 }
@@ -166,29 +166,29 @@ body {
 
 .filters button {
     border: none;
-    background: #fff5fa;
-    color: #7a5e6e;
+    background: #ffffff;
+    color: #6b6f87;
     padding: 10px 20px;
     border-radius: 40px;
     font-weight: 700;
     font-size: 14px;
     white-space: nowrap;
-    border: 2px solid #fce4ef;
+    border: 2px solid #e8edff;
     transition: all 0.15s;
-    box-shadow: 0 4px 0 #ecd6e2;
+    box-shadow: 0 4px 0 #d5ddff;
     cursor: pointer;
 }
 
 .filters button:active {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 #ecd6e2;
+    box-shadow: 0 1px 0 #d5ddff;
 }
 
 .filters button.active {
-    background: #f8b4d9;
-    border-color: #f8b4d9;
-    color: #4a2c3a;
-    box-shadow: 0 4px 0 #d48eb0;
+    background: #6c5ce7;
+    border-color: #6c5ce7;
+    color: white;
+    box-shadow: 0 4px 0 #4a3f8a;
 }
 
 /* ===== GÜN BAŞLIĞI ===== */
@@ -202,21 +202,21 @@ body {
 .day-header h2 {
     font-size: 20px;
     font-weight: 800;
-    color: #5f3b4e;
-    background: #fff5fa;
+    color: #3d3566;
+    background: #ffffff;
     padding: 4px 16px 4px 12px;
     border-radius: 40px;
-    border: 2px solid #fce4ef;
+    border: 2px solid #e8edff;
 }
 
 .day-count {
     font-size: 14px;
     font-weight: 700;
-    color: #b28b9e;
-    background: #fff5fa;
+    color: #8b8fa7;
+    background: #ffffff;
     padding: 4px 14px;
     border-radius: 40px;
-    border: 2px solid #fce4ef;
+    border: 2px solid #e8edff;
 }
 
 /* ===== GÖREV KARTI ===== */
@@ -228,24 +228,24 @@ body {
     display: flex;
     align-items: center;
     gap: 14px;
-    border: 2px solid #fce4ef;
-    box-shadow: 0 6px 0 #ecd6e2;
+    border: 2px solid #e8edff;
+    box-shadow: 0 6px 0 #d5ddff;
     transition: all 0.15s ease;
 }
 
 .task:active {
     transform: translateY(3px);
-    box-shadow: 0 3px 0 #ecd6e2;
+    box-shadow: 0 3px 0 #d5ddff;
 }
 
 .task.done {
-    opacity: 0.65;
-    filter: grayscale(0.2);
+    opacity: 0.6;
+    filter: grayscale(0.15);
 }
 
 .task.done .task-title {
     text-decoration: line-through;
-    color: #b28b9e;
+    color: #8b8fa7;
 }
 
 /* ===== CHECKBOX ===== */
@@ -253,9 +253,9 @@ body {
     width: 32px;
     height: 32px;
     flex-shrink: 0;
-    border-radius: 16px;
-    border: 3px solid #f5d6e4;
-    background: #fff5fa;
+    border-radius: 12px;
+    border: 3px solid #d5ddff;
+    background: #f5f7ff;
     cursor: pointer;
     padding: 0;
     transition: all 0.15s;
@@ -268,8 +268,8 @@ body {
 }
 
 .check.checked {
-    background: #a8e6cf;
-    border-color: #7bc4a8;
+    background: #00b894;
+    border-color: #00a381;
 }
 
 .check.checked::after {
@@ -285,7 +285,7 @@ body {
 .task-title {
     font-size: 16px;
     font-weight: 700;
-    color: #4a3f5c;
+    color: #2d3748;
     line-height: 1.3;
 }
 
@@ -293,15 +293,16 @@ body {
     margin-top: 4px;
     font-size: 13px;
     font-weight: 600;
-    color: #b28b9e;
+    color: #8b8fa7;
 }
 
 .task-subject span {
-    background: #f5edf0;
+    background: #f0f2ff;
     padding: 2px 12px;
     border-radius: 30px;
     display: inline-block;
     margin-top: 2px;
+    color: #6c5ce7;
 }
 
 /* ===== AKSİYON BUTONLARI ===== */
@@ -312,8 +313,8 @@ body {
 
 .task-action {
     border: none;
-    background: #f5edf0;
-    border-radius: 16px;
+    background: #f0f2ff;
+    border-radius: 14px;
     padding: 8px 10px;
     cursor: pointer;
     font-size: 15px;
@@ -322,20 +323,20 @@ body {
 }
 
 .task-action:hover {
-    background: #fce4ef;
-    border-color: #f5d6e4;
+    background: #e8edff;
+    border-color: #d5ddff;
 }
 
 /* ===== BOŞ DURUM ===== */
 .empty {
     text-align: center;
     padding: 50px 20px;
-    color: #b28b9e;
+    color: #8b8fa7;
     font-size: 18px;
     font-weight: 600;
-    background: #fff5fa;
+    background: #ffffff;
     border-radius: 40px;
-    border: 3px dashed #f5d6e4;
+    border: 3px dashed #d5ddff;
 }
 
 .empty span {
@@ -350,13 +351,13 @@ dialog {
     border-radius: 40px;
     padding: 0;
     width: min(92%, 420px);
-    box-shadow: 0 30px 60px rgba(90, 50, 70, 0.25);
-    background: #fffbfd;
+    box-shadow: 0 30px 60px rgba(60, 45, 100, 0.2);
+    background: #ffffff;
 }
 
 dialog::backdrop {
-    background: rgba(70, 40, 55, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(60, 45, 100, 0.4);
+    backdrop-filter: blur(6px);
 }
 
 .modal {
@@ -366,7 +367,7 @@ dialog::backdrop {
 .modal h2 {
     font-size: 26px;
     font-weight: 800;
-    color: #5f3b4e;
+    color: #3d3566;
     margin-bottom: 18px;
 }
 
@@ -374,24 +375,24 @@ label {
     display: block;
     font-size: 13px;
     font-weight: 700;
-    color: #7a5e6e;
+    color: #6b6f87;
     margin: 14px 0 5px;
 }
 
 input, select {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #f5d6e4;
+    border: 2px solid #e8edff;
     border-radius: 24px;
     font: inherit;
     font-size: 15px;
-    background: #fff9fc;
+    background: #fafbff;
     outline: none;
     transition: border 0.2s;
 }
 
 input:focus, select:focus {
-    border-color: #f8b4d9;
+    border-color: #6c5ce7;
 }
 
 .modal-buttons {
@@ -411,20 +412,20 @@ input:focus, select:focus {
 }
 
 .modal-buttons button:first-child {
-    background: #f5edf0;
-    color: #7a5e6e;
+    background: #f0f2ff;
+    color: #6b6f87;
 }
 
 .save-btn {
-    background: #f8b4d9;
-    color: #4a2c3a;
-    box-shadow: 0 6px 0 #d48eb0;
+    background: #6c5ce7;
+    color: white;
+    box-shadow: 0 6px 0 #4a3f8a;
     transition: 0.05s linear;
 }
 
 .save-btn:active {
     transform: translateY(4px);
-    box-shadow: 0 2px 0 #d48eb0;
+    box-shadow: 0 2px 0 #4a3f8a;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -465,8 +466,8 @@ input:focus, select:focus {
     <!-- HEADER -->
     <div class="header">
         <div class="title-area">
-            <h1>🍭 Ödevlerim</h1>
-            <p>⭐ Her gün biraz daha ileri!</p>
+            <h1>🌿 Ödevlerim</h1>
+            <p>✨ Her gün biraz daha ileri!</p>
         </div>
         <button class="add-btn" onclick="openAddModal()">
             ✨ Ekle
@@ -477,8 +478,8 @@ input:focus, select:focus {
     <div class="progress-card">
         <div class="progress-top">
             <div>
-                <div class="progress-title">🌸 İlerleme</div>
-                <div class="progress-sub">Tamamladıkça çiçek açıyor ✿</div>
+                <div class="progress-title">💜 İlerleme</div>
+                <div class="progress-sub">Tamamladıkça yol alıyorsun 🌱</div>
             </div>
             <div class="percent" id="percent">0%</div>
         </div>
@@ -513,7 +514,7 @@ input:focus, select:focus {
 <!-- MODAL -->
 <dialog id="taskModal">
     <form class="modal" onsubmit="saveTask(event)">
-        <h2 id="modalTitle">🌸 Yeni ödev</h2>
+        <h2 id="modalTitle">🌱 Yeni ödev</h2>
         <label>📖 Ders</label>
         <input id="subjectInput" type="text" placeholder="Mesela: Fen" required>
         <label>📝 Ödev</label>
@@ -556,7 +557,7 @@ const defaultTasks = [
     { id: 14, subject: "Matematik", title: "52 soruluk yeni nesil fotokopi", day: "Cuma", done: false }
 ];
 
-const STORAGE_KEY = "odev_tatli_v1";
+const STORAGE_KEY = "odev_modern_v1";
 let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultTasks;
 let currentFilter = "Tümü";
 const days = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar", "Belirtilmedi"];
@@ -593,7 +594,7 @@ function render() {
         const dayTasks = filtered.filter(t => t.day === day);
         if (!dayTasks.length) return;
         const done = dayTasks.filter(t => t.done).length;
-        html += `<div class="day-header"><h2>🌸 ${day}</h2><span class="day-count">${done}/${dayTasks.length}</span></div>`;
+        html += `<div class="day-header"><h2>🌿 ${day}</h2><span class="day-count">${done}/${dayTasks.length}</span></div>`;
         dayTasks.forEach(task => {
             html += `
             <div class="task ${task.done ? 'done' : ''}">
@@ -609,7 +610,7 @@ function render() {
             </div>`;
         });
     });
-    document.getElementById("taskList").innerHTML = html || `<div class="empty"><span>🎉</span>Hiç ödev yok, harikasın!</div>`;
+    document.getElementById("taskList").innerHTML = html || `<div class="empty"><span>🌱</span>Hiç ödev yok, harikasın!</div>`;
 }
 
 // ===== CRUD =====
@@ -619,7 +620,7 @@ function toggleTask(id) {
     if (t) { t.done = !t.done; saveData(); render(); }
 }
 function openAddModal() {
-    document.getElementById("modalTitle").textContent = "🌸 Yeni ödev";
+    document.getElementById("modalTitle").textContent = "🌱 Yeni ödev";
     document.getElementById("editId").value = "";
     document.getElementById("subjectInput").value = "";
     document.getElementById("titleInput").value = "";
