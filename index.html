@@ -3,824 +3,666 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ödev Takip</title>
-
+<title>🍭 Ödev Takip</title>
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+/* ===== TATLI TEMA ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    :root {
-        --bg: #f4f8f7;
-        --card: rgba(255,255,255,0.82);
-        --text: #263b3d;
-        --muted: #7c8d8e;
-        --green: #a9dfcf;
-        --green-dark: #4e8f80;
-        --blue: #d9e5ff;
-        --pink: #f7dce8;
-        --yellow: #f9edc8;
-        --border: rgba(38,59,61,0.09);
-        --shadow: 0 10px 30px rgba(38,59,61,0.08);
-    }
+body {
+    font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, sans-serif;
+    background: #fef9f4;
+    background-image: radial-gradient(circle at 10% 30%, #fff5e9 0%, #fdeff2 100%);
+    min-height: 100vh;
+    padding: 20px 10px 90px;
+    color: #4a3f5c;
+}
 
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                     "Segoe UI", sans-serif;
-        background:
-            radial-gradient(circle at top left, #e5f5ef, transparent 35%),
-            radial-gradient(circle at bottom right, #e5ebff, transparent 35%),
-            var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        padding: 20px 14px 40px;
-    }
+.app {
+    max-width: 700px;
+    margin: 0 auto;
+}
 
-    .container {
-        max-width: 700px;
-        margin: auto;
-    }
+/* ===== HEADER ===== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 6px;
+}
 
-    header {
-        text-align: center;
-        margin: 10px 0 22px;
-    }
+.title-area h1 {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f9a8d4, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
 
-    .cat {
-        font-size: 42px;
-        margin-bottom: 5px;
-    }
+.title-area p {
+    font-size: 14px;
+    color: #a78e9e;
+    font-weight: 500;
+    margin-top: 2px;
+    -webkit-text-fill-color: #a78e9e;
+}
 
-    h1 {
-        font-size: 29px;
-        letter-spacing: -1px;
-    }
+.add-btn {
+    background: #f8b4d9;
+    border: none;
+    color: #4a2c3a;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #d48eb0;
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 
-    .subtitle {
-        color: var(--muted);
+.add-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #d48eb0;
+}
+
+/* ===== PROGRESS KARTI ===== */
+.progress-card {
+    background: linear-gradient(145deg, #ffe2f0, #ffd9e8);
+    border-radius: 40px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 28px rgba(241, 154, 188, 0.25);
+    border: 2px solid #fff3f9;
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #5f3b4e;
+}
+
+.progress-sub {
+    font-size: 13px;
+    color: #9b6f84;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.percent {
+    font-size: 34px;
+    font-weight: 900;
+    color: #ad4c7a;
+}
+
+.progress-bar {
+    height: 16px;
+    background: #fce4ef;
+    border-radius: 30px;
+    margin-top: 16px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #f9a8d4, #f472b6);
+    border-radius: 30px;
+    transition: width 0.4s ease;
+}
+
+/* ===== STATS ===== */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.stat {
+    background: #fff9fc;
+    padding: 16px 10px;
+    border-radius: 28px;
+    text-align: center;
+    border: 2px solid #fce4ef;
+    box-shadow: 0 6px 0 #f5d6e4;
+}
+
+.stat-number {
+    font-size: 26px;
+    font-weight: 900;
+    color: #5f3b4e;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #b28b9e;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* ===== FİLTRELER ===== */
+.filters {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 2px 14px;
+    flex-wrap: nowrap;
+}
+
+.filters button {
+    border: none;
+    background: #fff5fa;
+    color: #7a5e6e;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    border: 2px solid #fce4ef;
+    transition: all 0.15s;
+    box-shadow: 0 4px 0 #ecd6e2;
+    cursor: pointer;
+}
+
+.filters button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #ecd6e2;
+}
+
+.filters button.active {
+    background: #f8b4d9;
+    border-color: #f8b4d9;
+    color: #4a2c3a;
+    box-shadow: 0 4px 0 #d48eb0;
+}
+
+/* ===== GÜN BAŞLIĞI ===== */
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px 4px 12px;
+}
+
+.day-header h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #5f3b4e;
+    background: #fff5fa;
+    padding: 4px 16px 4px 12px;
+    border-radius: 40px;
+    border: 2px solid #fce4ef;
+}
+
+.day-count {
+    font-size: 14px;
+    font-weight: 700;
+    color: #b28b9e;
+    background: #fff5fa;
+    padding: 4px 14px;
+    border-radius: 40px;
+    border: 2px solid #fce4ef;
+}
+
+/* ===== GÖREV KARTI ===== */
+.task {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 16px 18px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 2px solid #fce4ef;
+    box-shadow: 0 6px 0 #ecd6e2;
+    transition: all 0.15s ease;
+}
+
+.task:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #ecd6e2;
+}
+
+.task.done {
+    opacity: 0.65;
+    filter: grayscale(0.2);
+}
+
+.task.done .task-title {
+    text-decoration: line-through;
+    color: #b28b9e;
+}
+
+/* ===== CHECKBOX ===== */
+.check {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border: 3px solid #f5d6e4;
+    background: #fff5fa;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.check.checked {
+    background: #a8e6cf;
+    border-color: #7bc4a8;
+}
+
+.check.checked::after {
+    content: "✓";
+}
+
+/* ===== GÖREV BİLGİ ===== */
+.task-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4a3f5c;
+    line-height: 1.3;
+}
+
+.task-subject {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b28b9e;
+}
+
+.task-subject span {
+    background: #f5edf0;
+    padding: 2px 12px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+/* ===== AKSİYON BUTONLARI ===== */
+.task-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.task-action {
+    border: none;
+    background: #f5edf0;
+    border-radius: 16px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.1s;
+    border: 2px solid transparent;
+}
+
+.task-action:hover {
+    background: #fce4ef;
+    border-color: #f5d6e4;
+}
+
+/* ===== BOŞ DURUM ===== */
+.empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: #b28b9e;
+    font-size: 18px;
+    font-weight: 600;
+    background: #fff5fa;
+    border-radius: 40px;
+    border: 3px dashed #f5d6e4;
+}
+
+.empty span {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* ===== MODAL ===== */
+dialog {
+    border: none;
+    border-radius: 40px;
+    padding: 0;
+    width: min(92%, 420px);
+    box-shadow: 0 30px 60px rgba(90, 50, 70, 0.25);
+    background: #fffbfd;
+}
+
+dialog::backdrop {
+    background: rgba(70, 40, 55, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal {
+    padding: 30px 28px;
+}
+
+.modal h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #5f3b4e;
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7a5e6e;
+    margin: 14px 0 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #f5d6e4;
+    border-radius: 24px;
+    font: inherit;
+    font-size: 15px;
+    background: #fff9fc;
+    outline: none;
+    transition: border 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #f8b4d9;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-buttons button {
+    border: none;
+    padding: 13px 24px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.modal-buttons button:first-child {
+    background: #f5edf0;
+    color: #7a5e6e;
+}
+
+.save-btn {
+    background: #f8b4d9;
+    color: #4a2c3a;
+    box-shadow: 0 6px 0 #d48eb0;
+    transition: 0.05s linear;
+}
+
+.save-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #d48eb0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 520px) {
+    .header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .title-area h1 {
+        font-size: 26px;
+    }
+    .add-btn {
+        padding: 10px 16px;
         font-size: 14px;
-        margin-top: 5px;
     }
-
-    /* İLERLEME */
-
     .progress-card {
-        background: var(--card);
-        backdrop-filter: blur(15px);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-        border-radius: 22px;
-        padding: 18px;
-        margin-bottom: 20px;
+        padding: 18px 20px;
     }
-
-    .progress-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
+    .percent {
+        font-size: 28px;
     }
-
-    .progress-title {
-        font-weight: 800;
-    }
-
-    #percentage {
-        font-weight: 800;
-        color: var(--green-dark);
-    }
-
-    .progress-bar {
-        height: 11px;
-        background: #e7eeee;
-        border-radius: 20px;
-        overflow: hidden;
-    }
-
-    #progressFill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #9fd9c9, #78b9aa);
-        border-radius: 20px;
-        transition: width .3s ease;
-    }
-
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-top: 13px;
-    }
-
-    .stat {
-        background: rgba(255,255,255,.65);
-        border-radius: 14px;
-        padding: 10px 5px;
-        text-align: center;
-    }
-
     .stat-number {
-        font-size: 18px;
-        font-weight: 800;
+        font-size: 22px;
     }
-
-    .stat-label {
-        color: var(--muted);
-        font-size: 11px;
-        margin-top: 2px;
-    }
-
-    /* GÜN */
-
-    .day-section {
-        margin-bottom: 20px;
-    }
-
-    .day-title {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0 4px 9px;
-    }
-
-    .day-title h2 {
-        font-size: 17px;
-    }
-
-    .date-badge {
-        font-size: 11px;
-        padding: 4px 8px;
-        border-radius: 10px;
-        background: var(--green);
-        color: #35675d;
-        font-weight: 800;
-    }
-
-    /* ÖDEV */
-
-    .homework {
-        background: var(--card);
-        backdrop-filter: blur(14px);
-        border: 1px solid var(--border);
-        box-shadow: 0 6px 20px rgba(38,59,61,.05);
-        border-radius: 18px;
+    .task {
         padding: 14px;
-        margin-bottom: 9px;
-        transition: .2s;
+        flex-wrap: wrap;
     }
-
-    .homework.done {
-        opacity: .65;
+    .task-actions {
+        margin-left: auto;
     }
-
-    .homework.done .homework-name {
-        text-decoration: line-through;
-    }
-
-    .homework-main {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-    }
-
-    /* ÖZEL CHECKBOX */
-
-    .check {
-        appearance: none;
-        width: 27px;
-        height: 27px;
-        min-width: 27px;
-        border: 2px solid #b6c7c5;
-        border-radius: 9px;
-        background: white;
-        cursor: pointer;
-        position: relative;
-        transition: .2s;
-    }
-
-    .check:checked {
-        background: var(--green-dark);
-        border-color: var(--green-dark);
-    }
-
-    .check:checked::after {
-        content: "✓";
-        position: absolute;
-        color: white;
-        font-size: 17px;
-        font-weight: 900;
-        left: 5px;
-        top: 1px;
-    }
-
-    .homework-info {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .homework-name {
-        font-size: 15px;
-        font-weight: 750;
-    }
-
-    .homework-sub {
-        font-size: 11px;
-        color: var(--muted);
-        margin-top: 3px;
-    }
-
-    /* DOĞRU YANLIŞ */
-
-    .score-area {
-        display: flex;
-        gap: 7px;
-        margin-top: 12px;
-        padding-left: 38px;
-    }
-
-    .score {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .score label {
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--muted);
-    }
-
-    .score input {
-        width: 58px;
-        border: 1px solid var(--border);
-        background: rgba(255,255,255,.75);
-        border-radius: 10px;
-        padding: 8px 5px;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text);
-        outline: none;
-    }
-
-    .score input:focus {
-        border-color: var(--green-dark);
-    }
-
-    /* ALT */
-
-    .bottom {
-        margin-top: 25px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .reset {
-        border: none;
-        background: rgba(255,255,255,.7);
-        color: #8b6666;
-        padding: 11px 18px;
-        border-radius: 13px;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .reset:active {
-        transform: scale(.97);
-    }
-
-    .empty {
-        text-align: center;
-        color: var(--muted);
-        font-size: 13px;
-        padding: 15px;
-    }
-
-    @media (max-width: 430px) {
-        h1 {
-            font-size: 26px;
-        }
-
-        .homework {
-            padding: 13px;
-        }
-
-        .score-area {
-            padding-left: 0;
-        }
-
-        .score input {
-            width: 52px;
-        }
-    }
+}
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-    <header>
-        <div class="cat">🐱</div>
-        <h1>Ödev Takip</h1>
-        <div class="subtitle">Hepsini bitir, tikleri doldur ✨</div>
-    </header>
-
-    <div class="progress-card">
-
-        <div class="progress-top">
-            <span class="progress-title">Genel İlerleme</span>
-            <span id="percentage">0%</span>
+<div class="app">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="title-area">
+            <h1>🍭 Ödevlerim</h1>
+            <p>⭐ Her gün biraz daha ileri!</p>
         </div>
-
-        <div class="progress-bar">
-            <div id="progressFill"></div>
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <div class="stat-number" id="doneCount">0</div>
-                <div class="stat-label">Tamamlandı</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-number" id="correctCount">0</div>
-                <div class="stat-label">Doğru</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-number" id="wrongCount">0</div>
-                <div class="stat-label">Yanlış</div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <!-- PAZARTESİ -->
-
-    <section class="day-section">
-
-        <div class="day-title">
-            <h2>🔴 Pazartesi</h2>
-            <span class="date-badge">24 Ağustos</span>
-        </div>
-
-        <div class="homework" data-id="turkce100">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Türkçe — 100. sayfaya kadar</div>
-                    <div class="homework-sub">Pazartesi teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score">
-                    <label>✓ Doğru</label>
-                    <input class="correct" type="number" min="0" value="0">
-                </div>
-
-                <div class="score">
-                    <label>✕ Yanlış</label>
-                    <input class="wrong" type="number" min="0" value="0">
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- SALI -->
-
-    <section class="day-section">
-
-        <div class="day-title">
-            <h2>🟠 Salı</h2>
-            <span class="date-badge">25 Ağustos</span>
-        </div>
-
-        <div class="homework" data-id="ulti1">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Ulti — 1. Deneme</div>
-                    <div class="homework-sub">Salı teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="gizli1">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Gizli — 1. Ünite</div>
-                    <div class="homework-sub">Salı teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="fasikul1">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Fasikül — 1. Ünite</div>
-                    <div class="homework-sub">Salı teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- PERŞEMBE -->
-
-    <section class="day-section">
-
-        <div class="day-title">
-            <h2>🟡 Perşembe</h2>
-            <span class="date-badge">27 Ağustos</span>
-        </div>
-
-
-        <div class="homework" data-id="mat5">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">5 Deneme — Matematik</div>
-                    <div class="homework-sub">Perşembe teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="berkay123">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Berkay — 1-2-3. Denemeler</div>
-                    <div class="homework-sub">Perşembe teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="ultigenel">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Ulti — Genel Deneme</div>
-                    <div class="homework-sub">Perşembe teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="ucdortbesturkce">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">ÜçDörtBeş — Türkçe</div>
-                    <div class="homework-sub">Perşembe teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- CUMA -->
-
-    <section class="day-section">
-
-        <div class="day-title">
-            <h2>🟢 Cuma</h2>
-            <span class="date-badge">28 Ağustos</span>
-        </div>
-
-
-        <div class="homework" data-id="yazi">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">Yazı Ödevi</div>
-                    <div class="homework-sub">Cuma teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="din">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">ÜçDörtBeş — Din</div>
-                    <div class="homework-sub">Cuma teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="ucdortbesingilizce">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">ÜçDörtBeş — İngilizce</div>
-                    <div class="homework-sub">Cuma teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- 1 EYLÜL -->
-
-    <section class="day-section">
-
-        <div class="day-title">
-            <h2>🔵 Salı</h2>
-            <span class="date-badge">1 Eylül</span>
-        </div>
-
-
-        <div class="homework" data-id="inkilap">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">ÜçDörtBeş — İnkılap</div>
-                    <div class="homework-sub">1 Eylül teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-
-        <div class="homework" data-id="fen">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">ÜçDörtBeş — Fen</div>
-                    <div class="homework-sub">1 Eylül teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- 4 EYLÜL -->
-
-    <section class="day-section">
-
-        <div class="day-title">
-            <h2>🟣 Cuma</h2>
-            <span class="date-badge">4 Eylül</span>
-        </div>
-
-
-        <div class="homework" data-id="moreandmore">
-            <div class="homework-main">
-                <input class="check" type="checkbox">
-                <div class="homework-info">
-                    <div class="homework-name">More and More — 1. Ünite</div>
-                    <div class="homework-sub">4 Eylül teslim</div>
-                </div>
-            </div>
-
-            <div class="score-area">
-                <div class="score"><label>✓ Doğru</label><input class="correct" type="number" min="0" value="0"></div>
-                <div class="score"><label>✕ Yanlış</label><input class="wrong" type="number" min="0" value="0"></div>
-            </div>
-        </div>
-
-    </section>
-
-
-    <div class="bottom">
-        <button class="reset" onclick="resetAll()">
-            ↻ Tüm verileri sıfırla
+        <button class="add-btn" onclick="openAddModal()">
+            ✨ Ekle
         </button>
     </div>
 
+    <!-- PROGRESS -->
+    <div class="progress-card">
+        <div class="progress-top">
+            <div>
+                <div class="progress-title">🌸 İlerleme</div>
+                <div class="progress-sub">Tamamladıkça çiçek açıyor ✿</div>
+            </div>
+            <div class="percent" id="percent">0%</div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">📚 Toplam</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number" id="doneCount">0</div>
+            <div class="stat-label">✅ Tamamlanan</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number" id="leftCount">0</div>
+            <div class="stat-label">⏳ Kalan</div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters" id="filters"></div>
+
+    <!-- TASK LIST -->
+    <div id="taskList"></div>
 </div>
 
+<!-- MODAL -->
+<dialog id="taskModal">
+    <form class="modal" onsubmit="saveTask(event)">
+        <h2 id="modalTitle">🌸 Yeni ödev</h2>
+        <label>📖 Ders</label>
+        <input id="subjectInput" type="text" placeholder="Mesela: Fen" required>
+        <label>📝 Ödev</label>
+        <input id="titleInput" type="text" placeholder="Ne yapılacak?" required>
+        <label>📅 Teslim günü</label>
+        <select id="dayInput">
+            <option>Pazartesi</option>
+            <option>Salı</option>
+            <option>Çarşamba</option>
+            <option>Perşembe</option>
+            <option>Cuma</option>
+            <option>Cumartesi</option>
+            <option>Pazar</option>
+            <option>💭 Belirtilmedi</option>
+        </select>
+        <input id="editId" type="hidden">
+        <div class="modal-buttons">
+            <button type="button" onclick="taskModal.close()">Vazgeç</button>
+            <button class="save-btn">💾 Kaydet</button>
+        </div>
+    </form>
+</dialog>
 
 <script>
+// ===== VERİ =====
+const defaultTasks = [
+    { id: 1, subject: "Fen", title: "Turuncular", day: "Pazartesi", done: false },
+    { id: 2, subject: "Fen", title: "Parkur", day: "Pazartesi", done: false },
+    { id: 3, subject: "Fen", title: "Yeşil çerezlik", day: "Salı", done: false },
+    { id: 4, subject: "Fen", title: "1. Jet Fasikülü bitir", day: "Belirtilmedi", done: false },
+    { id: 5, subject: "Fen", title: "Pembe fotokopi ödevlerini tamamla", day: "Belirtilmedi", done: false },
+    { id: 6, subject: "Fen", title: "Fen Jet 1. ve 2. fasikülü yanında bulundur", day: "Belirtilmedi", done: false },
+    { id: 7, subject: "Fen", title: "Yazı ödevi", day: "Çarşamba", done: false },
+    { id: 8, subject: "Türkçe", title: "40 sayfa paragraf", day: "Belirtilmedi", done: false },
+    { id: 9, subject: "İngilizce", title: "345 Yayınları", day: "Pazartesi", done: false },
+    { id: 10, subject: "İngilizce", title: "More and More 1. Ünite", day: "Cuma", done: false },
+    { id: 11, subject: "Matematik", title: "Fİ Yayınları", day: "Salı", done: false },
+    { id: 12, subject: "Matematik", title: "Nartest ilk 6 test", day: "Çarşamba", done: false },
+    { id: 13, subject: "Matematik", title: "Nartest kalan 7 test", day: "Perşembe", done: false },
+    { id: 14, subject: "Matematik", title: "52 soruluk yeni nesil fotokopi", day: "Cuma", done: false }
+];
 
-const STORAGE_KEY = "beyza_odev_takip_v1";
+const STORAGE_KEY = "odev_tatli_v1";
+let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultTasks;
+let currentFilter = "Tümü";
+const days = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar", "Belirtilmedi"];
 
-let savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); }
 
-
-function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+function escapeHTML(text) {
+    return String(text).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
 }
 
+// ===== RENDER =====
+function render() {
+    const total = tasks.length;
+    const completed = tasks.filter(t => t.done).length;
+    const remaining = total - completed;
+    const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-function loadData() {
+    document.getElementById("totalCount").textContent = total;
+    document.getElementById("doneCount").textContent = completed;
+    document.getElementById("leftCount").textContent = remaining;
+    document.getElementById("percent").textContent = percentage + "%";
+    document.getElementById("progressFill").style.width = percentage + "%";
 
-    document.querySelectorAll(".homework").forEach(homework => {
+    // Filters
+    const subjects = ["Tümü", ...new Set(tasks.map(t => t.subject))];
+    document.getElementById("filters").innerHTML = subjects.map(s =>
+        `<button class="${currentFilter === s ? 'active' : ''}" onclick="setFilter('${escapeHTML(s)}')">${escapeHTML(s)}</button>`
+    ).join("");
 
-        const id = homework.dataset.id;
-        const check = homework.querySelector(".check");
-        const correct = homework.querySelector(".correct");
-        const wrong = homework.querySelector(".wrong");
-
-        if (savedData[id]) {
-
-            check.checked = savedData[id].done || false;
-            correct.value = savedData[id].correct ?? 0;
-            wrong.value = savedData[id].wrong ?? 0;
-
-        }
-
-        updateCard(homework);
+    // Tasks
+    const filtered = tasks.filter(t => currentFilter === "Tümü" || t.subject === currentFilter);
+    let html = "";
+    days.forEach(day => {
+        const dayTasks = filtered.filter(t => t.day === day);
+        if (!dayTasks.length) return;
+        const done = dayTasks.filter(t => t.done).length;
+        html += `<div class="day-header"><h2>🌸 ${day}</h2><span class="day-count">${done}/${dayTasks.length}</span></div>`;
+        dayTasks.forEach(task => {
+            html += `
+            <div class="task ${task.done ? 'done' : ''}">
+                <button class="check ${task.done ? 'checked' : ''}" onclick="toggleTask(${task.id})"></button>
+                <div class="task-info">
+                    <div class="task-title">${escapeHTML(task.title)}</div>
+                    <div class="task-subject"><span>${escapeHTML(task.subject)}</span> · ${task.day === "Belirtilmedi" ? "💭 gün belirtilmedi" : "📅 " + task.day}</div>
+                </div>
+                <div class="task-actions">
+                    <button class="task-action" onclick="editTask(${task.id})">✏️</button>
+                    <button class="task-action" onclick="deleteTask(${task.id})">🗑️</button>
+                </div>
+            </div>`;
+        });
     });
-
-    updateStats();
+    document.getElementById("taskList").innerHTML = html || `<div class="empty"><span>🎉</span>Hiç ödev yok, harikasın!</div>`;
 }
 
-
-function updateCard(homework) {
-
-    const id = homework.dataset.id;
-    const check = homework.querySelector(".check");
-
-    if (check.checked) {
-        homework.classList.add("done");
+// ===== CRUD =====
+function setFilter(s) { currentFilter = s; render(); }
+function toggleTask(id) {
+    const t = tasks.find(t => t.id === id);
+    if (t) { t.done = !t.done; saveData(); render(); }
+}
+function openAddModal() {
+    document.getElementById("modalTitle").textContent = "🌸 Yeni ödev";
+    document.getElementById("editId").value = "";
+    document.getElementById("subjectInput").value = "";
+    document.getElementById("titleInput").value = "";
+    document.getElementById("dayInput").value = "Pazartesi";
+    taskModal.showModal();
+}
+function editTask(id) {
+    const t = tasks.find(t => t.id === id);
+    if (!t) return;
+    document.getElementById("modalTitle").textContent = "✏️ Ödevi düzenle";
+    document.getElementById("editId").value = t.id;
+    document.getElementById("subjectInput").value = t.subject;
+    document.getElementById("titleInput").value = t.title;
+    document.getElementById("dayInput").value = t.day;
+    taskModal.showModal();
+}
+function saveTask(e) {
+    e.preventDefault();
+    const id = Number(document.getElementById("editId").value);
+    const subject = document.getElementById("subjectInput").value.trim();
+    const title = document.getElementById("titleInput").value.trim();
+    const day = document.getElementById("dayInput").value;
+    if (!subject || !title) return;
+    if (id) {
+        const t = tasks.find(t => t.id === id);
+        if (t) { t.subject = subject; t.title = title; t.day = day; }
     } else {
-        homework.classList.remove("done");
+        tasks.push({ id: Date.now(), subject, title, day, done: false });
     }
-
-    savedData[id] = {
-        done: check.checked,
-        correct: Number(homework.querySelector(".correct").value) || 0,
-        wrong: Number(homework.querySelector(".wrong").value) || 0
-    };
-
-    save();
+    saveData();
+    taskModal.close();
+    render();
+}
+function deleteTask(id) {
+    const t = tasks.find(t => t.id === id);
+    if (!t) return;
+    if (!confirm(`"${t.title}" ödevini silmek istediğine emin misin?`)) return;
+    tasks = tasks.filter(t => t.id !== id);
+    saveData();
+    render();
 }
 
-
-function updateStats() {
-
-    const all = document.querySelectorAll(".homework");
-    const done = document.querySelectorAll(".homework .check:checked");
-
-    let correctTotal = 0;
-    let wrongTotal = 0;
-
-    all.forEach(homework => {
-
-        correctTotal += Number(
-            homework.querySelector(".correct").value
-        ) || 0;
-
-        wrongTotal += Number(
-            homework.querySelector(".wrong").value
-        ) || 0;
-
-    });
-
-    const percentage = all.length
-        ? Math.round((done.length / all.length) * 100)
-        : 0;
-
-    document.getElementById("doneCount").textContent =
-        `${done.length}/${all.length}`;
-
-    document.getElementById("correctCount").textContent =
-        correctTotal;
-
-    document.getElementById("wrongCount").textContent =
-        wrongTotal;
-
-    document.getElementById("percentage").textContent =
-        percentage + "%";
-
-    document.getElementById("progressFill").style.width =
-        percentage + "%";
-}
-
-
-document.querySelectorAll(".homework").forEach(homework => {
-
-    const check = homework.querySelector(".check");
-    const correct = homework.querySelector(".correct");
-    const wrong = homework.querySelector(".wrong");
-
-    check.addEventListener("change", () => {
-        updateCard(homework);
-        updateStats();
-    });
-
-    correct.addEventListener("input", () => {
-        updateCard(homework);
-        updateStats();
-    });
-
-    wrong.addEventListener("input", () => {
-        updateCard(homework);
-        updateStats();
-    });
-
-});
-
-
-function resetAll() {
-
-    const answer = confirm(
-        "Bütün tikler ve doğru/yanlış sayıları silinsin mi?"
-    );
-
-    if (!answer) return;
-
-    localStorage.removeItem(STORAGE_KEY);
-    savedData = {};
-
-    document.querySelectorAll(".homework").forEach(homework => {
-
-        homework.querySelector(".check").checked = false;
-        homework.querySelector(".correct").value = 0;
-        homework.querySelector(".wrong").value = 0;
-
-        homework.classList.remove("done");
-
-    });
-
-    updateStats();
-}
-
-
-loadData();
-
+render();
 </script>
-
 </body>
 </html>
