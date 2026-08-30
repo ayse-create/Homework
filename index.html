@@ -14,7 +14,7 @@
 
     :root {
         --bg: #eef7f5;
-        --card: rgba(255,255,255,0.88);
+        --card: rgba(255,255,255,0.90);
         --text: #1d3d3a;
         --muted: #6a8a85;
         --green-light: #b8e0d6;
@@ -22,92 +22,75 @@
         --green-dark: #3d8a7a;
         --green-deep: #2a6b5e;
         --border: rgba(38,75,68,0.08);
-        --shadow: 0 12px 36px rgba(38,75,68,0.07);
-        --radius: 24px;
-        --radius-sm: 16px;
+        --shadow: 0 8px 30px rgba(38,75,68,0.07);
+        --radius: 20px;
+        --radius-sm: 14px;
     }
 
     body {
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
         background: 
             radial-gradient(circle at 10% 10%, #d4f0e8, transparent 45%),
             radial-gradient(circle at 90% 90%, #dce8f0, transparent 45%),
             var(--bg);
         color: var(--text);
         min-height: 100vh;
-        padding: 16px 12px 40px;
+        padding: 14px 10px 30px;
     }
 
-    .container {
-        max-width: 720px;
-        margin: auto;
+    .app {
+        max-width: 700px;
+        margin: 0 auto;
     }
 
     /* ===== HEADER ===== */
-    header {
-        text-align: center;
-        margin-bottom: 24px;
-        padding: 8px 0;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        padding: 0 4px;
+        flex-wrap: wrap;
+        gap: 8px;
     }
 
-    .emoji-big {
-        font-size: 48px;
-        display: block;
-        margin-bottom: 2px;
-    }
-
-    h1 {
-        font-size: 32px;
+    .title-area h1 {
+        font-size: 28px;
         font-weight: 800;
-        letter-spacing: -0.5px;
         background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        letter-spacing: -0.5px;
     }
 
-    .subtitle {
+    .title-area p {
+        font-size: 13px;
         color: var(--muted);
-        font-size: 14px;
         font-weight: 500;
-        margin-top: 4px;
+        margin-top: 2px;
         -webkit-text-fill-color: var(--muted);
     }
 
-    /* ===== HEADER AKSİYONLARI ===== */
-    .header-actions {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 12px;
-        flex-wrap: wrap;
-    }
-
-    .header-btn {
+    .add-btn {
+        background: var(--green-dark);
         border: none;
-        background: var(--card);
-        backdrop-filter: blur(10px);
-        padding: 10px 20px;
-        border-radius: 40px;
+        color: white;
         font-weight: 700;
         font-size: 14px;
-        color: var(--text);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
+        padding: 11px 18px;
+        border-radius: 40px;
         cursor: pointer;
-        transition: all 0.15s;
-        display: inline-flex;
+        box-shadow: 0 4px 0 var(--green-deep);
+        transition: all 0.1s ease;
+        display: flex;
         align-items: center;
         gap: 6px;
+        white-space: nowrap;
     }
 
-    .header-btn:active {
-        transform: scale(0.96);
-    }
-
-    .header-btn.primary {
-        background: var(--green-dark);
-        color: white;
-        border-color: var(--green-dark);
+    .add-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 var(--green-deep);
     }
 
     /* ===== PROGRESS CARD ===== */
@@ -117,34 +100,41 @@
         border: 1px solid var(--border);
         box-shadow: var(--shadow);
         border-radius: var(--radius);
-        padding: 22px 24px;
-        margin-bottom: 20px;
-        transition: all 0.2s;
+        padding: 20px 22px;
+        margin-bottom: 18px;
     }
 
     .progress-top {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .progress-title {
         font-weight: 800;
-        font-size: 17px;
+        font-size: 16px;
+    }
+
+    .progress-sub {
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 500;
+        margin-top: 2px;
     }
 
     #percentage {
         font-weight: 800;
-        font-size: 24px;
+        font-size: 26px;
         color: var(--green-dark);
     }
 
     .progress-bar {
-        height: 12px;
+        height: 10px;
         background: #e2efeb;
         border-radius: 30px;
         overflow: hidden;
+        margin-top: 4px;
     }
 
     #progressFill {
@@ -157,9 +147,9 @@
 
     .stats {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
-        margin-top: 16px;
+        margin-top: 14px;
     }
 
     .stat {
@@ -191,13 +181,18 @@
         padding: 4px 2px 14px;
         flex-wrap: nowrap;
         -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar {
+        display: none;
     }
 
     .filters button {
         border: none;
         background: var(--card);
         color: var(--muted);
-        padding: 8px 18px;
+        padding: 8px 16px;
         border-radius: 40px;
         font-weight: 700;
         font-size: 13px;
@@ -206,6 +201,7 @@
         cursor: pointer;
         transition: all 0.15s;
         flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(38,75,68,0.04);
     }
 
     .filters button.active {
@@ -220,99 +216,75 @@
 
     /* ===== DAY SECTION ===== */
     .day-section {
-        margin-bottom: 24px;
+        margin-bottom: 20px;
     }
 
-    .day-title {
+    .day-header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 10px;
-        margin: 0 4px 12px;
-        flex-wrap: wrap;
+        margin: 0 4px 10px;
     }
 
-    .day-title h2 {
-        font-size: 18px;
+    .day-header h2 {
+        font-size: 17px;
         font-weight: 800;
-    }
-
-    .day-emoji {
-        font-size: 22px;
-    }
-
-    .date-badge {
-        font-size: 12px;
-        padding: 4px 12px;
-        border-radius: 30px;
-        background: var(--green-light);
         color: var(--green-deep);
-        font-weight: 700;
     }
 
-    .day-progress {
+    .day-count {
         font-size: 12px;
+        font-weight: 700;
         color: var(--muted);
-        font-weight: 600;
-        margin-left: auto;
         background: var(--card);
-        padding: 3px 14px;
+        padding: 3px 12px;
         border-radius: 30px;
         border: 1px solid var(--border);
     }
 
-    /* ===== HOMEWORK CARD ===== */
-    .homework {
+    /* ===== TASK CARD ===== */
+    .task {
         background: var(--card);
         backdrop-filter: blur(14px);
         border: 1px solid var(--border);
-        box-shadow: 0 4px 16px rgba(38,75,68,0.05);
+        box-shadow: 0 4px 16px rgba(38,75,68,0.04);
         border-radius: var(--radius-sm);
-        padding: 16px 18px;
-        margin-bottom: 10px;
+        padding: 14px 16px;
+        margin-bottom: 9px;
         transition: all 0.2s ease;
-        position: relative;
     }
 
-    .homework:hover {
-        box-shadow: 0 6px 24px rgba(38,75,68,0.08);
+    .task:active {
+        transform: scale(0.99);
     }
 
-    .homework.done {
+    .task.done {
         opacity: 0.6;
     }
 
-    .homework.done .homework-name {
+    .task.done .task-title {
         text-decoration: line-through;
     }
 
-    .homework-main {
+    .task-main {
         display: flex;
         align-items: flex-start;
         gap: 12px;
     }
 
-    /* ===== CUSTOM CHECKBOX ===== */
-    .check-wrapper {
-        position: relative;
-        width: 28px;
-        height: 28px;
-        flex-shrink: 0;
-        margin-top: 2px;
-    }
-
+    /* ===== CHECKBOX ===== */
     .check {
         appearance: none;
-        width: 28px;
-        height: 28px;
-        border: 2.5px solid #b8d0ca;
-        border-radius: 10px;
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+        border: 2.5px solid #c5d9d3;
+        border-radius: 9px;
         background: white;
         cursor: pointer;
         transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         position: relative;
+        margin-top: 1px;
     }
 
     .check:checked {
@@ -323,7 +295,7 @@
     .check:checked::after {
         content: "✓";
         color: white;
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 900;
         position: absolute;
         top: 50%;
@@ -335,115 +307,66 @@
         transform: scale(0.9);
     }
 
-    .homework-info {
+    .task-info {
         flex: 1;
         min-width: 0;
     }
 
-    .homework-name {
+    .task-title {
         font-size: 15px;
         font-weight: 750;
         line-height: 1.3;
     }
 
-    .homework-sub {
+    .task-subject {
         font-size: 12px;
         color: var(--muted);
         margin-top: 4px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
     }
 
-    .tag {
+    .task-subject span {
         display: inline-block;
-        padding: 2px 10px;
-        border-radius: 30px;
-        font-size: 11px;
-        font-weight: 700;
         background: var(--green-light);
-        color: var(--green-deep);
-    }
-
-    /* ===== SCORE AREA ===== */
-    .score-area {
-        display: flex;
-        gap: 12px;
-        margin-top: 12px;
-        padding-left: 40px;
-        flex-wrap: wrap;
-    }
-
-    .score {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(255,255,255,0.5);
-        padding: 4px 10px 4px 6px;
+        padding: 1px 10px;
         border-radius: 30px;
-        border: 1px solid var(--border);
-    }
-
-    .score label {
-        font-size: 12px;
         font-weight: 700;
-        color: var(--muted);
-        display: flex;
-        align-items: center;
-        gap: 4px;
+        color: var(--green-deep);
+        font-size: 11px;
+        margin-right: 4px;
     }
 
-    .score input {
-        width: 48px;
+    .task-actions {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+        margin-left: 4px;
+    }
+
+    .task-action {
         border: none;
         background: transparent;
-        padding: 6px 2px;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text);
-        outline: none;
-        border-radius: 8px;
-    }
-
-    .score input:focus {
-        background: rgba(123, 196, 181, 0.1);
-    }
-
-    .score input[type="number"]::-webkit-inner-spin-button {
+        border-radius: 10px;
+        padding: 5px 7px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: all 0.15s;
         opacity: 0.5;
     }
 
-    /* ===== DELETE BUTTON ===== */
-    .delete-btn {
-        border: none;
-        background: transparent;
-        color: #c5a0a0;
-        cursor: pointer;
-        padding: 4px 6px;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: all 0.15s;
-        opacity: 0.4;
-        flex-shrink: 0;
-    }
-
-    .homework:hover .delete-btn {
+    .task:hover .task-action {
         opacity: 1;
     }
 
-    .delete-btn:hover {
-        background: #fde8e8;
-        color: #b35a5a;
+    .task-action:hover {
+        background: var(--green-light);
     }
 
-    /* ===== EMPTY STATE ===== */
+    /* ===== EMPTY ===== */
     .empty {
         text-align: center;
+        padding: 40px 20px;
         color: var(--muted);
-        font-size: 14px;
-        padding: 30px 20px;
+        font-size: 15px;
         background: var(--card);
         border-radius: var(--radius-sm);
         border: 2px dashed var(--green-light);
@@ -452,7 +375,7 @@
     .empty .big {
         font-size: 48px;
         display: block;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     /* ===== MODAL ===== */
@@ -460,7 +383,7 @@
         border: none;
         border-radius: var(--radius);
         padding: 0;
-        width: min(92%, 440px);
+        width: min(92%, 420px);
         box-shadow: 0 30px 60px rgba(38,75,68,0.2);
         background: var(--card);
         backdrop-filter: blur(20px);
@@ -472,14 +395,14 @@
     }
 
     .modal {
-        padding: 32px 28px;
+        padding: 28px 24px;
     }
 
     .modal h2 {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 800;
         color: var(--green-dark);
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 
     .modal label {
@@ -487,12 +410,13 @@
         font-size: 13px;
         font-weight: 700;
         color: var(--muted);
-        margin: 14px 0 5px;
+        margin: 12px 0 4px;
     }
 
-    .modal input, .modal select {
+    .modal input,
+    .modal select {
         width: 100%;
-        padding: 14px 16px;
+        padding: 12px 14px;
         border: 2px solid #dce8e4;
         border-radius: var(--radius-sm);
         font: inherit;
@@ -501,25 +425,34 @@
         outline: none;
         transition: border 0.2s;
         color: var(--text);
+        -webkit-appearance: none;
+        appearance: none;
     }
 
-    .modal input:focus, .modal select:focus {
+    .modal input:focus,
+    .modal select:focus {
         border-color: var(--green-mid);
+    }
+
+    .modal select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a8a85' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
     }
 
     .modal-buttons {
         display: flex;
         justify-content: flex-end;
-        gap: 12px;
-        margin-top: 24px;
+        gap: 10px;
+        margin-top: 20px;
     }
 
     .modal-buttons button {
         border: none;
-        padding: 12px 24px;
+        padding: 11px 20px;
         border-radius: 40px;
         font-weight: 700;
-        font-size: 15px;
+        font-size: 14px;
         cursor: pointer;
         transition: all 0.15s;
     }
@@ -543,55 +476,74 @@
     }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 500px) {
+    @media (max-width: 480px) {
         body {
-            padding: 12px 10px 30px;
+            padding: 10px 8px 20px;
         }
 
-        h1 {
-            font-size: 28px;
+        .header {
+            flex-wrap: wrap;
+        }
+
+        .title-area h1 {
+            font-size: 24px;
+        }
+
+        .add-btn {
+            padding: 9px 14px;
+            font-size: 13px;
         }
 
         .progress-card {
-            padding: 18px;
+            padding: 16px 18px;
+        }
+
+        .percent {
+            font-size: 22px;
         }
 
         .stats {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .stat:last-child {
-            grid-column: span 2;
-        }
-
-        .score-area {
-            padding-left: 0;
-            margin-top: 10px;
-        }
-
-        .homework {
-            padding: 14px;
-        }
-
-        .day-title {
+            grid-template-columns: repeat(3, 1fr);
             gap: 6px;
         }
 
-        .day-title h2 {
-            font-size: 16px;
+        .stat-number {
+            font-size: 17px;
         }
 
-        .header-actions {
-            gap: 6px;
+        .task {
+            padding: 12px 14px;
         }
 
-        .header-btn {
-            padding: 8px 14px;
-            font-size: 13px;
+        .task-title {
+            font-size: 14px;
+        }
+
+        .day-header h2 {
+            font-size: 15px;
+        }
+
+        .filters button {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+
+        .modal {
+            padding: 20px 16px;
+        }
+
+        .modal h2 {
+            font-size: 20px;
+        }
+
+        .modal input,
+        .modal select {
+            padding: 10px 12px;
+            font-size: 14px;
         }
     }
 
-    @media (max-width: 380px) {
+    @media (max-width: 360px) {
         .stats {
             grid-template-columns: 1fr 1fr;
         }
@@ -600,68 +552,54 @@
             grid-column: span 2;
         }
 
-        .score-area {
-            flex-direction: column;
-            gap: 6px;
+        .task-main {
+            flex-wrap: wrap;
         }
 
-        .score {
-            width: 100%;
-            justify-content: space-between;
+        .task-actions {
+            margin-left: auto;
         }
     }
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="container">
-
-    <header>
-        <span class="emoji-big">🌱</span>
-        <h1>Ödev Takip</h1>
-        <div class="subtitle">Her gün biraz daha ileri ✨</div>
-
-        <div class="header-actions">
-            <button class="header-btn primary" onclick="openAddModal()">
-                ➕ Yeni Ödev
-            </button>
-            <button class="header-btn" onclick="exportData()">
-                📤 Dışa Aktar
-            </button>
-            <button class="header-btn" onclick="importData()">
-                📥 İçe Aktar
-            </button>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="title-area">
+            <h1>🌿 Ödevlerim</h1>
+            <p>✨ Her gün biraz daha ileri</p>
         </div>
-    </header>
+        <button class="add-btn" onclick="openAddModal()">➕ Ekle</button>
+    </div>
 
     <!-- PROGRESS -->
     <div class="progress-card">
         <div class="progress-top">
-            <span class="progress-title">🌿 Genel İlerleme</span>
-            <span id="percentage">0%</span>
+            <div>
+                <div class="progress-title">Genel İlerleme</div>
+                <div class="progress-sub">Tamamladıkça yüzde yükselir</div>
+            </div>
+            <div id="percentage">0%</div>
         </div>
-
         <div class="progress-bar">
             <div id="progressFill"></div>
         </div>
 
         <div class="stats">
             <div class="stat">
-                <div class="stat-number" id="doneCount">0/0</div>
-                <div class="stat-label">✅ Tamamlandı</div>
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">📚 Toplam</div>
             </div>
             <div class="stat">
-                <div class="stat-number" id="correctCount">0</div>
-                <div class="stat-label">✓ Doğru</div>
+                <div class="stat-number" id="doneCount">0</div>
+                <div class="stat-label">✅ Tamamlanan</div>
             </div>
             <div class="stat">
-                <div class="stat-number" id="wrongCount">0</div>
-                <div class="stat-label">✕ Yanlış</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="accuracyCount">0%</div>
-                <div class="stat-label">🎯 Başarı</div>
+                <div class="stat-number" id="leftCount">0</div>
+                <div class="stat-label">⏳ Kalan</div>
             </div>
         </div>
     </div>
@@ -680,25 +618,22 @@
         <h2 id="modalTitle">🌱 Yeni Ödev</h2>
 
         <label>📚 Ders</label>
-        <input id="subjectInput" type="text" placeholder="Örn: Matematik" required>
+        <input id="subjectInput" type="text" placeholder="Fen, Matematik, vb." required>
 
-        <label>📝 Ödev Adı</label>
-        <input id="titleInput" type="text" placeholder="Örn: 50 soru çöz" required>
+        <label>📝 Ödev</label>
+        <input id="titleInput" type="text" placeholder="Ödev adı" required>
 
         <label>📅 Teslim Günü</label>
         <select id="dayInput">
-            <option value="Pazartesi">🔴 Pazartesi</option>
-            <option value="Salı">🟠 Salı</option>
-            <option value="Çarşamba">🟡 Çarşamba</option>
-            <option value="Perşembe">🟢 Perşembe</option>
-            <option value="Cuma">🔵 Cuma</option>
-            <option value="Cumartesi">🟣 Cumartesi</option>
-            <option value="Pazar">⚪ Pazar</option>
-            <option value="Belirtilmedi">💭 Belirtilmedi</option>
+            <option value="Pazartesi">Pazartesi</option>
+            <option value="Salı">Salı</option>
+            <option value="Çarşamba">Çarşamba</option>
+            <option value="Perşembe">Perşembe</option>
+            <option value="Cuma">Cuma</option>
+            <option value="Cumartesi">Cumartesi</option>
+            <option value="Pazar">Pazar</option>
+            <option value="Belirtilmedi">Belirtilmedi</option>
         </select>
-
-        <label>🏷️ Etiket (isteğe bağlı)</label>
-        <input id="tagInput" type="text" placeholder="Örn: Deneme, Fasikül">
 
         <input id="editId" type="hidden">
 
@@ -710,307 +645,237 @@
 </dialog>
 
 <script>
-// ============================================================
-// VERİ YÖNETİMİ
-// ============================================================
+    // ============================================================
+    // ÖDEVLER - SİZİN İSTEĞİNİZ GİBİ
+    // ============================================================
+    const defaultTasks = [
+        // FEN
+        { id: 1, subject: "Fen", title: "Yazı ödevi", day: "Çarşamba", done: false },
+        { id: 2, subject: "Fen", title: "Yeşil fotokopi", day: "Salı", done: false },
+        { id: 3, subject: "Fen", title: "Fenomen", day: "Pazartesi", done: false },
+        { id: 4, subject: "Fen", title: "Parkur", day: "Pazartesi", done: false },
 
-const STORAGE_KEY = "odev_takip_yesil_v2";
+        // TÜRKÇE
+        { id: 5, subject: "Türkçe", title: "40 sayfa paragraf", day: "Belirtilmedi", done: false },
 
-let tasks = [];
-let currentFilter = "Tümü";
-let nextId = 1;
+        // İNGİLİZCE
+        { id: 6, subject: "İngilizce", title: "345 Yayınları", day: "Pazartesi", done: false },
+        { id: 7, subject: "İngilizce", title: "More and More 1. Ünite", day: "Cuma", done: false },
 
-// Default ödevler
-const defaultTasks = [
-    { id: 1, subject: "Türkçe", title: "100. sayfaya kadar", day: "Pazartesi", tag: "Okuma", done: false, correct: 0, wrong: 0 },
-    { id: 2, subject: "Ulti", title: "1. Deneme", day: "Salı", tag: "Deneme", done: false, correct: 0, wrong: 0 },
-    { id: 3, subject: "Gizli", title: "1. Ünite", day: "Salı", tag: "Kitap", done: false, correct: 0, wrong: 0 },
-    { id: 4, subject: "Fasikül", title: "1. Ünite", day: "Salı", tag: "Fasikül", done: false, correct: 0, wrong: 0 },
-    { id: 5, subject: "Matematik", title: "5 Deneme", day: "Perşembe", tag: "Deneme", done: false, correct: 0, wrong: 0 },
-    { id: 6, subject: "Berkay", title: "1-2-3. Denemeler", day: "Perşembe", tag: "Deneme", done: false, correct: 0, wrong: 0 },
-    { id: 7, subject: "Ulti", title: "Genel Deneme", day: "Perşembe", tag: "Deneme", done: false, correct: 0, wrong: 0 },
-    { id: 8, subject: "Türkçe", title: "ÜçDörtBeş", day: "Perşembe", tag: "Soru Bankası", done: false, correct: 0, wrong: 0 },
-    { id: 9, subject: "Yazı", title: "Yazı Ödevi", day: "Cuma", tag: "Yazı", done: false, correct: 0, wrong: 0 },
-    { id: 10, subject: "Din", title: "ÜçDörtBeş", day: "Cuma", tag: "Soru Bankası", done: false, correct: 0, wrong: 0 },
-    { id: 11, subject: "İngilizce", title: "ÜçDörtBeş", day: "Cuma", tag: "Soru Bankası", done: false, correct: 0, wrong: 0 },
-    { id: 12, subject: "İnkılap", title: "ÜçDörtBeş", day: "Salı", tag: "Soru Bankası", done: false, correct: 0, wrong: 0 },
-    { id: 13, subject: "Fen", title: "ÜçDörtBeş", day: "Salı", tag: "Soru Bankası", done: false, correct: 0, wrong: 0 },
-    { id: 14, subject: "İngilizce", title: "More and More 1. Ünite", day: "Cuma", tag: "Kitap", done: false, correct: 0, wrong: 0 }
-];
+        // MATEMATİK
+        { id: 8, subject: "Matematik", title: "Fİ Yayınları", day: "Salı", done: false },
+        { id: 9, subject: "Matematik", title: "Nartest ilk 6 test", day: "Çarşamba", done: false },
+        { id: 10, subject: "Matematik", title: "Nartest kalan 7 test", day: "Perşembe", done: false },
+        { id: 11, subject: "Matematik", title: "52 soruluk yeni nesil fotokopi", day: "Cuma", done: false }
+    ];
 
-// ============================================================
-// YÜKLE & KAYDET
-// ============================================================
+    // ============================================================
+    // VERİ YÖNETİMİ
+    // ============================================================
 
-function loadData() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-        try {
-            const parsed = JSON.parse(saved);
-            tasks = parsed.tasks || defaultTasks;
-            nextId = parsed.nextId || tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-        } catch {
-            tasks = defaultTasks;
-            nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-        }
-    } else {
-        tasks = defaultTasks;
-        nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-    }
-    saveData();
-}
+    const STORAGE_KEY = "odev_takip_yesil_v3";
 
-function saveData() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ tasks, nextId }));
-}
+    let tasks = [];
+    let currentFilter = "Tümü";
 
-// ============================================================
-// RENDER
-// ============================================================
-
-function render() {
-    // Stats
-    const total = tasks.length;
-    const done = tasks.filter(t => t.done).length;
-    const correctTotal = tasks.reduce((sum, t) => sum + (t.correct || 0), 0);
-    const wrongTotal = tasks.reduce((sum, t) => sum + (t.wrong || 0), 0);
-    const totalQuestions = correctTotal + wrongTotal;
-    const accuracy = totalQuestions > 0 ? Math.round((correctTotal / totalQuestions) * 100) : 0;
-    const percentage = total > 0 ? Math.round((done / total) * 100) : 0;
-
-    document.getElementById("doneCount").textContent = `${done}/${total}`;
-    document.getElementById("correctCount").textContent = correctTotal;
-    document.getElementById("wrongCount").textContent = wrongTotal;
-    document.getElementById("accuracyCount").textContent = accuracy + "%";
-    document.getElementById("percentage").textContent = percentage + "%";
-    document.getElementById("progressFill").style.width = percentage + "%";
-
-    // Filters
-    const subjects = ["Tümü", ...new Set(tasks.map(t => t.subject).filter(Boolean))];
-    document.getElementById("filters").innerHTML = subjects.map(s =>
-        `<button class="${currentFilter === s ? 'active' : ''}" onclick="setFilter('${escapeHTML(s)}')">${escapeHTML(s)}</button>`
-    ).join("");
-
-    // Tasks by day
-    const days = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar", "Belirtilmedi"];
-    const filtered = tasks.filter(t => currentFilter === "Tümü" || t.subject === currentFilter);
-
-    let html = "";
-    days.forEach(day => {
-        const dayTasks = filtered.filter(t => t.day === day);
-        if (dayTasks.length === 0) return;
-
-        const dayDone = dayTasks.filter(t => t.done).length;
-        const emojis = { "Pazartesi": "🔴", "Salı": "🟠", "Çarşamba": "🟡", "Perşembe": "🟢", "Cuma": "🔵", "Cumartesi": "🟣", "Pazar": "⚪", "Belirtilmedi": "💭" };
-
-        html += `
-            <div class="day-section">
-                <div class="day-title">
-                    <span class="day-emoji">${emojis[day] || "📅"}</span>
-                    <h2>${day}</h2>
-                    <span class="day-progress">${dayDone}/${dayTasks.length} ✅</span>
-                </div>
-        `;
-
-        dayTasks.forEach(task => {
-            html += `
-                <div class="homework ${task.done ? 'done' : ''}" data-id="${task.id}">
-                    <div class="homework-main">
-                        <div class="check-wrapper">
-                            <input class="check" type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id})">
-                        </div>
-                        <div class="homework-info">
-                            <div class="homework-name">${escapeHTML(task.subject)} — ${escapeHTML(task.title)}</div>
-                            <div class="homework-sub">
-                                <span>📅 ${task.day === "Belirtilmedi" ? "Gün belirtilmedi" : task.day}</span>
-                                ${task.tag ? `<span class="tag">${escapeHTML(task.tag)}</span>` : ''}
-                            </div>
-                        </div>
-                        <button class="delete-btn" onclick="deleteTask(${task.id})" title="Sil">🗑️</button>
-                    </div>
-                    <div class="score-area">
-                        <div class="score">
-                            <label>✓ Doğru</label>
-                            <input class="correct-input" type="number" min="0" value="${task.correct || 0}" onchange="updateScore(${task.id}, 'correct', this.value)">
-                        </div>
-                        <div class="score">
-                            <label>✕ Yanlış</label>
-                            <input class="wrong-input" type="number" min="0" value="${task.wrong || 0}" onchange="updateScore(${task.id}, 'wrong', this.value)">
-                        </div>
-                        <button class="header-btn" style="padding:4px 10px;font-size:12px;margin-left:auto;" onclick="editTask(${task.id})">✏️</button>
-                    </div>
-                </div>
-            `;
-        });
-
-        html += `</div>`;
-    });
-
-    if (!html) {
-        html = `
-            <div class="empty">
-                <span class="big">🌿</span>
-                Hiç ödev yok. Yeni bir ödev eklemek için <strong>"Yeni Ödev"</strong> butonuna tıkla!
-            </div>
-        `;
-    }
-
-    document.getElementById("taskList").innerHTML = html;
-}
-
-// ============================================================
-// CRUD İŞLEMLERİ
-// ============================================================
-
-function setFilter(filter) {
-    currentFilter = filter;
-    render();
-}
-
-function toggleTask(id) {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-        task.done = !task.done;
-        saveData();
-        render();
-    }
-}
-
-function updateScore(id, type, value) {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-        const num = parseInt(value) || 0;
-        if (type === 'correct') task.correct = num;
-        else task.wrong = num;
-        saveData();
-        render();
-    }
-}
-
-function openAddModal() {
-    document.getElementById("modalTitle").textContent = "🌱 Yeni Ödev";
-    document.getElementById("editId").value = "";
-    document.getElementById("subjectInput").value = "";
-    document.getElementById("titleInput").value = "";
-    document.getElementById("dayInput").value = "Pazartesi";
-    document.getElementById("tagInput").value = "";
-    taskModal.showModal();
-}
-
-function editTask(id) {
-    const task = tasks.find(t => t.id === id);
-    if (!task) return;
-    document.getElementById("modalTitle").textContent = "✏️ Ödevi Düzenle";
-    document.getElementById("editId").value = task.id;
-    document.getElementById("subjectInput").value = task.subject;
-    document.getElementById("titleInput").value = task.title;
-    document.getElementById("dayInput").value = task.day;
-    document.getElementById("tagInput").value = task.tag || "";
-    taskModal.showModal();
-}
-
-function saveTask(e) {
-    e.preventDefault();
-    const id = Number(document.getElementById("editId").value);
-    const subject = document.getElementById("subjectInput").value.trim();
-    const title = document.getElementById("titleInput").value.trim();
-    const day = document.getElementById("dayInput").value;
-    const tag = document.getElementById("tagInput").value.trim();
-
-    if (!subject || !title) return;
-
-    if (id) {
-        const task = tasks.find(t => t.id === id);
-        if (task) {
-            task.subject = subject;
-            task.title = title;
-            task.day = day;
-            task.tag = tag || undefined;
-        }
-    } else {
-        tasks.push({
-            id: nextId++,
-            subject,
-            title,
-            day,
-            tag: tag || undefined,
-            done: false,
-            correct: 0,
-            wrong: 0
-        });
-    }
-
-    saveData();
-    taskModal.close();
-    render();
-}
-
-function deleteTask(id) {
-    const task = tasks.find(t => t.id === id);
-    if (!task) return;
-    if (!confirm(`"${task.subject} — ${task.title}" ödevini silmek istediğine emin misin?`)) return;
-    tasks = tasks.filter(t => t.id !== id);
-    saveData();
-    render();
-}
-
-// ============================================================
-// VERİ İÇE / DIŞA AKTAR
-// ============================================================
-
-function exportData() {
-    const data = JSON.stringify({ tasks, nextId }, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `odev_takip_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-}
-
-function importData() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
+    function loadData() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
             try {
-                const data = JSON.parse(ev.target.result);
-                if (data.tasks && Array.isArray(data.tasks)) {
-                    tasks = data.tasks;
-                    nextId = data.nextId || tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-                    saveData();
-                    render();
-                    alert("✅ Veriler başarıyla içe aktarıldı!");
+                tasks = JSON.parse(saved);
+                if (!tasks || !Array.isArray(tasks) || tasks.length === 0) {
+                    tasks = JSON.parse(JSON.stringify(defaultTasks));
                 }
             } catch {
-                alert("❌ Geçersiz dosya formatı!");
+                tasks = JSON.parse(JSON.stringify(defaultTasks));
             }
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-}
+        } else {
+            tasks = JSON.parse(JSON.stringify(defaultTasks));
+        }
+        saveData();
+    }
 
-// ============================================================
-// YARDIMCI FONKSİYONLAR
-// ============================================================
+    function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
 
-function escapeHTML(text) {
-    if (!text) return '';
-    return String(text).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
-}
+    // ============================================================
+    // RENDER
+    // ============================================================
 
-// ============================================================
-// BAŞLAT
-// ============================================================
+    function render() {
+        const total = tasks.length;
+        const done = tasks.filter(t => t.done).length;
+        const remaining = total - done;
+        const percentage = total === 0 ? 0 : Math.round((done / total) * 100);
 
-loadData();
-render();
+        document.getElementById("totalCount").textContent = total;
+        document.getElementById("doneCount").textContent = done;
+        document.getElementById("leftCount").textContent = remaining;
+        document.getElementById("percentage").textContent = percentage + "%";
+        document.getElementById("progressFill").style.width = percentage + "%";
+
+        // Filters
+        const subjects = ["Tümü", ...new Set(tasks.map(t => t.subject))];
+        document.getElementById("filters").innerHTML = subjects.map(s =>
+            `<button class="${currentFilter === s ? 'active' : ''}" onclick="setFilter('${escapeHTML(s)}')">${escapeHTML(s)}</button>`
+        ).join("");
+
+        // Tasks by day
+        const days = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar", "Belirtilmedi"];
+        const filtered = tasks.filter(t => currentFilter === "Tümü" || t.subject === currentFilter);
+
+        let html = "";
+        days.forEach(day => {
+            const dayTasks = filtered.filter(t => t.day === day);
+            if (dayTasks.length === 0) return;
+
+            const dayDone = dayTasks.filter(t => t.done).length;
+
+            html += `
+                <div class="day-section">
+                    <div class="day-header">
+                        <h2>📅 ${day}</h2>
+                        <span class="day-count">${dayDone}/${dayTasks.length}</span>
+                    </div>
+            `;
+
+            dayTasks.forEach(task => {
+                html += `
+                    <div class="task ${task.done ? 'done' : ''}">
+                        <div class="task-main">
+                            <input class="check" type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id})">
+                            <div class="task-info">
+                                <div class="task-title">${escapeHTML(task.title)}</div>
+                                <div class="task-subject">
+                                    <span>${escapeHTML(task.subject)}</span>
+                                    ${task.day === "Belirtilmedi" ? "💭 Gün belirtilmedi" : "📅 " + task.day}
+                                </div>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-action" onclick="editTask(${task.id})" title="Düzenle">✏️</button>
+                                <button class="task-action" onclick="deleteTask(${task.id})" title="Sil">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+        });
+
+        if (!html) {
+            html = `
+                <div class="empty">
+                    <span class="big">🌿</span>
+                    Bu filtrede ödev yok
+                </div>
+            `;
+        }
+
+        document.getElementById("taskList").innerHTML = html;
+    }
+
+    // ============================================================
+    // CRUD İŞLEMLERİ
+    // ============================================================
+
+    function setFilter(filter) {
+        currentFilter = filter;
+        render();
+    }
+
+    function toggleTask(id) {
+        const task = tasks.find(t => t.id === id);
+        if (task) {
+            task.done = !task.done;
+            saveData();
+            render();
+        }
+    }
+
+    function openAddModal() {
+        document.getElementById("modalTitle").textContent = "🌱 Yeni Ödev";
+        document.getElementById("editId").value = "";
+        document.getElementById("subjectInput").value = "";
+        document.getElementById("titleInput").value = "";
+        document.getElementById("dayInput").value = "Pazartesi";
+        taskModal.showModal();
+    }
+
+    function editTask(id) {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
+        document.getElementById("modalTitle").textContent = "✏️ Ödevi Düzenle";
+        document.getElementById("editId").value = task.id;
+        document.getElementById("subjectInput").value = task.subject;
+        document.getElementById("titleInput").value = task.title;
+        document.getElementById("dayInput").value = task.day;
+        taskModal.showModal();
+    }
+
+    function saveTask(e) {
+        e.preventDefault();
+        const id = Number(document.getElementById("editId").value);
+        const subject = document.getElementById("subjectInput").value.trim();
+        const title = document.getElementById("titleInput").value.trim();
+        const day = document.getElementById("dayInput").value;
+
+        if (!subject || !title) return;
+
+        if (id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.subject = subject;
+                task.title = title;
+                task.day = day;
+            }
+        } else {
+            const maxId = tasks.reduce((max, t) => Math.max(max, t.id), 0);
+            tasks.push({
+                id: maxId + 1,
+                subject,
+                title,
+                day,
+                done: false
+            });
+        }
+
+        saveData();
+        taskModal.close();
+        render();
+    }
+
+    function deleteTask(id) {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
+        if (!confirm(`"${task.title}" ödevini silmek istediğine emin misin?`)) return;
+        tasks = tasks.filter(t => t.id !== id);
+        saveData();
+        render();
+    }
+
+    // ============================================================
+    // YARDIMCI FONKSİYONLAR
+    // ============================================================
+
+    function escapeHTML(text) {
+        if (!text) return '';
+        return String(text).replace(/[&<>"']/g, m => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[m]));
+    }
+
+    // ============================================================
+    // BAŞLAT
+    // ============================================================
+
+    loadData();
+    render();
 </script>
 
 </body>
