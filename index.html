@@ -6,8 +6,11 @@
 
 <title>Ödevio</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
 
 * {
     box-sizing: border-box;
@@ -16,67 +19,61 @@
 }
 
 :root {
-    --bg: #f7faf8;
+    --primary: #72b88a;
+    --primary-dark: #4d9568;
+    --primary-light: #e8f5ec;
+
+    --background: #f6f8f7;
     --surface: #ffffff;
-    --surface-2: #f0f5f2;
-    --text: #1d2924;
-    --muted: #84918b;
-    --border: #e4ebe7;
+    --surface-2: #f1f4f2;
 
-    --primary: #69a98c;
-    --primary-dark: #4e8e72;
-    --primary-soft: #e2f1ea;
+    --text: #202622;
+    --muted: #7d8781;
+    --border: #e2e8e4;
 
-    --danger: #e26d6d;
+    --danger: #e57575;
 
-    --radius-xl: 28px;
-    --radius-lg: 20px;
-    --radius-md: 14px;
-
-    --shadow: 0 12px 40px rgba(35, 62, 49, .07);
+    --shadow: 0 12px 35px rgba(30, 50, 38, .07);
 }
 
+/* TEMALAR */
+
 body.theme-pink {
-    --primary: #d889a5;
-    --primary-dark: #c36c8d;
-    --primary-soft: #f8e5ed;
-    --bg: #fcf7f9;
+    --primary: #e58cae;
+    --primary-dark: #ca6d91;
+    --primary-light: #fcebf2;
 }
 
 body.theme-blue {
-    --primary: #6d9fc8;
-    --primary-dark: #5285b1;
-    --primary-soft: #e2eff8;
-    --bg: #f6f9fc;
+    --primary: #74a9db;
+    --primary-dark: #548bc0;
+    --primary-light: #eaf4fc;
 }
 
 body.theme-green {
-    --primary: #69a98c;
-    --primary-dark: #4e8e72;
-    --primary-soft: #e2f1ea;
-    --bg: #f7faf8;
+    --primary: #72b88a;
+    --primary-dark: #4d9568;
+    --primary-light: #e8f5ec;
 }
 
 body.theme-yellow {
-    --primary: #d5ad51;
-    --primary-dark: #bb9137;
-    --primary-soft: #f8f0d9;
-    --bg: #fcfaf4;
+    --primary: #ddb75f;
+    --primary-dark: #c49b3f;
+    --primary-light: #fff7df;
 }
 
 body.theme-orange {
-    --primary: #df9562;
-    --primary-dark: #c87947;
-    --primary-soft: #fae9dc;
-    --bg: #fcf8f5;
+    --primary: #e4935f;
+    --primary-dark: #cc7541;
+    --primary-light: #fff0e6;
 }
 
 body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
     font-family: "DM Sans", sans-serif;
-    transition: background .25s ease, color .25s ease;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background .3s ease;
 }
 
 button,
@@ -87,782 +84,905 @@ select {
 
 button {
     cursor: pointer;
+    border: none;
 }
 
-.app {
-    width: min(1180px, calc(100% - 36px));
-    margin: auto;
-    padding: 28px 0 60px;
-}
-
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .header {
+    width: min(1400px, calc(100% - 40px));
+    min-height: 92px;
+
+    margin: 22px auto 0;
+    padding: 14px 22px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
+
+    box-shadow: var(--shadow);
 }
 
-.brand {
+.logo {
+    width: auto;
+    height: 64px;
+    max-width: 220px;
+    object-fit: contain;
+
+    transition: transform .25s ease;
+}
+
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+.header-right {
     display: flex;
     align-items: center;
-    gap: 12px;
 }
 
-.brand-image {
+.theme-button {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 19px;
+    background: var(--primary-light);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .25s ease;
+}
+
+.theme-button:hover {
+    transform: translateY(-2px);
+    background: var(--primary);
+}
+
+.theme-button img {
     width: 46px;
     height: 46px;
     object-fit: contain;
 }
 
-.brand-name {
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: min(1400px, calc(100% - 40px));
+    margin: 24px auto 60px;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+    min-height: 190px;
+
+    padding: 30px 35px;
+
+    margin-bottom: 22px;
+
+    background: var(--primary-light);
+    border-radius: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    overflow: hidden;
+}
+
+.welcome-text h1 {
     font-family: "Manrope", sans-serif;
-    font-size: 28px;
+    font-size: clamp(30px, 4vw, 44px);
     font-weight: 800;
-    letter-spacing: -1.3px;
+    letter-spacing: -1.8px;
 }
 
-.brand-name span {
-    color: var(--primary);
+.welcome-text p {
+    color: var(--muted);
+    margin-top: 9px;
+    font-size: 16px;
 }
 
-.header-actions {
-    position: relative;
+.welcome-visual {
+    width: 210px;
+    height: 155px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.theme-button {
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    background: var(--surface);
-    display: grid;
-    place-items: center;
-    transition: .2s;
-}
-
-.theme-button:hover {
-    transform: translateY(-2px);
-    border-color: var(--primary);
-}
-
-.theme-button img {
-    width: 25px;
-    height: 25px;
+.welcome-visual img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
-/* THEME MENU */
+/* =========================
+   STATS
+========================= */
 
-.theme-menu {
-    position: absolute;
-    right: 0;
-    top: 58px;
-    width: 185px;
-    padding: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 17px;
-    box-shadow: var(--shadow);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-7px);
-    transition: .2s;
-    z-index: 50;
-}
-
-.theme-menu.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.theme-choice {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border: 0;
-    border-radius: 11px;
-    background: transparent;
-    color: var(--text);
-    text-align: left;
-}
-
-.theme-choice:hover {
-    background: var(--surface-2);
-}
-
-.theme-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-}
-
-.dot-pink { background: #d889a5; }
-.dot-blue { background: #6d9fc8; }
-.dot-green { background: #69a98c; }
-.dot-yellow { background: #d5ad51; }
-.dot-orange { background: #df9562; }
-
-/* WELCOME */
-
-.welcome {
-    margin-bottom: 24px;
-}
-
-.welcome h1 {
-    font-family: "Manrope", sans-serif;
-    font-size: clamp(28px, 4vw, 40px);
-    letter-spacing: -1.5px;
-    margin-bottom: 6px;
-}
-
-.welcome p {
-    color: var(--muted);
-    font-size: 15px;
-}
-
-/* DASHBOARD */
-
-.dashboard {
+.stats {
     display: grid;
-    grid-template-columns: 1.4fr .6fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 18px;
-    margin-bottom: 30px;
-}
 
-.progress-card {
-    position: relative;
-    overflow: hidden;
-    min-height: 205px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding: 28px;
-    box-shadow: var(--shadow);
-}
-
-.progress-card::after {
-    content: "";
-    position: absolute;
-    width: 210px;
-    height: 210px;
-    border-radius: 50%;
-    background: var(--primary-soft);
-    right: -80px;
-    bottom: -120px;
-}
-
-.progress-label {
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.progress-number {
-    font-family: "Manrope", sans-serif;
-    font-size: 48px;
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: -2px;
-    color: var(--primary-dark);
-}
-
-.progress-subtitle {
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 9px;
-}
-
-.progress-track {
-    height: 11px;
-    width: 100%;
-    background: var(--primary-soft);
-    border-radius: 30px;
-    overflow: hidden;
-    margin-top: 25px;
-}
-
-.progress-fill {
-    width: 0;
-    height: 100%;
-    background: var(--primary);
-    border-radius: inherit;
-    transition: width .5s cubic-bezier(.22,1,.36,1);
+    margin-bottom: 28px;
 }
 
 .stat-card {
-    background: var(--primary);
-    color: white;
-    border-radius: var(--radius-xl);
-    padding: 27px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 205px;
-}
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 21px;
 
-.stat-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 23px;
+
+    box-shadow: var(--shadow);
 }
 
 .stat-title {
+    color: var(--muted);
     font-size: 14px;
-    opacity: .85;
-}
-
-.stat-image {
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
+    font-weight: 600;
 }
 
 .stat-number {
     font-family: "Manrope", sans-serif;
-    font-size: 48px;
+    font-size: 34px;
     font-weight: 800;
-    letter-spacing: -2px;
+
+    margin-top: 6px;
 }
 
-.stat-bottom {
-    font-size: 13px;
-    opacity: .82;
+.progress {
+    height: 9px;
+
+    background: var(--surface-2);
+    border-radius: 99px;
+
+    overflow: hidden;
+    margin-top: 17px;
 }
 
-/* TOOLBAR */
+.progress-bar {
+    width: 0%;
+    height: 100%;
 
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
+    background: var(--primary);
+    border-radius: 99px;
+
+    transition: width .4s ease;
 }
+
+/* =========================
+   SUBJECTS
+========================= */
 
 .section-title {
     font-family: "Manrope", sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
-    letter-spacing: -.5px;
+
+    margin-bottom: 14px;
+}
+
+.subjects {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+
+    margin-bottom: 27px;
+}
+
+.subject-card {
+    min-height: 175px;
+
+    padding: 15px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 21px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        background .22s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.subject-card.active {
+    border: 2px solid var(--primary);
+    background: var(--primary-light);
+}
+
+.subject-image {
+    height: 115px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subject-image img {
+    width: 105px;
+    height: 105px;
+
+    object-fit: contain;
+
+    transition: transform .25s ease;
+}
+
+.subject-card:hover .subject-image img {
+    transform: scale(1.08);
+}
+
+.subject-name {
+    text-align: center;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    padding-bottom: 3px;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar {
+    padding: 17px;
+
+    margin-bottom: 18px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 21px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    box-shadow: var(--shadow);
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.select {
+    min-width: 165px;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    outline: none;
+}
+
+.select:focus {
+    border-color: var(--primary);
 }
 
 .add-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
+    min-height: 54px;
+
+    padding: 7px 18px;
+
+    border-radius: 15px;
+
     background: var(--primary);
     color: white;
-    padding: 12px 17px;
-    border-radius: 13px;
-    font-size: 13px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
     font-weight: 700;
-    transition: .2s;
+
+    transition: .25s ease;
 }
 
 .add-button:hover {
     background: var(--primary-dark);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .add-button img {
-    width: 17px;
-    height: 17px;
+    width: 39px;
+    height: 39px;
     object-fit: contain;
 }
 
-.toolbar {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 17px;
-}
+/* =========================
+   TASK
+========================= */
 
-.select-wrapper {
-    position: relative;
-}
-
-.select-wrapper select {
-    appearance: none;
-    min-width: 175px;
-    padding: 12px 38px 12px 14px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    font-size: 13px;
-}
-
-.select-wrapper::after {
-    content: "";
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    width: 7px;
-    height: 7px;
-    border-right: 1.5px solid var(--muted);
-    border-bottom: 1.5px solid var(--muted);
-    transform: translateY(-65%) rotate(45deg);
-    pointer-events: none;
-}
-
-/* TASKS */
-
-.task-list {
+.tasks {
     display: grid;
-    gap: 11px;
+    gap: 13px;
 }
 
 .task {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    padding: 18px 20px;
+
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 17px 19px;
-    transition: .2s;
+    border-radius: 21px;
+
+    display: grid;
+    grid-template-columns: 66px 1fr auto;
+
+    align-items: center;
+    gap: 16px;
+
+    box-shadow: var(--shadow);
+
+    transition: .22s ease;
 }
 
 .task:hover {
-    border-color: var(--primary);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(0,0,0,.045);
+    transform: translateY(-2px);
 }
 
 .task.completed {
-    opacity: .62;
+    opacity: .6;
 }
 
-.check-button {
-    flex: 0 0 25px;
-    width: 25px;
-    height: 25px;
-    border-radius: 8px;
-    border: 2px solid var(--primary);
-    background: transparent;
-    display: grid;
-    place-items: center;
-    transition: .2s;
-}
-
-.check-button.checked {
-    background: var(--primary);
-}
-
-.check-button img {
-    width: 15px;
-    height: 15px;
-    object-fit: contain;
-}
-
-.task-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.task-name {
-    font-weight: 700;
-    font-size: 15px;
-    margin-bottom: 7px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.completed .task-name {
+.task.completed .task-title {
     text-decoration: line-through;
 }
 
-.task-details {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
+.task-subject-image {
+    width: 66px;
+    height: 66px;
 
-.subject-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px 8px;
-    border-radius: 7px;
-    background: var(--primary-soft);
-    color: var(--primary-dark);
-    font-size: 11px;
-    font-weight: 700;
-}
+    border-radius: 17px;
 
-.subject-tag img {
-    width: 15px;
-    height: 15px;
-    object-fit: contain;
-}
+    background: var(--primary-light);
 
-.deadline {
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.deadline.urgent {
-    color: var(--danger);
-    font-weight: 700;
-}
-
-.delete-button {
-    border: none;
-    background: transparent;
-    padding: 7px;
-    opacity: .5;
-}
-
-.delete-button:hover {
-    opacity: 1;
-}
-
-.delete-button img {
-    width: 18px;
-    height: 18px;
-    object-fit: contain;
-}
-
-/* EMPTY */
-
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    background: var(--surface);
-    border: 1px dashed var(--border);
-    border-radius: 20px;
-}
-
-.empty-state img {
-    width: 75px;
-    height: 75px;
-    object-fit: contain;
-    margin-bottom: 15px;
-}
-
-.empty-state h3 {
-    font-size: 17px;
-    margin-bottom: 5px;
-}
-
-.empty-state p {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-/* MODAL */
-
-.modal-background {
-    position: fixed;
-    inset: 0;
-    background: rgba(19, 27, 24, .42);
-    backdrop-filter: blur(5px);
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.task-subject-image img {
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+}
+
+.task-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    margin-top: 7px;
+}
+
+.badge {
+    padding: 5px 9px;
+
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.check-button,
+.delete-button {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-button {
+    background: var(--primary-light);
+}
+
+.check-button img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.delete-button {
+    background: #fff0f0;
+    color: var(--danger);
+
+    font-size: 22px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+    display: none;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 27px;
+}
+
+.empty img {
+    width: 180px;
+    height: 180px;
+
+    object-fit: contain;
+
+    margin-bottom: 10px;
+}
+
+.empty h3 {
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+}
+
+.empty p {
+    margin-top: 7px;
+    color: var(--muted);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(20, 25, 22, .38);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
     padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: .2s;
+
     z-index: 100;
 }
 
-.modal-background.open {
-    opacity: 1;
-    visibility: visible;
+.overlay.show {
+    display: flex;
 }
 
 .modal {
-    width: min(470px, 100%);
+    width: min(520px, 100%);
+
+    padding: 28px;
+
     background: var(--surface);
-    border-radius: 25px;
-    padding: 27px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.18);
-    transform: translateY(12px) scale(.98);
-    transition: .25s;
+    border-radius: 27px;
+
+    box-shadow: 0 30px 80px rgba(0,0,0,.18);
+
+    animation: modalIn .25s ease;
 }
 
-.modal-background.open .modal {
-    transform: translateY(0) scale(1);
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     margin-bottom: 23px;
 }
 
-.modal-title {
+.modal-header h2 {
     font-family: "Manrope", sans-serif;
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 24px;
 }
 
-.close-button {
-    width: 35px;
-    height: 35px;
-    border: 1px solid var(--border);
+.close {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
     background: var(--surface-2);
-    color: var(--muted);
-    border-radius: 10px;
-    font-size: 19px;
+
+    color: var(--text);
+    font-size: 21px;
 }
 
 .form-group {
-    margin-bottom: 17px;
+    margin-bottom: 16px;
 }
 
-.form-label {
+.form-group label {
     display: block;
-    font-size: 12px;
-    font-weight: 700;
+
     margin-bottom: 7px;
-}
 
-.form-input,
-.form-select {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    font-size: 14px;
-}
-
-.form-input:focus,
-.form-select:focus {
-    border-color: var(--primary);
-}
-
-.modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 23px;
-}
-
-.cancel-button,
-.save-button {
-    flex: 1;
-    padding: 13px;
-    border-radius: 12px;
     font-size: 13px;
     font-weight: 700;
 }
 
-.cancel-button {
+.input {
+    width: 100%;
+
+    padding: 13px 14px;
+
     border: 1px solid var(--border);
-    background: transparent;
+    border-radius: 13px;
+
+    background: var(--surface);
     color: var(--text);
+
+    outline: none;
 }
 
-.save-button {
-    border: none;
+.input:focus {
+    border-color: var(--primary);
+}
+
+.modal-submit {
+    width: 100%;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
     background: var(--primary);
     color: white;
+
+    font-weight: 700;
 }
 
-/* RESPONSIVE */
+.modal-submit:hover {
+    background: var(--primary-dark);
+}
 
-@media (max-width: 760px) {
+/* =========================
+   THEME PANEL
+========================= */
 
-    .app {
-        width: min(100% - 24px, 600px);
-        padding-top: 18px;
+.theme-panel {
+    position: fixed;
+
+    top: 99px;
+    right: 22px;
+
+    padding: 12px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    display: none;
+    grid-template-columns: repeat(5, 52px);
+    gap: 8px;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,.13);
+
+    z-index: 90;
+}
+
+.theme-panel.show {
+    display: grid;
+}
+
+.theme-choice {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+
+    background: var(--surface-2);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .2s ease;
+}
+
+.theme-choice:hover {
+    transform: scale(1.08);
+}
+
+.theme-choice img {
+    width: 39px;
+    height: 39px;
+
+    object-fit: contain;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+    .subjects {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 720px) {
+
+    .header,
+    .container {
+        width: calc(100% - 24px);
     }
 
     .header {
-        margin-bottom: 25px;
+        min-height: 78px;
+        padding: 10px 14px;
     }
 
-    .dashboard {
+    .logo {
+        height: 54px;
+        max-width: 175px;
+    }
+
+    .theme-button {
+        width: 54px;
+        height: 54px;
+    }
+
+    .theme-button img {
+        width: 39px;
+        height: 39px;
+    }
+
+    .welcome {
+        min-height: 160px;
+        padding: 24px;
+    }
+
+    .welcome-visual {
+        width: 125px;
+        height: 115px;
+    }
+
+    .stats {
         grid-template-columns: 1fr;
     }
 
-    .stat-card {
-        min-height: 145px;
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .progress-card {
-        min-height: 190px;
+    .filters {
+        width: 100%;
     }
 
-    .section-header {
-        align-items: flex-end;
-        gap: 12px;
+    .select {
+        flex: 1;
+        min-width: 0;
     }
 
     .add-button {
-        padding: 11px 13px;
+        justify-content: center;
     }
 
-    .toolbar {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+    .task {
+        grid-template-columns: 58px 1fr;
     }
 
-    .select-wrapper select {
-        width: 100%;
-        min-width: 0;
+    .task-subject-image {
+        width: 58px;
+        height: 58px;
     }
+
+    .task-subject-image img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .task-actions {
+        grid-column: 2;
+    }
+
 }
 
 @media (max-width: 450px) {
 
-    .welcome h1 {
-        font-size: 29px;
+    .subjects {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
-    .brand-name {
-        font-size: 25px;
+    .subject-card {
+        min-height: 155px;
     }
 
-    .toolbar {
-        grid-template-columns: 1fr;
+    .subject-image {
+        height: 100px;
     }
 
-    .section-header {
-        align-items: center;
+    .subject-image img {
+        width: 90px;
+        height: 90px;
     }
 
-    .task {
-        padding: 15px;
-        gap: 11px;
+    .welcome-visual {
+        width: 90px;
+        height: 90px;
     }
 
-    .task-name {
-        font-size: 14px;
+    .welcome-text h1 {
+        font-size: 28px;
     }
 
-    .delete-button {
-        padding: 4px;
+    .theme-panel {
+        right: 12px;
     }
+
 }
+
 </style>
 </head>
 
-<body class="theme-green">
+<body>
 
-<div class="app">
+<header class="header">
 
-    <!-- HEADER -->
+    <img
+        id="logoImage"
+        class="logo"
+        src="images/logo.png"
+        alt="Ödevio">
 
-    <header class="header">
+    <div class="header-right">
 
-        <div class="brand">
+        <button
+            class="theme-button"
+            onclick="toggleThemePanel()">
 
             <img
-                src="images/logo.png"
-                class="brand-image"
-                alt=""
-                onerror="this.style.display='none'"
-            >
+                id="themeImage"
+                src="images/1.png"
+                alt="Tema">
 
-            <div class="brand-name">
-                ödev<span>io</span>
-            </div>
+        </button>
 
-        </div>
+    </div>
 
-        <div class="header-actions">
-
-            <button
-                class="theme-button"
-                onclick="toggleThemeMenu()"
-                aria-label="Tema seç"
-            >
-                <img src="images/1.png" alt="">
-            </button>
-
-            <div class="theme-menu" id="themeMenu">
-
-                <button class="theme-choice" onclick="setTheme('pink')">
-                    <span class="theme-dot dot-pink"></span>
-                    Pembe
-                </button>
-
-                <button class="theme-choice" onclick="setTheme('blue')">
-                    <span class="theme-dot dot-blue"></span>
-                    Mavi
-                </button>
-
-                <button class="theme-choice" onclick="setTheme('green')">
-                    <span class="theme-dot dot-green"></span>
-                    Yeşil
-                </button>
-
-                <button class="theme-choice" onclick="setTheme('yellow')">
-                    <span class="theme-dot dot-yellow"></span>
-                    Sarı
-                </button>
-
-                <button class="theme-choice" onclick="setTheme('orange')">
-                    <span class="theme-dot dot-orange"></span>
-                    Turuncu
-                </button>
-
-            </div>
-
-        </div>
-
-    </header>
+</header>
 
 
-    <!-- WELCOME -->
+<!-- TEMA SEÇİMİ -->
+
+<div id="themePanel" class="theme-panel">
+
+    <button class="theme-choice" onclick="changeTheme('pink')">
+        <img src="images/pembe-1.png" alt="Pembe">
+    </button>
+
+    <button class="theme-choice" onclick="changeTheme('blue')">
+        <img src="images/mavi-1.png" alt="Mavi">
+    </button>
+
+    <button class="theme-choice" onclick="changeTheme('green')">
+        <img src="images/1.png" alt="Yeşil">
+    </button>
+
+    <button class="theme-choice" onclick="changeTheme('yellow')">
+        <img src="images/sari-1.png" alt="Sarı">
+    </button>
+
+    <button class="theme-choice" onclick="changeTheme('orange')">
+        <img src="images/turuncu-1.png" alt="Turuncu">
+    </button>
+
+</div>
+
+
+<main class="container">
+
+
+    <!-- KARŞILAMA -->
 
     <section class="welcome">
 
-        <h1>Ödevlerin burada.</h1>
+        <div class="welcome-text">
 
-        <p>
-            Bugünkü işlerini takip et, ilerlemeni gör.
-        </p>
+            <h1>Ödevlerini yönet.</h1>
+
+            <p>
+                Bugünkü çalışmalarını düzenli ve kolay
+                bir şekilde takip et.
+            </p>
+
+        </div>
+
+
+        <div class="welcome-visual">
+
+            <img
+                id="welcomeImage"
+                src="images/2.png"
+                alt="">
+
+        </div>
 
     </section>
 
 
-    <!-- DASHBOARD -->
+    <!-- İSTATİSTİKLER -->
 
-    <section class="dashboard">
+    <section class="stats">
 
-        <div class="progress-card">
+        <div class="stat-card">
 
-            <div class="progress-label">
-                Genel ilerleme
+            <div class="stat-title">
+                Toplam ödev
             </div>
 
             <div
-                class="progress-number"
-                id="progressNumber"
-            >
-                0%
-            </div>
-
-            <div
-                class="progress-subtitle"
-                id="progressText"
-            >
-                Henüz tamamlanan ödev yok.
-            </div>
-
-            <div class="progress-track">
-
-                <div
-                    class="progress-fill"
-                    id="progressFill"
-                ></div>
-
+                id="totalCount"
+                class="stat-number">
+                0
             </div>
 
         </div>
@@ -870,29 +990,38 @@ button {
 
         <div class="stat-card">
 
-            <div class="stat-top">
-
-                <div class="stat-title">
-                    Kalan ödev
-                </div>
-
-                <img
-                    src="images/3.png"
-                    class="stat-image"
-                    alt=""
-                >
-
+            <div class="stat-title">
+                Tamamlanan
             </div>
 
             <div
-                class="stat-number"
-                id="remainingCount"
-            >
+                id="completedCount"
+                class="stat-number">
                 0
             </div>
 
-            <div class="stat-bottom">
-                Tamamladıkça burası azalır.
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Tamamlanma
+            </div>
+
+            <div
+                id="percentage"
+                class="stat-number">
+                0%
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="progressBar"
+                    class="progress-bar">
+                </div>
+
             </div>
 
         </div>
@@ -900,184 +1029,338 @@ button {
     </section>
 
 
-    <!-- TASK SECTION -->
+    <!-- DERSLER -->
 
-    <section>
-
-        <div class="section-header">
-
-            <div class="section-title">
-                Ödevler
-            </div>
-
-            <button
-                class="add-button"
-                onclick="openModal()"
-            >
-                <img src="images/2.png" alt="">
-                Ödev ekle
-            </button>
-
-        </div>
+    <h2 class="section-title">
+        Dersler
+    </h2>
 
 
-        <!-- FILTERS -->
+    <section class="subjects">
 
-        <div class="toolbar">
 
-            <div class="select-wrapper">
+        <div
+            class="subject-card"
+            data-subject="Matematik"
+            onclick="selectSubject('Matematik')">
 
-                <select
-                    id="subjectFilter"
-                    onchange="renderTasks()"
-                >
-                    <option value="all">Tüm dersler</option>
-                    <option value="Matematik">Matematik</option>
-                    <option value="Seçmeli Matematik">Seçmeli Matematik</option>
-                    <option value="Türkçe">Türkçe</option>
-                    <option value="Fen Bilimleri">Fen Bilimleri</option>
-                    <option value="İnkılap">İnkılap</option>
-                    <option value="İngilizce">İngilizce</option>
-                </select>
+            <div class="subject-image">
+
+                <img
+                    data-image="3"
+                    src="images/3.png"
+                    alt="">
 
             </div>
 
-
-            <div class="select-wrapper">
-
-                <select
-                    id="sortFilter"
-                    onchange="renderTasks()"
-                >
-                    <option value="nearest">
-                        Son teslim: en yakın
-                    </option>
-
-                    <option value="furthest">
-                        Son teslim: en uzak
-                    </option>
-
-                    <option value="newest">
-                        Eklenme: en yeni
-                    </option>
-
-                    <option value="oldest">
-                        Eklenme: en eski
-                    </option>
-
-                </select>
-
+            <div class="subject-name">
+                Matematik
             </div>
 
         </div>
 
 
         <div
-            class="task-list"
-            id="taskList"
-        ></div>
+            class="subject-card"
+            data-subject="Seçmeli Matematik"
+            onclick="selectSubject('Seçmeli Matematik')">
+
+            <div class="subject-image">
+
+                <img
+                    data-image="4"
+                    src="images/4.png"
+                    alt="">
+
+            </div>
+
+            <div class="subject-name">
+                Seçmeli Matematik
+            </div>
+
+        </div>
+
+
+        <div
+            class="subject-card"
+            data-subject="Türkçe"
+            onclick="selectSubject('Türkçe')">
+
+            <div class="subject-image">
+
+                <img
+                    data-image="5"
+                    src="images/5.png"
+                    alt="">
+
+            </div>
+
+            <div class="subject-name">
+                Türkçe
+            </div>
+
+        </div>
+
+
+        <div
+            class="subject-card"
+            data-subject="Fen Bilimleri"
+            onclick="selectSubject('Fen Bilimleri')">
+
+            <div class="subject-image">
+
+                <img
+                    data-image="6"
+                    src="images/6.png"
+                    alt="">
+
+            </div>
+
+            <div class="subject-name">
+                Fen Bilimleri
+            </div>
+
+        </div>
+
+
+        <div
+            class="subject-card"
+            data-subject="İnkılap"
+            onclick="selectSubject('İnkılap')">
+
+            <div class="subject-image">
+
+                <img
+                    data-image="7"
+                    src="images/7.png"
+                    alt="">
+
+            </div>
+
+            <div class="subject-name">
+                İnkılap
+            </div>
+
+        </div>
+
+
+        <div
+            class="subject-card"
+            data-subject="İngilizce"
+            onclick="selectSubject('İngilizce')">
+
+            <div class="subject-image">
+
+                <img
+                    data-image="8"
+                    src="images/8.png"
+                    alt="">
+
+            </div>
+
+            <div class="subject-name">
+                İngilizce
+            </div>
+
+        </div>
+
 
     </section>
 
-</div>
 
+    <!-- FİLTRELER -->
 
-<!-- ADD MODAL -->
+    <section class="toolbar">
 
-<div
-    class="modal-background"
-    id="modal"
-    onclick="backgroundClose(event)"
->
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <div class="modal-title">
-                Yeni ödev
-            </div>
-
-            <button
-                class="close-button"
-                onclick="closeModal()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label class="form-label">
-                Ödev adı
-            </label>
-
-            <input
-                class="form-input"
-                id="taskTitle"
-                type="text"
-                placeholder="Örn. 40 soru paragraf"
-                maxlength="120"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label class="form-label">
-                Ders
-            </label>
+        <div class="filters">
 
             <select
-                class="form-select"
-                id="taskSubject"
-            >
+                id="subjectFilter"
+                class="select"
+                onchange="renderTasks()">
+
+                <option value="all">
+                    Tüm dersler
+                </option>
+
                 <option>Matematik</option>
                 <option>Seçmeli Matematik</option>
                 <option>Türkçe</option>
                 <option>Fen Bilimleri</option>
                 <option>İnkılap</option>
                 <option>İngilizce</option>
+
+            </select>
+
+
+            <select
+                id="sortFilter"
+                class="select"
+                onchange="renderTasks()">
+
+                <option value="nearest">
+                    Teslim tarihi: Yakın
+                </option>
+
+                <option value="farthest">
+                    Teslim tarihi: Uzak
+                </option>
+
+                <option value="newest">
+                    Eklenme: Yeni
+                </option>
+
+                <option value="oldest">
+                    Eklenme: Eski
+                </option>
+
             </select>
 
         </div>
 
 
-        <div class="form-group">
+        <button
+            class="add-button"
+            onclick="openModal()">
 
-            <label class="form-label">
-                Son teslim tarihi
-            </label>
+            <img
+                id="addImage"
+                src="images/2.png"
+                alt="">
 
-            <input
-                class="form-input"
-                id="taskDate"
-                type="date"
-            >
+            <span>
+                Ödev ekle
+            </span>
+
+        </button>
+
+    </section>
+
+
+    <!-- ÖDEVLER -->
+
+    <section
+        id="tasks"
+        class="tasks">
+    </section>
+
+
+    <!-- BOŞ DURUM -->
+
+    <section
+        id="empty"
+        class="empty">
+
+        <img
+            id="emptyImage"
+            src="images/3.png"
+            alt="">
+
+        <h3>
+            Burada henüz bir ödev yok
+        </h3>
+
+        <p>
+            Yeni bir ödev ekleyerek başlayabilirsin.
+        </p>
+
+    </section>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    id="overlay"
+    class="overlay">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>
+                Yeni ödev
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ×
+            </button>
 
         </div>
 
 
-        <div class="modal-actions">
+        <form onsubmit="addTask(event)">
+
+            <div class="form-group">
+
+                <label>
+                    Ödev adı
+                </label>
+
+                <input
+                    id="taskName"
+                    class="input"
+                    type="text"
+                    placeholder="Örneğin: 50 soru matematik"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Ders
+                </label>
+
+                <select
+                    id="taskSubject"
+                    class="input"
+                    required>
+
+                    <option value="">
+                        Ders seç
+                    </option>
+
+                    <option>Matematik</option>
+                    <option>Seçmeli Matematik</option>
+                    <option>Türkçe</option>
+                    <option>Fen Bilimleri</option>
+                    <option>İnkılap</option>
+                    <option>İngilizce</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Son teslim tarihi
+                </label>
+
+                <input
+                    id="taskDate"
+                    class="input"
+                    type="date"
+                    required>
+
+            </div>
+
 
             <button
-                class="cancel-button"
-                onclick="closeModal()"
-            >
-                Vazgeç
-            </button>
+                class="modal-submit"
+                type="submit">
 
-            <button
-                class="save-button"
-                onclick="addTask()"
-            >
                 Ödevi ekle
+
             </button>
 
-        </div>
+        </form>
 
     </div>
 
@@ -1086,66 +1369,151 @@ button {
 
 <script>
 
-const STORAGE_KEY = "odevio_tasks_v2";
-const THEME_KEY = "odevio_theme";
+/* ==================================================
+   TEMA SİSTEMİ
 
-let tasks = loadTasks();
+   YEŞİL:
+   logo.png
+   1.png
+   2.png
+   3.png ...
 
-const subjectImages = {
-    "Matematik": "images/4.png",
-    "Seçmeli Matematik": "images/5.png",
-    "Türkçe": "images/6.png",
-    "Fen Bilimleri": "images/7.png",
-    "İnkılap": "images/8.png",
-    "İngilizce": "images/9.png"
+   PEMBE:
+   pembe-logo.png
+   pembe-1.png
+   pembe-2.png
+   pembe-3.png ...
+
+   MAVİ:
+   mavi-logo.png
+   mavi-1.png
+   mavi-2.png
+   mavi-3.png ...
+================================================== */
+
+const themePrefix = {
+
+    green: "",
+
+    pink: "pembe-",
+
+    blue: "mavi-",
+
+    yellow: "sari-",
+
+    orange: "turuncu-"
+
 };
 
 
-// STORAGE
+let currentTheme =
+    localStorage.getItem("odevio_theme") || "green";
 
-function loadTasks() {
 
-    try {
+function image(numberOrName) {
 
-        return JSON.parse(
-            localStorage.getItem(STORAGE_KEY)
-        ) || [];
-
-    } catch {
-
-        return [];
-
-    }
+    return `images/${themePrefix[currentTheme]}${numberOrName}.png`;
 
 }
 
 
-function saveTasks() {
+/* TÜM GÖRSELLERİ DEĞİŞTİR */
+
+function updateThemeImages() {
+
+    document.getElementById("logoImage").src =
+        image("logo");
+
+    document.getElementById("themeImage").src =
+        image("1");
+
+    document.getElementById("welcomeImage").src =
+        image("2");
+
+    document.getElementById("addImage").src =
+        image("2");
+
+    document.getElementById("emptyImage").src =
+        image("3");
+
+
+    document
+        .querySelectorAll("[data-image]")
+        .forEach(img => {
+
+            img.src =
+                image(img.dataset.image);
+
+        });
+
+
+    renderTasks();
+
+}
+
+
+/* TEMAYI UYGULA */
+
+function applyTheme() {
+
+    document.body.className =
+        `theme-${currentTheme}`;
+
+    updateThemeImages();
+
+}
+
+
+/* TEMA DEĞİŞTİR */
+
+function changeTheme(theme) {
+
+    currentTheme = theme;
 
     localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(tasks)
+        "odevio_theme",
+        currentTheme
     );
+
+    applyTheme();
+
+    document
+        .getElementById("themePanel")
+        .classList.remove("show");
 
 }
 
 
-// MODAL
+/* TEMA PANELİ */
+
+function toggleThemePanel() {
+
+    document
+        .getElementById("themePanel")
+        .classList.toggle("show");
+
+}
+
+
+/* ==================================================
+   ÖDEV VERİLERİ
+================================================== */
+
+let tasks =
+    JSON.parse(
+        localStorage.getItem("odevio_tasks")
+    ) || [];
+
+
+/* ==================================================
+   MODAL
+================================================== */
 
 function openModal() {
 
     document
-        .getElementById("modal")
-        .classList.add("open");
-
-    const today =
-        new Date().toISOString().split("T")[0];
-
-    document.getElementById("taskDate").value = today;
-
-    setTimeout(() => {
-        document.getElementById("taskTitle").focus();
-    }, 150);
+        .getElementById("overlay")
+        .classList.add("show");
 
 }
 
@@ -1153,60 +1521,39 @@ function openModal() {
 function closeModal() {
 
     document
-        .getElementById("modal")
-        .classList.remove("open");
-
-    document.getElementById("taskTitle").value = "";
+        .getElementById("overlay")
+        .classList.remove("show");
 
 }
 
 
-function backgroundClose(event) {
+/* ==================================================
+   ÖDEV EKLE
+================================================== */
 
-    if (
-        event.target ===
-        document.getElementById("modal")
-    ) {
-        closeModal();
-    }
+function addTask(event) {
 
-}
+    event.preventDefault();
 
-
-// ADD TASK
-
-function addTask() {
-
-    const title =
-        document.getElementById("taskTitle")
-            .value.trim();
+    const name =
+        document
+            .getElementById("taskName")
+            .value
+            .trim();
 
     const subject =
-        document.getElementById("taskSubject")
+        document
+            .getElementById("taskSubject")
             .value;
 
     const date =
-        document.getElementById("taskDate")
+        document
+            .getElementById("taskDate")
             .value;
 
 
-    if (!title) {
-
-        document
-            .getElementById("taskTitle")
-            .focus();
-
+    if (!name || !subject || !date) {
         return;
-
-    }
-
-
-    if (!date) {
-
-        alert("Lütfen son teslim tarihini seç.");
-
-        return;
-
     }
 
 
@@ -1214,11 +1561,11 @@ function addTask() {
 
         id: Date.now(),
 
-        title,
+        name: name,
 
-        subject,
+        subject: subject,
 
-        date,
+        date: date,
 
         completed: false,
 
@@ -1229,6 +1576,8 @@ function addTask() {
 
     saveTasks();
 
+    event.target.reset();
+
     closeModal();
 
     renderTasks();
@@ -1236,16 +1585,35 @@ function addTask() {
 }
 
 
-// TOGGLE
+/* ==================================================
+   KAYDET
+================================================== */
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "odevio_tasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+/* ==================================================
+   TAMAMLANDI
+================================================== */
 
 function toggleTask(id) {
 
     const task =
-        tasks.find(item => item.id === id);
+        tasks.find(
+            task => task.id === id
+        );
 
     if (!task) return;
 
-    task.completed = !task.completed;
+    task.completed =
+        !task.completed;
 
     saveTasks();
 
@@ -1254,12 +1622,16 @@ function toggleTask(id) {
 }
 
 
-// DELETE
+/* ==================================================
+   SİL
+================================================== */
 
 function deleteTask(id) {
 
     tasks =
-        tasks.filter(item => item.id !== id);
+        tasks.filter(
+            task => task.id !== id
+        );
 
     saveTasks();
 
@@ -1268,117 +1640,122 @@ function deleteTask(id) {
 }
 
 
-// DATE
+/* ==================================================
+   DERS SEÇ
+================================================== */
 
-function dateValue(date) {
+function selectSubject(subject) {
 
-    return new Date(
-        date + "T00:00:00"
-    ).getTime();
-
-}
-
-
-function formatDate(date) {
-
-    return new Date(
-        date + "T00:00:00"
-    ).toLocaleDateString(
-        "tr-TR",
-        {
-            day: "numeric",
-            month: "long"
-        }
-    );
-
-}
+    document
+        .getElementById("subjectFilter")
+        .value = subject;
 
 
-function getDaysLeft(date) {
+    document
+        .querySelectorAll(".subject-card")
+        .forEach(card => {
 
-    const today = new Date();
+            card.classList.toggle(
+                "active",
+                card.dataset.subject === subject
+            );
 
-    today.setHours(0,0,0,0);
+        });
 
-    const target = new Date(
-        date + "T00:00:00"
-    );
 
-    return Math.ceil(
-        (target - today) / 86400000
-    );
+    renderTasks();
 
 }
 
 
-function deadlineText(date) {
+/* ==================================================
+   DERS GÖRSEL NUMARASI
+================================================== */
 
-    const days = getDaysLeft(date);
+function getSubjectImage(subject) {
 
-    if (days < 0) {
-        return "Süresi geçti";
-    }
+    const images = {
 
-    if (days === 0) {
-        return "Bugün";
-    }
+        "Matematik": "3",
 
-    if (days === 1) {
-        return "Yarın";
-    }
+        "Seçmeli Matematik": "4",
 
-    return `${days} gün kaldı`;
+        "Türkçe": "5",
+
+        "Fen Bilimleri": "6",
+
+        "İnkılap": "7",
+
+        "İngilizce": "8"
+
+    };
+
+    return images[subject];
 
 }
 
 
-// RENDER
+/* ==================================================
+   ÖDEVLERİ GÖSTER
+================================================== */
 
 function renderTasks() {
 
-    const list =
-        document.getElementById("taskList");
+    const container =
+        document.getElementById("tasks");
 
-    const selectedSubject =
-        document.getElementById("subjectFilter")
+    const empty =
+        document.getElementById("empty");
+
+
+    const subject =
+        document
+            .getElementById("subjectFilter")
             .value;
+
 
     const sort =
-        document.getElementById("sortFilter")
+        document
+            .getElementById("sortFilter")
             .value;
 
 
-    let filtered = [...tasks];
+    let filtered =
+        [...tasks];
 
 
-    if (selectedSubject !== "all") {
+    /* FİLTRE */
+
+    if (subject !== "all") {
 
         filtered =
             filtered.filter(
                 task =>
-                    task.subject === selectedSubject
+                    task.subject === subject
             );
 
     }
 
 
+    /* SIRALAMA */
+
     if (sort === "nearest") {
 
         filtered.sort(
-            (a,b) =>
-                dateValue(a.date) -
-                dateValue(b.date)
+            (a, b) =>
+                new Date(a.date) -
+                new Date(b.date)
         );
 
     }
 
 
-    if (sort === "furthest") {
+    if (sort === "farthest") {
 
         filtered.sort(
-            (a,b) =>
-                dateValue(b.date) -
-                dateValue(a.date)
+            (a, b) =>
+                new Date(b.date) -
+                new Date(a.date)
         );
 
     }
@@ -1387,7 +1764,7 @@ function renderTasks() {
     if (sort === "newest") {
 
         filtered.sort(
-            (a,b) =>
+            (a, b) =>
                 b.createdAt -
                 a.createdAt
         );
@@ -1398,7 +1775,7 @@ function renderTasks() {
     if (sort === "oldest") {
 
         filtered.sort(
-            (a,b) =>
+            (a, b) =>
                 a.createdAt -
                 b.createdAt
         );
@@ -1406,123 +1783,121 @@ function renderTasks() {
     }
 
 
+    container.innerHTML = "";
+
+
     if (filtered.length === 0) {
 
-        list.innerHTML = `
+        empty.style.display = "block";
 
-            <div class="empty-state">
+    } else {
+
+        empty.style.display = "none";
+
+    }
+
+
+    filtered.forEach(task => {
+
+        const card =
+            document.createElement("article");
+
+
+        card.className =
+            "task" +
+            (task.completed
+                ? " completed"
+                : "");
+
+
+        const date =
+            new Date(
+                task.date + "T00:00:00"
+            ).toLocaleDateString(
+                "tr-TR",
+                {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+
+        const subjectImage =
+            getSubjectImage(
+                task.subject
+            );
+
+
+        card.innerHTML = `
+
+            <div class="task-subject-image">
 
                 <img
-                    src="images/10.png"
-                    alt=""
-                >
+                    src="${image(subjectImage)}"
+                    alt="">
 
-                <h3>Burada henüz bir şey yok</h3>
+            </div>
 
-                <p>
-                    ${tasks.length === 0
-                        ? "İlk ödevini ekleyerek başlayabilirsin."
-                        : "Bu filtreye uygun ödev bulunamadı."
-                    }
-                </p>
+
+            <div>
+
+                <div class="task-title">
+
+                    ${escapeHtml(task.name)}
+
+                </div>
+
+
+                <div class="task-meta">
+
+                    <span class="badge">
+
+                        ${escapeHtml(task.subject)}
+
+                    </span>
+
+
+                    <span class="badge">
+
+                        ${date}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="task-actions">
+
+                <button
+                    class="check-button"
+                    onclick="toggleTask(${task.id})">
+
+                    <img
+                        src="${image("2")}"
+                        alt="">
+
+                </button>
+
+
+                <button
+                    class="delete-button"
+                    onclick="deleteTask(${task.id})">
+
+                    ×
+
+                </button>
 
             </div>
 
         `;
 
-        updateStats();
 
-        return;
+        container.appendChild(card);
 
-    }
-
-
-    list.innerHTML = filtered.map(task => {
-
-        const image =
-            subjectImages[task.subject];
-
-        const days =
-            getDaysLeft(task.date);
-
-        const urgent =
-            !task.completed &&
-            days <= 1;
-
-
-        return `
-
-            <article
-                class="task ${task.completed ? "completed" : ""}"
-            >
-
-                <button
-                    class="check-button ${task.completed ? "checked" : ""}"
-                    onclick="toggleTask(${task.id})"
-                    aria-label="Tamamlandı"
-                >
-
-                    ${
-                        task.completed
-                        ? `<img src="images/11.png" alt="">`
-                        : ""
-                    }
-
-                </button>
-
-
-                <div class="task-info">
-
-                    <div class="task-name">
-                        ${escapeHTML(task.title)}
-                    </div>
-
-
-                    <div class="task-details">
-
-                        <span class="subject-tag">
-
-                            <img
-                                src="${image}"
-                                alt=""
-                            >
-
-                            ${escapeHTML(task.subject)}
-
-                        </span>
-
-
-                        <span class="deadline ${urgent ? "urgent" : ""}">
-
-                            ${formatDate(task.date)}
-                            ·
-                            ${deadlineText(task.date)}
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="delete-button"
-                    onclick="deleteTask(${task.id})"
-                    aria-label="Ödevi sil"
-                >
-
-                    <img
-                        src="images/12.png"
-                        alt=""
-                    >
-
-                </button>
-
-            </article>
-
-        `;
-
-    }).join("");
+    });
 
 
     updateStats();
@@ -1530,128 +1905,95 @@ function renderTasks() {
 }
 
 
-// STATS
+/* ==================================================
+   İSTATİSTİK
+================================================== */
 
 function updateStats() {
 
     const total =
         tasks.length;
 
+
     const completed =
         tasks.filter(
             task => task.completed
         ).length;
 
-    const remaining =
-        total - completed;
-
 
     const percentage =
         total === 0
-        ? 0
-        : Math.round(
-            (completed / total) * 100
-        );
+            ? 0
+            : Math.round(
+                completed / total * 100
+            );
 
 
     document
-        .getElementById("progressNumber")
+        .getElementById("totalCount")
+        .textContent = total;
+
+
+    document
+        .getElementById("completedCount")
+        .textContent = completed;
+
+
+    document
+        .getElementById("percentage")
         .textContent =
-        percentage + "%";
+            percentage + "%";
 
 
     document
-        .getElementById("progressFill")
+        .getElementById("progressBar")
         .style.width =
-        percentage + "%";
-
-
-    document
-        .getElementById("remainingCount")
-        .textContent =
-        remaining;
-
-
-    document
-        .getElementById("progressText")
-        .textContent =
-        total === 0
-        ? "Henüz tamamlanan ödev yok."
-        : `${completed} / ${total} ödev tamamlandı`;
+            percentage + "%";
 
 }
 
 
-// THEMES
+/* ==================================================
+   HTML GÜVENLİĞİ
+================================================== */
 
-function toggleThemeMenu() {
+function escapeHtml(text) {
 
-    document
-        .getElementById("themeMenu")
-        .classList.toggle("open");
-
-}
-
-
-function setTheme(theme) {
-
-    document.body.className =
-        "theme-" + theme;
-
-    localStorage.setItem(
-        THEME_KEY,
-        theme
-    );
-
-    document
-        .getElementById("themeMenu")
-        .classList.remove("open");
-
-}
-
-
-const savedTheme =
-    localStorage.getItem(THEME_KEY);
-
-if (savedTheme) {
-
-    document.body.className =
-        "theme-" + savedTheme;
-
-}
-
-
-// ESC
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Escape") {
-            closeModal();
-        }
-
-    }
-);
-
-
-// HTML SECURITY
-
-function escapeHTML(text) {
-
-    const element =
+    const div =
         document.createElement("div");
 
-    element.textContent = text;
+    div.textContent = text;
 
-    return element.innerHTML;
+    return div.innerHTML;
 
 }
 
 
-// START
+/* ==================================================
+   MODAL DIŞINA TIKLAMA
+================================================== */
 
-renderTasks();
+document
+    .getElementById("overlay")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === this) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* ==================================================
+   BAŞLAT
+================================================== */
+
+applyTheme();
 
 </script>
 
