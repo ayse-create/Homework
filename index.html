@@ -3,879 +3,952 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌿 Ödev Takip</title>
+
+<title>Ödevio</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #f5f7f8;
+    --card: #ffffff;
+    --text: #263238;
+    --muted: #78909c;
+    --primary: #4f8f78;
+    --primary-light: #dff0e9;
+    --border: #e5e9e8;
+    --danger: #e57373;
+    --shadow: 0 8px 25px rgba(0,0,0,.06);
+}
+
+body.dark {
+    --bg: #171b1a;
+    --card: #222827;
+    --text: #f1f5f3;
+    --muted: #9aaba5;
+    --primary: #78b99e;
+    --primary-light: #294438;
+    --border: #343d3a;
+    --shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+body.blue {
+    --primary: #5795c8;
+    --primary-light: #e0effb;
+}
+
+body.purple {
+    --primary: #8b75bd;
+    --primary-light: #eee8fa;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: .25s;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: auto;
+}
+
+/* HEADER */
+
+header {
+    padding: 28px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    border-radius: 12px;
+    width: 43px;
+    height: 43px;
+    cursor: pointer;
+    font-size: 19px;
+}
+
+/* PROGRESS */
+
+.progress-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 22px;
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.progress-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.percent {
+    font-size: 25px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.progress-bar {
+    height: 13px;
+    background: var(--primary-light);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    border-radius: 20px;
+    transition: width .4s ease;
+}
+
+.progress-info {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* CONTROLS */
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+select,
+input {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 12px 14px;
+    border-radius: 12px;
+    outline: none;
+    font-size: 14px;
+}
+
+select:focus,
+input:focus {
+    border-color: var(--primary);
+}
+
+.add-btn {
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 13px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* TASKS */
+
+#taskList {
+    display: grid;
+    gap: 13px;
+    padding-bottom: 40px;
+}
+
+.task {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: var(--shadow);
+    transition: .2s;
+}
+
+.task.completed {
+    opacity: .62;
+}
+
+.check {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.completed .check {
+    background: var(--primary);
+}
+
+.task-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.completed .task-title {
+    text-decoration: line-through;
+}
+
+.task-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.subject {
+    font-size: 12px;
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 5px 9px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.date {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.delete {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.delete:hover {
+    color: var(--danger);
+}
+
+.empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+}
+
+/* MODAL */
+
+.modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.modal-bg.active {
+    display: flex;
+}
+
+.modal {
+    width: min(450px, 100%);
+    background: var(--card);
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 13px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.cancel {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+}
+
+.save {
+    border: none;
+    background: var(--primary);
+    color: white;
+}
+
+/* THEME MENU */
+
+.theme-menu {
+    position: fixed;
+    top: 80px;
+    right: 4%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-radius: 16px;
+    padding: 10px;
+    display: none;
+    z-index: 5;
+}
+
+.theme-menu.active {
+    display: block;
+}
+
+.theme-option {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    padding: 10px 14px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.theme-option:hover {
+    background: var(--primary-light);
+}
+
+@media(max-width:600px) {
+    header {
+        padding-top: 20px;
     }
 
-    :root {
-        --bg: #eef7f5;
-        --card: rgba(255,255,255,0.90);
-        --text: #1d3d3a;
-        --muted: #6a8a85;
-        --green-light: #b8e0d6;
-        --green-mid: #7bc4b5;
-        --green-dark: #3d8a7a;
-        --green-deep: #2a6b5e;
-        --border: rgba(38,75,68,0.08);
-        --shadow: 0 8px 30px rgba(38,75,68,0.07);
-        --radius: 20px;
-        --radius-sm: 14px;
+    .logo {
+        font-size: 26px;
     }
 
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-        background: 
-            radial-gradient(circle at 10% 10%, #d4f0e8, transparent 45%),
-            radial-gradient(circle at 90% 90%, #dce8f0, transparent 45%),
-            var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        padding: 14px 10px 30px;
+    .task {
+        padding: 15px;
     }
 
-    .app {
-        max-width: 700px;
-        margin: 0 auto;
+    .controls {
+        align-items: stretch;
     }
 
-    /* ===== HEADER ===== */
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 18px;
-        padding: 0 4px;
-        flex-wrap: wrap;
-        gap: 8px;
+    .filters {
+        width: 100%;
     }
 
-    .title-area h1 {
-        font-size: 28px;
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: -0.5px;
-    }
-
-    .title-area p {
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 500;
-        margin-top: 2px;
-        -webkit-text-fill-color: var(--muted);
+    .filters select {
+        flex: 1;
     }
 
     .add-btn {
-        background: var(--green-dark);
-        border: none;
-        color: white;
-        font-weight: 700;
-        font-size: 14px;
-        padding: 11px 18px;
-        border-radius: 40px;
-        cursor: pointer;
-        box-shadow: 0 4px 0 var(--green-deep);
-        transition: all 0.1s ease;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        white-space: nowrap;
-    }
-
-    .add-btn:active {
-        transform: translateY(3px);
-        box-shadow: 0 1px 0 var(--green-deep);
-    }
-
-    /* ===== PROGRESS CARD ===== */
-    .progress-card {
-        background: var(--card);
-        backdrop-filter: blur(15px);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-        border-radius: var(--radius);
-        padding: 20px 22px;
-        margin-bottom: 18px;
-    }
-
-    .progress-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .progress-title {
-        font-weight: 800;
-        font-size: 16px;
-    }
-
-    .progress-sub {
-        font-size: 12px;
-        color: var(--muted);
-        font-weight: 500;
-        margin-top: 2px;
-    }
-
-    #percentage {
-        font-weight: 800;
-        font-size: 26px;
-        color: var(--green-dark);
-    }
-
-    .progress-bar {
-        height: 10px;
-        background: #e2efeb;
-        border-radius: 30px;
-        overflow: hidden;
-        margin-top: 4px;
-    }
-
-    #progressFill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, var(--green-mid), var(--green-dark));
-        border-radius: 30px;
-        transition: width 0.4s ease;
-    }
-
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-top: 14px;
-    }
-
-    .stat {
-        background: rgba(255,255,255,0.6);
-        border-radius: var(--radius-sm);
-        padding: 12px 6px;
-        text-align: center;
-        border: 1px solid rgba(123, 196, 181, 0.2);
-    }
-
-    .stat-number {
-        font-size: 20px;
-        font-weight: 800;
-        color: var(--green-dark);
-    }
-
-    .stat-label {
-        color: var(--muted);
-        font-size: 11px;
-        font-weight: 600;
-        margin-top: 2px;
-    }
-
-    /* ===== FILTERS ===== */
-    .filters {
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        padding: 4px 2px 14px;
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .filters::-webkit-scrollbar {
-        display: none;
-    }
-
-    .filters button {
-        border: none;
-        background: var(--card);
-        color: var(--muted);
-        padding: 8px 16px;
-        border-radius: 40px;
-        font-weight: 700;
-        font-size: 13px;
-        white-space: nowrap;
-        border: 1px solid var(--border);
-        cursor: pointer;
-        transition: all 0.15s;
-        flex-shrink: 0;
-        box-shadow: 0 2px 8px rgba(38,75,68,0.04);
-    }
-
-    .filters button.active {
-        background: var(--green-dark);
-        color: white;
-        border-color: var(--green-dark);
-    }
-
-    .filters button:active {
-        transform: scale(0.95);
-    }
-
-    /* ===== DAY SECTION ===== */
-    .day-section {
-        margin-bottom: 20px;
-    }
-
-    .day-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 0 4px 10px;
-    }
-
-    .day-header h2 {
-        font-size: 17px;
-        font-weight: 800;
-        color: var(--green-deep);
-    }
-
-    .day-count {
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--muted);
-        background: var(--card);
-        padding: 3px 12px;
-        border-radius: 30px;
-        border: 1px solid var(--border);
-    }
-
-    /* ===== TASK CARD ===== */
-    .task {
-        background: var(--card);
-        backdrop-filter: blur(14px);
-        border: 1px solid var(--border);
-        box-shadow: 0 4px 16px rgba(38,75,68,0.04);
-        border-radius: var(--radius-sm);
-        padding: 14px 16px;
-        margin-bottom: 9px;
-        transition: all 0.2s ease;
-    }
-
-    .task:active {
-        transform: scale(0.99);
-    }
-
-    .task.done {
-        opacity: 0.6;
-    }
-
-    .task.done .task-title {
-        text-decoration: line-through;
-    }
-
-    .task-main {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    /* ===== CHECKBOX ===== */
-    .check {
-        appearance: none;
-        width: 26px;
-        height: 26px;
-        flex-shrink: 0;
-        border: 2.5px solid #c5d9d3;
-        border-radius: 9px;
-        background: white;
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-        margin-top: 1px;
-    }
-
-    .check:checked {
-        background: var(--green-dark);
-        border-color: var(--green-dark);
-    }
-
-    .check:checked::after {
-        content: "✓";
-        color: white;
-        font-size: 17px;
-        font-weight: 900;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .check:active {
-        transform: scale(0.9);
-    }
-
-    .task-info {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .task-title {
-        font-size: 15px;
-        font-weight: 750;
-        line-height: 1.3;
-    }
-
-    .task-subject {
-        font-size: 12px;
-        color: var(--muted);
-        margin-top: 4px;
-    }
-
-    .task-subject span {
-        display: inline-block;
-        background: var(--green-light);
-        padding: 1px 10px;
-        border-radius: 30px;
-        font-weight: 700;
-        color: var(--green-deep);
-        font-size: 11px;
-        margin-right: 4px;
-    }
-
-    .task-actions {
-        display: flex;
-        gap: 4px;
-        flex-shrink: 0;
-        margin-left: 4px;
-    }
-
-    .task-action {
-        border: none;
-        background: transparent;
-        border-radius: 10px;
-        padding: 5px 7px;
-        cursor: pointer;
-        font-size: 15px;
-        transition: all 0.15s;
-        opacity: 0.5;
-    }
-
-    .task:hover .task-action {
-        opacity: 1;
-    }
-
-    .task-action:hover {
-        background: var(--green-light);
-    }
-
-    /* ===== EMPTY ===== */
-    .empty {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--muted);
-        font-size: 15px;
-        background: var(--card);
-        border-radius: var(--radius-sm);
-        border: 2px dashed var(--green-light);
-    }
-
-    .empty .big {
-        font-size: 48px;
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    /* ===== MODAL ===== */
-    dialog {
-        border: none;
-        border-radius: var(--radius);
-        padding: 0;
-        width: min(92%, 420px);
-        box-shadow: 0 30px 60px rgba(38,75,68,0.2);
-        background: var(--card);
-        backdrop-filter: blur(20px);
-    }
-
-    dialog::backdrop {
-        background: rgba(30, 60, 50, 0.4);
-        backdrop-filter: blur(6px);
-    }
-
-    .modal {
-        padding: 28px 24px;
-    }
-
-    .modal h2 {
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--green-dark);
-        margin-bottom: 16px;
-    }
-
-    .modal label {
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--muted);
-        margin: 12px 0 4px;
-    }
-
-    .modal input,
-    .modal select {
         width: 100%;
-        padding: 12px 14px;
-        border: 2px solid #dce8e4;
-        border-radius: var(--radius-sm);
-        font: inherit;
-        font-size: 15px;
-        background: rgba(255,255,255,0.7);
-        outline: none;
-        transition: border 0.2s;
-        color: var(--text);
-        -webkit-appearance: none;
-        appearance: none;
     }
-
-    .modal input:focus,
-    .modal select:focus {
-        border-color: var(--green-mid);
-    }
-
-    .modal select {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a8a85' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 14px center;
-    }
-
-    .modal-buttons {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .modal-buttons button {
-        border: none;
-        padding: 11px 20px;
-        border-radius: 40px;
-        font-weight: 700;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.15s;
-    }
-
-    .modal-buttons button:first-child {
-        background: #eef3f1;
-        color: var(--muted);
-    }
-
-    .modal-buttons button:first-child:active {
-        transform: scale(0.96);
-    }
-
-    .save-btn {
-        background: var(--green-dark);
-        color: white;
-    }
-
-    .save-btn:active {
-        transform: scale(0.96);
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 480px) {
-        body {
-            padding: 10px 8px 20px;
-        }
-
-        .header {
-            flex-wrap: wrap;
-        }
-
-        .title-area h1 {
-            font-size: 24px;
-        }
-
-        .add-btn {
-            padding: 9px 14px;
-            font-size: 13px;
-        }
-
-        .progress-card {
-            padding: 16px 18px;
-        }
-
-        .percent {
-            font-size: 22px;
-        }
-
-        .stats {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-
-        .stat-number {
-            font-size: 17px;
-        }
-
-        .task {
-            padding: 12px 14px;
-        }
-
-        .task-title {
-            font-size: 14px;
-        }
-
-        .day-header h2 {
-            font-size: 15px;
-        }
-
-        .filters button {
-            padding: 6px 14px;
-            font-size: 12px;
-        }
-
-        .modal {
-            padding: 20px 16px;
-        }
-
-        .modal h2 {
-            font-size: 20px;
-        }
-
-        .modal input,
-        .modal select {
-            padding: 10px 12px;
-            font-size: 14px;
-        }
-    }
-
-    @media (max-width: 360px) {
-        .stats {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .stat:last-child {
-            grid-column: span 2;
-        }
-
-        .task-main {
-            flex-wrap: wrap;
-        }
-
-        .task-actions {
-            margin-left: auto;
-        }
-    }
+}
 </style>
 </head>
 
 <body>
-<div class="app">
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="title-area">
-            <h1>🌿 Ödevlerim</h1>
-            <p>✨ Her gün biraz daha ileri</p>
+<div class="container">
+
+    <header>
+        <div class="logo">ödev<span>io</span></div>
+
+        <div class="header-right">
+            <button class="icon-btn" onclick="toggleThemeMenu()">🎨</button>
         </div>
-        <button class="add-btn" onclick="openAddModal()">➕ Ekle</button>
-    </div>
+    </header>
 
-    <!-- PROGRESS -->
     <div class="progress-card">
+
         <div class="progress-top">
-            <div>
-                <div class="progress-title">Genel İlerleme</div>
-                <div class="progress-sub">Tamamladıkça yüzde yükselir</div>
-            </div>
-            <div id="percentage">0%</div>
-        </div>
-        <div class="progress-bar">
-            <div id="progressFill"></div>
+            <div class="progress-title">Ödev ilerlemen</div>
+            <div class="percent" id="percent">0%</div>
         </div>
 
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-number" id="totalCount">0</div>
-                <div class="stat-label">📚 Toplam</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="doneCount">0</div>
-                <div class="stat-label">✅ Tamamlanan</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="leftCount">0</div>
-                <div class="stat-label">⏳ Kalan</div>
-            </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
+
+        <div class="progress-info" id="progressInfo">
+            Henüz tamamlanan ödev yok.
+        </div>
+
     </div>
 
-    <!-- FILTERS -->
-    <div class="filters" id="filters"></div>
+    <div class="controls">
 
-    <!-- TASK LIST -->
+        <div class="filters">
+
+            <select id="subjectFilter" onchange="renderTasks()">
+                <option value="all">Tüm dersler</option>
+                <option>Matematik</option>
+                <option>Seçmeli Matematik</option>
+                <option>Türkçe</option>
+                <option>Fen Bilimleri</option>
+                <option>İnkılap</option>
+                <option>İngilizce</option>
+            </select>
+
+            <select id="sortFilter" onchange="renderTasks()">
+                <option value="nearest">Yakın tarihe göre</option>
+                <option value="furthest">Uzak tarihe göre</option>
+                <option value="newest">Yeni eklenenler</option>
+                <option value="oldest">Eski eklenenler</option>
+            </select>
+
+        </div>
+
+        <button class="add-btn" onclick="openModal()">
+            + Ödev Ekle
+        </button>
+
+    </div>
+
     <div id="taskList"></div>
 
 </div>
 
+
+<!-- TEMA -->
+
+<div class="theme-menu" id="themeMenu">
+
+    <button class="theme-option" onclick="setTheme('')">
+        🌿 Yeşil
+    </button>
+
+    <button class="theme-option" onclick="setTheme('blue')">
+        💙 Mavi
+    </button>
+
+    <button class="theme-option" onclick="setTheme('purple')">
+        💜 Mor
+    </button>
+
+    <button class="theme-option" onclick="setTheme('dark')">
+        🌙 Koyu
+    </button>
+
+</div>
+
+
 <!-- MODAL -->
-<dialog id="taskModal">
-    <form class="modal" onsubmit="saveTask(event)">
-        <h2 id="modalTitle">🌱 Yeni Ödev</h2>
 
-        <label>📚 Ders</label>
-        <input id="subjectInput" type="text" placeholder="Fen, Matematik, vb." required>
+<div class="modal-bg" id="modal">
 
-        <label>📝 Ödev</label>
-        <input id="titleInput" type="text" placeholder="Ödev adı" required>
+    <div class="modal">
 
-        <label>📅 Teslim Günü</label>
-        <select id="dayInput">
-            <option value="Pazartesi">Pazartesi</option>
-            <option value="Salı">Salı</option>
-            <option value="Çarşamba">Çarşamba</option>
-            <option value="Perşembe">Perşembe</option>
-            <option value="Cuma">Cuma</option>
-            <option value="Cumartesi">Cumartesi</option>
-            <option value="Pazar">Pazar</option>
-            <option value="Belirtilmedi">Belirtilmedi</option>
-        </select>
+        <h2>Yeni Ödev</h2>
 
-        <input id="editId" type="hidden">
+        <div class="form-group">
+            <label>Ödev adı</label>
+            <input
+                type="text"
+                id="taskTitle"
+                placeholder="Örn. 40 soru paragraf"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Ders</label>
+
+            <select id="taskSubject">
+
+                <option>Matematik</option>
+                <option>Seçmeli Matematik</option>
+                <option>Türkçe</option>
+                <option>Fen Bilimleri</option>
+                <option>İnkılap</option>
+                <option>İngilizce</option>
+
+            </select>
+        </div>
+
+        <div class="form-group">
+
+            <label>Son teslim tarihi</label>
+
+            <input
+                type="date"
+                id="taskDate"
+            >
+
+        </div>
 
         <div class="modal-buttons">
-            <button type="button" onclick="taskModal.close()">Vazgeç</button>
-            <button class="save-btn">💾 Kaydet</button>
+
+            <button class="cancel" onclick="closeModal()">
+                Vazgeç
+            </button>
+
+            <button class="save" onclick="addTask()">
+                Ödevi Ekle
+            </button>
+
         </div>
-    </form>
-</dialog>
+
+    </div>
+
+</div>
+
 
 <script>
-    // ============================================================
-    // ÖDEVLER - SİZİN İSTEĞİNİZ GİBİ
-    // ============================================================
-    const defaultTasks = [
-        // FEN
-        { id: 1, subject: "Fen", title: "Yazı ödevi", day: "Çarşamba", done: false },
-        { id: 2, subject: "Fen", title: "Yeşil fotokopi", day: "Salı", done: false },
-        { id: 3, subject: "Fen", title: "Fenomen", day: "Pazartesi", done: false },
-        { id: 4, subject: "Fen", title: "Parkur", day: "Pazartesi", done: false },
 
-        // TÜRKÇE
-        { id: 5, subject: "Türkçe", title: "40 sayfa paragraf", day: "Belirtilmedi", done: false },
+const STORAGE_KEY = "odevio_simple_tasks";
 
-        // İNGİLİZCE
-        { id: 6, subject: "İngilizce", title: "345 Yayınları", day: "Pazartesi", done: false },
-        { id: 7, subject: "İngilizce", title: "More and More 1. Ünite", day: "Cuma", done: false },
+let tasks = JSON.parse(
+    localStorage.getItem(STORAGE_KEY)
+) || [];
 
-        // MATEMATİK
-        { id: 8, subject: "Matematik", title: "Fİ Yayınları", day: "Salı", done: false },
-        { id: 9, subject: "Matematik", title: "Nartest ilk 6 test", day: "Çarşamba", done: false },
-        { id: 10, subject: "Matematik", title: "Nartest kalan 7 test", day: "Perşembe", done: false },
-        { id: 11, subject: "Matematik", title: "52 soruluk yeni nesil fotokopi", day: "Cuma", done: false }
-    ];
 
-    // ============================================================
-    // VERİ YÖNETİMİ
-    // ============================================================
+// MODAL
 
-    const STORAGE_KEY = "odev_takip_yesil_v3";
+function openModal() {
+    document.getElementById("modal").classList.add("active");
 
-    let tasks = [];
-    let currentFilter = "Tümü";
+    document.getElementById("taskTitle").focus();
 
-    function loadData() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            try {
-                tasks = JSON.parse(saved);
-                if (!tasks || !Array.isArray(tasks) || tasks.length === 0) {
-                    tasks = JSON.parse(JSON.stringify(defaultTasks));
-                }
-            } catch {
-                tasks = JSON.parse(JSON.stringify(defaultTasks));
-            }
-        } else {
-            tasks = JSON.parse(JSON.stringify(defaultTasks));
+    // Varsayılan tarih bugün
+    const today = new Date().toISOString().split("T")[0];
+
+    document.getElementById("taskDate").value = today;
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.remove("active");
+
+    document.getElementById("taskTitle").value = "";
+}
+
+
+// ÖDEV EKLE
+
+function addTask() {
+
+    const title =
+        document.getElementById("taskTitle").value.trim();
+
+    const subject =
+        document.getElementById("taskSubject").value;
+
+    const date =
+        document.getElementById("taskDate").value;
+
+    if (!title) {
+        alert("Lütfen ödev adını yaz.");
+        return;
+    }
+
+    if (!date) {
+        alert("Lütfen son teslim tarihini seç.");
+        return;
+    }
+
+    tasks.push({
+
+        id: Date.now(),
+
+        title: title,
+
+        subject: subject,
+
+        date: date,
+
+        completed: false,
+
+        createdAt: Date.now()
+
+    });
+
+    save();
+
+    closeModal();
+
+    renderTasks();
+}
+
+
+// KAYDET
+
+function save() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+// TAMAMLAMA
+
+function toggleTask(id) {
+
+    const task = tasks.find(t => t.id === id);
+
+    if (task) {
+        task.completed = !task.completed;
+    }
+
+    save();
+
+    renderTasks();
+
+}
+
+
+// SİL
+
+function deleteTask(id) {
+
+    tasks = tasks.filter(
+        task => task.id !== id
+    );
+
+    save();
+
+    renderTasks();
+
+}
+
+
+// TARİH
+
+function formatDate(dateString) {
+
+    const date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString(
+        "tr-TR",
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
         }
-        saveData();
+    );
+
+}
+
+
+// GÖREVLERİ GÖSTER
+
+function renderTasks() {
+
+    const list =
+        document.getElementById("taskList");
+
+    const subject =
+        document.getElementById("subjectFilter").value;
+
+    const sort =
+        document.getElementById("sortFilter").value;
+
+
+    let filtered = [...tasks];
+
+
+    // DERS FİLTRESİ
+
+    if (subject !== "all") {
+
+        filtered = filtered.filter(
+            task => task.subject === subject
+        );
+
     }
 
-    function saveData() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+
+    // SIRALAMA
+
+    if (sort === "nearest") {
+
+        filtered.sort(
+            (a,b) => new Date(a.date) - new Date(b.date)
+        );
+
     }
 
-    // ============================================================
-    // RENDER
-    // ============================================================
+    if (sort === "furthest") {
 
-    function render() {
-        const total = tasks.length;
-        const done = tasks.filter(t => t.done).length;
-        const remaining = total - done;
-        const percentage = total === 0 ? 0 : Math.round((done / total) * 100);
+        filtered.sort(
+            (a,b) => new Date(b.date) - new Date(a.date)
+        );
 
-        document.getElementById("totalCount").textContent = total;
-        document.getElementById("doneCount").textContent = done;
-        document.getElementById("leftCount").textContent = remaining;
-        document.getElementById("percentage").textContent = percentage + "%";
-        document.getElementById("progressFill").style.width = percentage + "%";
+    }
 
-        // Filters
-        const subjects = ["Tümü", ...new Set(tasks.map(t => t.subject))];
-        document.getElementById("filters").innerHTML = subjects.map(s =>
-            `<button class="${currentFilter === s ? 'active' : ''}" onclick="setFilter('${escapeHTML(s)}')">${escapeHTML(s)}</button>`
-        ).join("");
+    if (sort === "newest") {
 
-        // Tasks by day
-        const days = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar", "Belirtilmedi"];
-        const filtered = tasks.filter(t => currentFilter === "Tümü" || t.subject === currentFilter);
+        filtered.sort(
+            (a,b) => b.createdAt - a.createdAt
+        );
 
-        let html = "";
-        days.forEach(day => {
-            const dayTasks = filtered.filter(t => t.day === day);
-            if (dayTasks.length === 0) return;
+    }
 
-            const dayDone = dayTasks.filter(t => t.done).length;
+    if (sort === "oldest") {
 
-            html += `
-                <div class="day-section">
-                    <div class="day-header">
-                        <h2>📅 ${day}</h2>
-                        <span class="day-count">${dayDone}/${dayTasks.length}</span>
-                    </div>
-            `;
+        filtered.sort(
+            (a,b) => a.createdAt - b.createdAt
+        );
 
-            dayTasks.forEach(task => {
-                html += `
-                    <div class="task ${task.done ? 'done' : ''}">
-                        <div class="task-main">
-                            <input class="check" type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${task.id})">
-                            <div class="task-info">
-                                <div class="task-title">${escapeHTML(task.title)}</div>
-                                <div class="task-subject">
-                                    <span>${escapeHTML(task.subject)}</span>
-                                    ${task.day === "Belirtilmedi" ? "💭 Gün belirtilmedi" : "📅 " + task.day}
-                                </div>
-                            </div>
-                            <div class="task-actions">
-                                <button class="task-action" onclick="editTask(${task.id})" title="Düzenle">✏️</button>
-                                <button class="task-action" onclick="deleteTask(${task.id})" title="Sil">🗑️</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
+    }
 
-            html += `</div>`;
-        });
 
-        if (!html) {
-            html = `
-                <div class="empty">
-                    <span class="big">🌿</span>
-                    Bu filtrede ödev yok
+    if (filtered.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                <div style="font-size:40px;margin-bottom:10px">
+                    📚
                 </div>
-            `;
-        }
 
-        document.getElementById("taskList").innerHTML = html;
+                <div>
+                    Bu filtreye uygun ödev yok.
+                </div>
+            </div>
+        `;
+
+        updateProgress();
+
+        return;
     }
 
-    // ============================================================
-    // CRUD İŞLEMLERİ
-    // ============================================================
 
-    function setFilter(filter) {
-        currentFilter = filter;
-        render();
+    list.innerHTML = filtered.map(task => `
+
+        <div class="task ${task.completed ? "completed" : ""}">
+
+            <div
+                class="check"
+                onclick="toggleTask(${task.id})"
+            >
+                ${task.completed ? "✓" : ""}
+            </div>
+
+            <div class="task-content">
+
+                <div class="task-title">
+                    ${escapeHTML(task.title)}
+                </div>
+
+                <div class="task-meta">
+
+                    <span class="subject">
+                        ${task.subject}
+                    </span>
+
+                    <span class="date">
+                        📅 ${formatDate(task.date)}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button
+                class="delete"
+                onclick="deleteTask(${task.id})"
+                title="Sil"
+            >
+                🗑️
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    updateProgress();
+
+}
+
+
+// YÜZDE
+
+function updateProgress() {
+
+    const total = tasks.length;
+
+    const completed =
+        tasks.filter(task => task.completed).length;
+
+
+    let percentage = 0;
+
+    if (total > 0) {
+
+        percentage =
+            Math.round((completed / total) * 100);
+
     }
 
-    function toggleTask(id) {
-        const task = tasks.find(t => t.id === id);
-        if (task) {
-            task.done = !task.done;
-            saveData();
-            render();
-        }
+
+    document.getElementById("percent")
+        .textContent = percentage + "%";
+
+
+    document.getElementById("progressFill")
+        .style.width = percentage + "%";
+
+
+    if (total === 0) {
+
+        document.getElementById("progressInfo")
+            .textContent =
+            "Henüz eklenmiş ödev yok.";
+
+    } else {
+
+        document.getElementById("progressInfo")
+            .textContent =
+            `${completed} / ${total} ödev tamamlandı`;
+
     }
 
-    function openAddModal() {
-        document.getElementById("modalTitle").textContent = "🌱 Yeni Ödev";
-        document.getElementById("editId").value = "";
-        document.getElementById("subjectInput").value = "";
-        document.getElementById("titleInput").value = "";
-        document.getElementById("dayInput").value = "Pazartesi";
-        taskModal.showModal();
+}
+
+
+// TEMA
+
+function toggleThemeMenu() {
+
+    document
+        .getElementById("themeMenu")
+        .classList.toggle("active");
+
+}
+
+function setTheme(theme) {
+
+    document.body.className = theme;
+
+    localStorage.setItem(
+        "odevio_theme",
+        theme
+    );
+
+    document
+        .getElementById("themeMenu")
+        .classList.remove("active");
+
+}
+
+
+// HTML GÜVENLİĞİ
+
+function escapeHTML(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+// KAYITLI TEMAYI YÜKLE
+
+const savedTheme =
+    localStorage.getItem("odevio_theme");
+
+if (savedTheme !== null) {
+
+    document.body.className = savedTheme;
+
+}
+
+
+// BAŞLAT
+
+renderTasks();
+
+
+// ESC İLE MODAL KAPAT
+
+document.addEventListener("keydown", e => {
+
+    if (e.key === "Escape") {
+        closeModal();
     }
 
-    function editTask(id) {
-        const task = tasks.find(t => t.id === id);
-        if (!task) return;
-        document.getElementById("modalTitle").textContent = "✏️ Ödevi Düzenle";
-        document.getElementById("editId").value = task.id;
-        document.getElementById("subjectInput").value = task.subject;
-        document.getElementById("titleInput").value = task.title;
-        document.getElementById("dayInput").value = task.day;
-        taskModal.showModal();
-    }
+});
 
-    function saveTask(e) {
-        e.preventDefault();
-        const id = Number(document.getElementById("editId").value);
-        const subject = document.getElementById("subjectInput").value.trim();
-        const title = document.getElementById("titleInput").value.trim();
-        const day = document.getElementById("dayInput").value;
-
-        if (!subject || !title) return;
-
-        if (id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.subject = subject;
-                task.title = title;
-                task.day = day;
-            }
-        } else {
-            const maxId = tasks.reduce((max, t) => Math.max(max, t.id), 0);
-            tasks.push({
-                id: maxId + 1,
-                subject,
-                title,
-                day,
-                done: false
-            });
-        }
-
-        saveData();
-        taskModal.close();
-        render();
-    }
-
-    function deleteTask(id) {
-        const task = tasks.find(t => t.id === id);
-        if (!task) return;
-        if (!confirm(`"${task.title}" ödevini silmek istediğine emin misin?`)) return;
-        tasks = tasks.filter(t => t.id !== id);
-        saveData();
-        render();
-    }
-
-    // ============================================================
-    // YARDIMCI FONKSİYONLAR
-    // ============================================================
-
-    function escapeHTML(text) {
-        if (!text) return '';
-        return String(text).replace(/[&<>"']/g, m => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        }[m]));
-    }
-
-    // ============================================================
-    // BAŞLAT
-    // ============================================================
-
-    loadData();
-    render();
 </script>
 
 </body>
