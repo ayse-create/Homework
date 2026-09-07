@@ -132,6 +132,29 @@ button {
 
 .header-actions {
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.week-button,
+.share-button {
+    height: 56px;
+    padding: 0 17px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.week-button:hover,
+.share-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    background: var(--primary-soft);
 }
 
 .theme-button {
@@ -778,8 +801,7 @@ button {
     margin-bottom: 5px;
 }
 
-.notebook-task.completed
-.notebook-task-name {
+.notebook-task.completed .notebook-task-name {
     text-decoration: line-through;
 }
 
@@ -856,6 +878,465 @@ button {
 
 
 /* =========================
+   HAFTALIK PLAN
+========================= */
+
+.weekly-page {
+    display: none;
+
+    animation: pageIn .35s ease;
+}
+
+.weekly-page.active {
+    display: block;
+}
+
+.weekly-container {
+    min-height: 620px;
+
+    padding: 32px;
+
+    border-radius: 26px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+.weekly-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 30px;
+}
+
+.weekly-back {
+    width: 45px;
+    height: 45px;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    background: var(--surface-2);
+
+    color: var(--text);
+
+    font-size: 22px;
+
+    transition: .2s;
+}
+
+.weekly-back:hover {
+    background: var(--primary-soft);
+
+    border-color: var(--primary);
+
+    transform: translateX(-2px);
+}
+
+.weekly-title h2 {
+    font-family: "Manrope", sans-serif;
+
+    font-size: clamp(25px, 4vw, 34px);
+
+    letter-spacing: -1px;
+
+    margin-bottom: 5px;
+}
+
+.weekly-title p {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.week-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.day-card {
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    background: var(--surface-2);
+
+    padding: 18px;
+
+    min-height: 185px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    transition: .2s;
+}
+
+.day-card:hover {
+    border-color: var(--primary);
+}
+
+.day-name {
+    font-family: "Manrope", sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    margin-bottom: 13px;
+}
+
+.day-task-list {
+    display: grid;
+
+    gap: 8px;
+
+    flex: 1;
+}
+
+.planned-task {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    min-width: 0;
+}
+
+.planned-task-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.planned-task-subject {
+    color: var(--primary-dark);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    margin-bottom: 2px;
+}
+
+.planned-task-title {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.planned-task.completed {
+    opacity: .55;
+}
+
+.planned-task.completed .planned-task-title {
+    text-decoration: line-through;
+}
+
+.remove-plan-task {
+    border: none;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 17px;
+
+    padding: 2px 4px;
+}
+
+.remove-plan-task:hover {
+    color: var(--danger);
+}
+
+.empty-day {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    padding: 4px 0 12px;
+}
+
+.add-plan-button {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 10px;
+
+    border: 1px dashed var(--primary);
+
+    border-radius: 11px;
+
+    background: transparent;
+
+    color: var(--primary-dark);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition: .2s;
+}
+
+.add-plan-button:hover {
+    background: var(--primary-soft);
+}
+
+
+/* =========================
+   PLAN TASK PICKER
+========================= */
+
+.plan-modal {
+    width: min(520px, 100%);
+}
+
+.plan-day-label {
+    color: var(--primary-dark);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-top: -10px;
+
+    margin-bottom: 18px;
+}
+
+.plan-task-picker {
+    max-height: 340px;
+
+    overflow-y: auto;
+
+    display: grid;
+
+    gap: 8px;
+}
+
+.plan-task-option {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    background: var(--surface);
+
+    text-align: left;
+
+    transition: .2s;
+}
+
+.plan-task-option:hover {
+    border-color: var(--primary);
+
+    background: var(--surface-2);
+}
+
+.plan-task-option.selected {
+    border-color: var(--primary);
+
+    background: var(--primary-soft);
+}
+
+.plan-checkbox {
+    width: 21px;
+    height: 21px;
+
+    flex-shrink: 0;
+
+    border: 2px solid var(--border);
+
+    border-radius: 6px;
+
+    display: grid;
+
+    place-items: center;
+
+    background: var(--surface);
+}
+
+.plan-task-option.selected .plan-checkbox {
+    background: var(--primary);
+
+    border-color: var(--primary);
+}
+
+.plan-checkbox img {
+    width: 14px;
+    height: 14px;
+
+    object-fit: contain;
+}
+
+.plan-task-details {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.plan-task-name {
+    font-size: 13px;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.plan-task-meta {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-top: 3px;
+}
+
+.plan-empty {
+    text-align: center;
+
+    padding: 35px 15px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   PAYLAŞ MODAL
+========================= */
+
+.share-modal {
+    width: min(500px, 100%);
+}
+
+.share-preview {
+    width: 100%;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface-2);
+
+    margin-bottom: 17px;
+}
+
+.share-preview canvas {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+}
+
+.share-link-box {
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--surface-2);
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    word-break: break-all;
+
+    margin-bottom: 14px;
+}
+
+.share-buttons {
+    display: flex;
+
+    gap: 10px;
+}
+
+.share-main-button,
+.whatsapp-button {
+    flex: 1;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.share-main-button {
+    border: none;
+
+    background: var(--primary);
+
+    color: white;
+}
+
+.share-main-button:hover {
+    background: var(--primary-dark);
+}
+
+.whatsapp-button {
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--text);
+}
+
+.whatsapp-button:hover {
+    border-color: var(--primary);
+
+    background: var(--primary-soft);
+}
+
+
+/* =========================
    MODAL
 ========================= */
 
@@ -904,6 +1385,10 @@ button {
     transform: translateY(12px) scale(.98);
 
     transition: .25s;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
 }
 
 .modal-background.open .modal {
@@ -1043,10 +1528,6 @@ button {
         font-size: 14px;
     }
 
-    .notebook {
-        padding-left: 55px;
-    }
-
 }
 
 
@@ -1056,6 +1537,26 @@ button {
         width: min(100% - 24px, 600px);
 
         padding-top: 18px;
+    }
+
+    .header-actions {
+        gap: 6px;
+    }
+
+    .week-button,
+    .share-button {
+        height: 52px;
+
+        padding: 0 10px;
+
+        font-size: 10px;
+
+        border-radius: 15px;
+    }
+
+    .theme-button {
+        width: 52px;
+        height: 52px;
     }
 
     .subject-grid {
@@ -1101,6 +1602,22 @@ button {
         font-size: 23px;
     }
 
+    .weekly-container {
+        padding: 22px 16px 30px;
+
+        border-radius: 21px;
+    }
+
+    .week-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
 }
 
 
@@ -1117,6 +1634,17 @@ button {
 
     .brand-name {
         font-size: 25px;
+    }
+
+    .header-actions {
+        gap: 4px;
+    }
+
+    .week-button,
+    .share-button {
+        font-size: 9px;
+
+        padding: 0 7px;
     }
 
     .theme-button {
@@ -1218,6 +1746,22 @@ button {
 
 
             <div class="header-actions">
+
+                <button
+                    class="week-button"
+                    onclick="openWeeklyPlan()"
+                >
+                    Haftalık Plan
+                </button>
+
+
+                <button
+                    class="share-button"
+                    onclick="openShareModal()"
+                >
+                    Paylaş
+                </button>
+
 
                 <button
                     class="theme-button"
@@ -1471,12 +2015,62 @@ button {
 
     </main>
 
+
+
+    <!-- =========================
+         HAFTALIK PLAN SAYFASI
+    ========================== -->
+
+    <main
+        id="weeklyPage"
+        class="weekly-page"
+    >
+
+        <div class="weekly-container">
+
+
+            <div class="weekly-header">
+
+                <button
+                    class="weekly-back"
+                    onclick="closeWeeklyPlan()"
+                    aria-label="Geri"
+                >
+                    ←
+                </button>
+
+
+                <div class="weekly-title">
+
+                    <h2>
+                        Haftalık Plan
+                    </h2>
+
+                    <p>
+                        Ödevlerini günlere göre planla.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="week-grid"
+                id="weekGrid"
+            ></div>
+
+
+        </div>
+
+    </main>
+
 </div>
 
 
 
 <!-- =========================
-     MODAL
+     ÖDEV MODAL
 ========================== -->
 
 <div
@@ -1591,6 +2185,146 @@ button {
 
 
 
+<!-- =========================
+     HAFTALIK PLAN MODAL
+========================== -->
+
+<div
+    class="modal-background"
+    id="planModal"
+    onclick="planBackgroundClose(event)"
+>
+
+    <div class="modal plan-modal">
+
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                Ödev seç
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closePlanModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="plan-day-label"
+            id="planDayLabel"
+        >
+            Pazartesi
+        </div>
+
+
+        <div
+            class="plan-task-picker"
+            id="planTaskPicker"
+        ></div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel-button"
+                onclick="closePlanModal()"
+            >
+                Vazgeç
+            </button>
+
+            <button
+                class="save-button"
+                onclick="savePlanSelection()"
+            >
+                Planı kaydet
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     PAYLAŞ MODAL
+========================== -->
+
+<div
+    class="modal-background"
+    id="shareModal"
+    onclick="shareBackgroundClose(event)"
+>
+
+    <div class="modal share-modal">
+
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                Ödevlerini paylaş
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeShareModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="share-preview">
+
+            <canvas
+                id="shareCanvas"
+                width="1000"
+                height="700"
+            ></canvas>
+
+        </div>
+
+
+        <div
+            class="share-link-box"
+        >
+            https://ayse-create.github.io/Homework
+        </div>
+
+
+        <div class="share-buttons">
+
+            <button
+                class="share-main-button"
+                onclick="shareHomework()"
+            >
+                Paylaş
+            </button>
+
+            <button
+                class="whatsapp-button"
+                onclick="shareWhatsApp()"
+            >
+                WhatsApp
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
 <script>
 
 
@@ -1603,6 +2337,9 @@ const STORAGE_KEY =
 
 const THEME_KEY =
     "odevio_theme";
+
+const PLAN_KEY =
+    "odevio_weekly_plan_v1";
 
 
 let tasks =
@@ -1617,6 +2354,33 @@ let currentTheme =
 
 let currentSubject =
     null;
+
+
+let currentPlanDay =
+    null;
+
+
+let planSelection =
+    new Set();
+
+
+const weekDays = [
+
+    "Pazartesi",
+
+    "Salı",
+
+    "Çarşamba",
+
+    "Perşembe",
+
+    "Cuma",
+
+    "Cumartesi",
+
+    "Pazar"
+
+];
 
 
 
@@ -1722,6 +2486,105 @@ function saveTasks() {
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(tasks)
+    );
+
+}
+
+
+
+/* =========================
+   WEEKLY PLAN STORAGE
+========================= */
+
+function createEmptyPlan() {
+
+    return {
+
+        Pazartesi: [],
+
+        Salı: [],
+
+        Çarşamba: [],
+
+        Perşembe: [],
+
+        Cuma: [],
+
+        Cumartesi: [],
+
+        Pazar: []
+
+    };
+
+}
+
+
+function loadWeeklyPlan() {
+
+    try {
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(
+                    PLAN_KEY
+                )
+            );
+
+
+        const empty =
+            createEmptyPlan();
+
+
+        if (
+            saved &&
+            typeof saved === "object"
+        ) {
+
+            weekDays.forEach(day => {
+
+                if (
+                    Array.isArray(
+                        saved[day]
+                    )
+                ) {
+
+                    empty[day] =
+                        saved[day]
+                            .map(Number)
+                            .filter(
+                                id =>
+                                    Number.isFinite(id)
+                            );
+
+                }
+
+            });
+
+        }
+
+
+        return empty;
+
+    } catch {
+
+        return createEmptyPlan();
+
+    }
+
+}
+
+
+let weeklyPlan =
+    loadWeeklyPlan();
+
+
+function saveWeeklyPlan() {
+
+    localStorage.setItem(
+        PLAN_KEY,
+        JSON.stringify(
+            weeklyPlan
+        )
     );
 
 }
@@ -1841,6 +2704,15 @@ function openSubject(subjectName) {
 
     document
         .getElementById(
+            "weeklyPage"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+    document
+        .getElementById(
             "subjectPage"
         )
         .classList.add(
@@ -1899,6 +2771,15 @@ function goHome() {
 
     document
         .getElementById(
+            "weeklyPage"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+    document
+        .getElementById(
             "homePage"
         )
         .style.display =
@@ -1912,6 +2793,468 @@ function goHome() {
         top: 0,
         behavior: "instant"
     });
+
+}
+
+
+
+/* =========================
+   HAFTALIK PLAN
+========================= */
+
+function openWeeklyPlan() {
+
+    currentSubject =
+        null;
+
+
+    document
+        .getElementById(
+            "homePage"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "subjectPage"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+    document
+        .getElementById(
+            "weeklyPage"
+        )
+        .classList.add(
+            "active"
+        );
+
+
+    document
+        .getElementById(
+            "themeMenu"
+        )
+        .classList.remove(
+            "open"
+        );
+
+
+    renderWeeklyPlan();
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "instant"
+    });
+
+}
+
+
+function closeWeeklyPlan() {
+
+    document
+        .getElementById(
+            "weeklyPage"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+    document
+        .getElementById(
+            "homePage"
+        )
+        .style.display =
+        "";
+
+
+    renderSubjects();
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "instant"
+    });
+
+}
+
+
+function renderWeeklyPlan() {
+
+    const grid =
+        document.getElementById(
+            "weekGrid"
+        );
+
+
+    grid.innerHTML =
+        weekDays.map(day => {
+
+
+            const ids =
+                weeklyPlan[day] || [];
+
+
+            const plannedTasks =
+                ids
+                    .map(
+                        id =>
+                            tasks.find(
+                                task =>
+                                    Number(task.id) ===
+                                    Number(id)
+                            )
+                    )
+                    .filter(Boolean);
+
+
+            let taskHTML;
+
+
+            if (
+                plannedTasks.length === 0
+            ) {
+
+                taskHTML = `
+
+                    <div class="empty-day">
+                        Bu gün için henüz ödev planlanmadı.
+                    </div>
+
+                `;
+
+            } else {
+
+                taskHTML =
+                    plannedTasks
+                        .map(task => `
+
+                            <div
+                                class="planned-task ${
+                                    task.completed
+                                    ? "completed"
+                                    : ""
+                                }"
+                            >
+
+                                <div
+                                    class="planned-task-info"
+                                >
+
+                                    <div
+                                        class="planned-task-subject"
+                                    >
+                                        ${escapeHTML(
+                                            task.subject
+                                        )}
+                                    </div>
+
+                                    <div
+                                        class="planned-task-title"
+                                    >
+                                        ${escapeHTML(
+                                            task.title
+                                        )}
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    class="remove-plan-task"
+                                    onclick="removeFromPlan('${day}', ${task.id})"
+                                    aria-label="Plana çıkar"
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                        `)
+                        .join("");
+
+            }
+
+
+            return `
+
+                <div class="day-card">
+
+                    <div class="day-name">
+                        ${day}
+                    </div>
+
+
+                    <div class="day-task-list">
+
+                        ${taskHTML}
+
+                    </div>
+
+
+                    <button
+                        class="add-plan-button"
+                        onclick="openPlanModal('${day}')"
+                    >
+                        Ödev ekle
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+function openPlanModal(day) {
+
+    currentPlanDay =
+        day;
+
+
+    planSelection =
+        new Set(
+            weeklyPlan[day] || []
+        );
+
+
+    document
+        .getElementById(
+            "planDayLabel"
+        )
+        .textContent =
+        `${day} için ödevler`;
+
+
+    renderPlanTaskPicker();
+
+
+    document
+        .getElementById(
+            "planModal"
+        )
+        .classList.add(
+            "open"
+        );
+
+}
+
+
+function renderPlanTaskPicker() {
+
+    const picker =
+        document.getElementById(
+            "planTaskPicker"
+        );
+
+
+    const sortedTasks =
+        [...tasks].sort(
+            (a,b) =>
+                dateValue(a.date) -
+                dateValue(b.date)
+        );
+
+
+    if (
+        sortedTasks.length === 0
+    ) {
+
+        picker.innerHTML = `
+
+            <div class="plan-empty">
+                Önce ana sayfadan bir ödev eklemelisin.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    picker.innerHTML =
+        sortedTasks
+            .map(task => {
+
+
+                const selected =
+                    planSelection.has(
+                        Number(task.id)
+                    );
+
+
+                return `
+
+                    <button
+                        class="plan-task-option ${
+                            selected
+                            ? "selected"
+                            : ""
+                        }"
+                        onclick="togglePlanSelection(${task.id})"
+                    >
+
+                        <div class="plan-checkbox">
+
+                            ${
+                                selected
+                                ? `
+                                    <img
+                                        src="${getImage(11)}"
+                                        alt=""
+                                    >
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+
+                        <div
+                            class="plan-task-details"
+                        >
+
+                            <div
+                                class="plan-task-name"
+                            >
+                                ${escapeHTML(
+                                    task.title
+                                )}
+                            </div>
+
+
+                            <div
+                                class="plan-task-meta"
+                            >
+                                ${escapeHTML(
+                                    task.subject
+                                )}
+
+                                ·
+
+                                ${formatDate(
+                                    task.date
+                                )}
+                            </div>
+
+                        </div>
+
+                    </button>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+function togglePlanSelection(id) {
+
+    id =
+        Number(id);
+
+
+    if (
+        planSelection.has(id)
+    ) {
+
+        planSelection.delete(id);
+
+    } else {
+
+        planSelection.add(id);
+
+    }
+
+
+    renderPlanTaskPicker();
+
+}
+
+
+function savePlanSelection() {
+
+    if (!currentPlanDay) return;
+
+
+    weeklyPlan[currentPlanDay] =
+        Array.from(
+            planSelection
+        );
+
+
+    saveWeeklyPlan();
+
+
+    closePlanModal();
+
+
+    renderWeeklyPlan();
+
+}
+
+
+function removeFromPlan(day, id) {
+
+    weeklyPlan[day] =
+        (weeklyPlan[day] || [])
+            .filter(
+                taskId =>
+                    Number(taskId) !==
+                    Number(id)
+            );
+
+
+    saveWeeklyPlan();
+
+
+    renderWeeklyPlan();
+
+}
+
+
+function closePlanModal() {
+
+    document
+        .getElementById(
+            "planModal"
+        )
+        .classList.remove(
+            "open"
+        );
+
+
+    currentPlanDay =
+        null;
+
+
+    planSelection =
+        new Set();
+
+}
+
+
+function planBackgroundClose(event) {
+
+    if (
+        event.target ===
+        document.getElementById(
+            "planModal"
+        )
+    ) {
+
+        closePlanModal();
+
+    }
 
 }
 
@@ -2195,6 +3538,21 @@ function addTask() {
 
     }
 
+
+    if (
+        document
+            .getElementById(
+                "weeklyPage"
+            )
+            .classList.contains(
+                "active"
+            )
+    ) {
+
+        renderWeeklyPlan();
+
+    }
+
 }
 
 
@@ -2233,6 +3591,21 @@ function toggleTask(id) {
 
     }
 
+
+    if (
+        document
+            .getElementById(
+                "weeklyPage"
+            )
+            .classList.contains(
+                "active"
+            )
+    ) {
+
+        renderWeeklyPlan();
+
+    }
+
 }
 
 
@@ -2250,7 +3623,22 @@ function deleteTask(id) {
         );
 
 
+    weekDays.forEach(day => {
+
+        weeklyPlan[day] =
+            (weeklyPlan[day] || [])
+                .filter(
+                    taskId =>
+                        Number(taskId) !==
+                        Number(id)
+                );
+
+    });
+
+
     saveTasks();
+
+    saveWeeklyPlan();
 
 
     updateStats();
@@ -2261,6 +3649,21 @@ function deleteTask(id) {
     if (currentSubject) {
 
         renderNotebookTasks();
+
+    }
+
+
+    if (
+        document
+            .getElementById(
+                "weeklyPage"
+            )
+            .classList.contains(
+                "active"
+            )
+    ) {
+
+        renderWeeklyPlan();
 
     }
 
@@ -2426,7 +3829,7 @@ function updateStats() {
 
 
 /* =========================
-   MODAL
+   ÖDEV MODAL
 ========================= */
 
 function openModal() {
@@ -2511,6 +3914,564 @@ function backgroundClose(event) {
         closeModal();
 
     }
+
+}
+
+
+
+/* =========================
+   PAYLAŞ
+========================= */
+
+function openShareModal() {
+
+    document
+        .getElementById(
+            "themeMenu"
+        )
+        .classList.remove(
+            "open"
+        );
+
+
+    createShareImage();
+
+
+    document
+        .getElementById(
+            "shareModal"
+        )
+        .classList.add(
+            "open"
+        );
+
+}
+
+
+function closeShareModal() {
+
+    document
+        .getElementById(
+            "shareModal"
+        )
+        .classList.remove(
+            "open"
+        );
+
+}
+
+
+function shareBackgroundClose(event) {
+
+    if (
+        event.target ===
+        document.getElementById(
+            "shareModal"
+        )
+    ) {
+
+        closeShareModal();
+
+    }
+
+}
+
+
+function createShareImage() {
+
+    const canvas =
+        document.getElementById(
+            "shareCanvas"
+        );
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    const width =
+        canvas.width;
+
+
+    const height =
+        canvas.height;
+
+
+    const total =
+        tasks.length;
+
+
+    const completed =
+        tasks.filter(
+            task =>
+                task.completed
+        ).length;
+
+
+    const percentage =
+        total === 0
+        ? 0
+        : Math.round(
+            completed /
+            total *
+            100
+        );
+
+
+    const remaining =
+        total - completed;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    ctx.fillStyle =
+        getComputedStyle(
+            document.body
+        ).getPropertyValue(
+            "--bg"
+        ).trim();
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    ctx.fillStyle =
+        getComputedStyle(
+            document.body
+        ).getPropertyValue(
+            "--surface"
+        ).trim();
+
+
+    roundRect(
+        ctx,
+        45,
+        45,
+        width - 90,
+        height - 90,
+        35
+    );
+
+
+    ctx.fill();
+
+
+    const primary =
+        getComputedStyle(
+            document.body
+        ).getPropertyValue(
+            "--primary"
+        ).trim();
+
+
+    const primaryDark =
+        getComputedStyle(
+            document.body
+        ).getPropertyValue(
+            "--primary-dark"
+        ).trim();
+
+
+    ctx.fillStyle =
+        primaryDark;
+
+
+    ctx.font =
+        "800 48px Manrope, sans-serif";
+
+
+    ctx.fillText(
+        "ödevio",
+        90,
+        125
+    );
+
+
+    ctx.fillStyle =
+        "#84918b";
+
+
+    ctx.font =
+        "600 22px DM Sans, sans-serif";
+
+
+    ctx.fillText(
+        "Ödev ilerlemem",
+        90,
+        170
+    );
+
+
+    ctx.fillStyle =
+        primaryDark;
+
+
+    ctx.font =
+        "800 86px Manrope, sans-serif";
+
+
+    ctx.fillText(
+        percentage + "%",
+        90,
+        275
+    );
+
+
+    ctx.fillStyle =
+        "#84918b";
+
+
+    ctx.font =
+        "500 22px DM Sans, sans-serif";
+
+
+    ctx.fillText(
+        `${completed} / ${total} ödev tamamlandı`,
+        90,
+        315
+    );
+
+
+    ctx.fillStyle =
+        "#e2f1ea";
+
+
+    roundRect(
+        ctx,
+        90,
+        355,
+        width - 180,
+        25,
+        13
+    );
+
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        primary;
+
+
+    roundRect(
+        ctx,
+        90,
+        355,
+        (width - 180) *
+            (percentage / 100),
+        25,
+        13
+    );
+
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        primary;
+
+
+    roundRect(
+        ctx,
+        90,
+        430,
+        250,
+        135,
+        25
+    );
+
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.font =
+        "600 20px DM Sans, sans-serif";
+
+
+    ctx.fillText(
+        "Kalan ödev",
+        120,
+        470
+    );
+
+
+    ctx.font =
+        "800 52px Manrope, sans-serif";
+
+
+    ctx.fillText(
+        String(remaining),
+        120,
+        530
+    );
+
+
+    ctx.fillStyle =
+        "#84918b";
+
+
+    ctx.font =
+        "500 19px DM Sans, sans-serif";
+
+
+    ctx.fillText(
+        "Ödevlerini takip et.",
+        90,
+        625
+    );
+
+
+    ctx.fillText(
+        "https://ayse-create.github.io/Homework",
+        90,
+        655
+    );
+
+}
+
+
+function roundRect(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    radius
+) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x + radius,
+        y
+    );
+
+    ctx.arcTo(
+        x + width,
+        y,
+        x + width,
+        y + height,
+        radius
+    );
+
+    ctx.arcTo(
+        x + width,
+        y + height,
+        x,
+        y + height,
+        radius
+    );
+
+    ctx.arcTo(
+        x,
+        y + height,
+        x,
+        y,
+        radius
+    );
+
+    ctx.arcTo(
+        x,
+        y,
+        x + width,
+        y,
+        radius
+    );
+
+    ctx.closePath();
+
+}
+
+
+async function shareHomework() {
+
+    const canvas =
+        document.getElementById(
+            "shareCanvas"
+        );
+
+
+    const total =
+        tasks.length;
+
+
+    const completed =
+        tasks.filter(
+            task =>
+                task.completed
+        ).length;
+
+
+    const percentage =
+        total === 0
+        ? 0
+        : Math.round(
+            completed /
+            total *
+            100
+        );
+
+
+    const shareText =
+        `Ödevio ile ödev takibim: %${percentage} tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
+
+
+    if (
+        navigator.share &&
+        navigator.canShare
+    ) {
+
+        try {
+
+            const blob =
+                await new Promise(
+                    resolve =>
+                        canvas.toBlob(
+                            resolve,
+                            "image/png"
+                        )
+                );
+
+
+            const file =
+                new File(
+                    [blob],
+                    "odevio-ilerleme.png",
+                    {
+                        type: "image/png"
+                    }
+                );
+
+
+            if (
+                navigator.canShare({
+                    files: [file]
+                })
+            ) {
+
+                await navigator.share({
+
+                    title: "Ödevio",
+
+                    text: shareText,
+
+                    files: [file]
+
+                });
+
+
+                return;
+
+            }
+
+        } catch (error) {
+
+            if (
+                error.name ===
+                "AbortError"
+            ) {
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share({
+
+                title: "Ödevio",
+
+                text: shareText
+
+            });
+
+            return;
+
+        } catch (error) {
+
+            if (
+                error.name ===
+                "AbortError"
+            ) {
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    alert(
+        "Bu cihaz paylaşım özelliğini desteklemiyor. WhatsApp butonunu kullanabilirsin."
+    );
+
+}
+
+
+function shareWhatsApp() {
+
+    const total =
+        tasks.length;
+
+
+    const completed =
+        tasks.filter(
+            task =>
+                task.completed
+        ).length;
+
+
+    const percentage =
+        total === 0
+        ? 0
+        : Math.round(
+            completed /
+            total *
+            100
+        );
+
+
+    const text =
+        `Ödev takibini kolaylaştıran bir site, bakmak ister misin?\n\nÖdevio'da ödevlerimin %${percentage}'si tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
+
+
+    const url =
+        "https://wa.me/?text=" +
+        encodeURIComponent(
+            text
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
 
 }
 
@@ -2629,6 +4590,36 @@ function updateThemeImages() {
 
     }
 
+
+    if (
+        document
+            .getElementById(
+                "weeklyPage"
+            )
+            .classList.contains(
+                "active"
+            )
+    ) {
+
+        renderWeeklyPlan();
+
+    }
+
+
+    if (
+        document
+            .getElementById(
+                "shareModal"
+            )
+            .classList.contains(
+                "open"
+            )
+    ) {
+
+        createShareImage();
+
+    }
+
 }
 
 
@@ -2668,6 +4659,10 @@ document.addEventListener(
         ) {
 
             closeModal();
+
+            closePlanModal();
+
+            closeShareModal();
 
         }
 
