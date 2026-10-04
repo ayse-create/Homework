@@ -854,13 +854,26 @@ function fitText(ctx, text, maxWidth) {
     return text + "…";
 }
 
+function tomorrowISO() {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function getTomorrowTasks() {
+    const t = tomorrowISO();
+    return tasks.filter(task => task.date === t);
+}
+
 function createShareImage() {
     const canvas = document.getElementById("shareCanvas");
     const ctx = canvas.getContext("2d");
     const css = v => getComputedStyle(document.body).getPropertyValue(v).trim();
 
-    const p = calcProgress(tasks);
-    const sorted = [...tasks].sort((a, b) => dateValue(a.date) - dateValue(b.date));
+    const sorted = getTomorrowTasks();
+    const p = calcProgress(sorted);
+    const overall = calcProgress(tasks).percent;
+    const tomorrowText = new Date(tomorrowISO() + "T00:00:00").toLocaleDateString("tr-TR", { weekday: "long", day: "numeric", month: "long" });
     const rowH = 58, tableTop = 500;
     const width = 1000;
     const rowsHeight = Math.max(sorted.length, 1) * rowH;
@@ -886,9 +899,9 @@ function createShareImage() {
 
     ctx.fillStyle = muted;
     ctx.font = "600 22px DM Sans, sans-serif";
-    ctx.fillText("Ödev ilerlemem", 80, 150);
+    ctx.fillText("Yarın teslim edilecek ödevler", 80, 150);
     ctx.textAlign = "right";
-    ctx.fillText(new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" }), width - 80, 110);
+    ctx.fillText(tomorrowText, width - 80, 110);
     ctx.textAlign = "left";
 
     // Yüzde
@@ -898,7 +911,7 @@ function createShareImage() {
 
     ctx.fillStyle = muted;
     ctx.font = "500 21px DM Sans, sans-serif";
-    ctx.fillText("soru ve dakikaya göre tamamlanan oran", 80, 285);
+    ctx.fillText("Yarınki ödevlerin tamamlanma oranı · Genel ilerleme: %" + overall, 80, 285);
 
     // İlerleme çubuğu
     ctx.fillStyle = soft;
@@ -951,7 +964,7 @@ function createShareImage() {
         ctx.textAlign = "left";
         ctx.fillStyle = muted;
         ctx.font = "500 20px DM Sans, sans-serif";
-        ctx.fillText("Henüz ödev eklenmedi.", cols.title, tableTop + 44 + 36);
+        ctx.fillText("Yarın teslim edilecek ödev yok.", cols.title, tableTop + 44 + 36);
     }
 
     sorted.forEach((t, i) => {
@@ -1004,8 +1017,9 @@ function roundRect(ctx, x, y, width, height, radius) {
 async function shareHomework() {
     createShareImage();
     const canvas = document.getElementById("shareCanvas");
-    const p = calcProgress(tasks);
-    const shareText = `Ödevio ile ödev takibim: %${p.percent} tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
+    const tm = getTomorrowTasks();
+    const p = calcProgress(tm);
+    const shareText = `Yarın teslim edeceğim ${tm.length} ödev var (${p.totalQ} soru, ${p.totalM} dk). %${p.percent} tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
     if (!blob) { alert("Görsel oluşturulamadı."); return; }
