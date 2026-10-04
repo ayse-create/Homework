@@ -405,7 +405,7 @@ button{cursor:pointer}
         </div>
         <div class="share-link-box">https://ayse-create.github.io/Homework</div>
         <div class="share-buttons">
-            <button class="share-main-button" onclick="shareHomework()">PDF Paylaş</button>
+            <button class="share-main-button" onclick="shareHomework()">Paylaş</button>
             <button class="whatsapp-button" onclick="shareWhatsApp()">WhatsApp</button>
         </div>
     </div>
@@ -846,64 +846,148 @@ function shareBackgroundClose(event) {
     if (event.target === document.getElementById("shareModal")) closeShareModal();
 }
 
-/* Önizleme görseli (paylaşılan şey artık PDF) */
+/* Paylaşım görseli (PNG) - tüm ödevler, teslim, soru, süre ve yüzde */
+function fitText(ctx, text, maxWidth) {
+    text = String(text);
+    if (ctx.measureText(text).width <= maxWidth) return text;
+    while (text.length > 1 && ctx.measureText(text + "…").width > maxWidth) text = text.slice(0, -1);
+    return text + "…";
+}
+
 function createShareImage() {
     const canvas = document.getElementById("shareCanvas");
     const ctx = canvas.getContext("2d");
-    const width = canvas.width, height = canvas.height;
     const css = v => getComputedStyle(document.body).getPropertyValue(v).trim();
 
     const p = calcProgress(tasks);
-    const total = p.total, completed = p.done, percentage = p.percent;
-    const remaining = total - completed;
-    const primary = css("--primary"), primaryDark = css("--primary-dark");
+    const sorted = [...tasks].sort((a, b) => dateValue(a.date) - dateValue(b.date));
+    const rowH = 58, tableTop = 500;
+    const width = 1000;
+    const rowsHeight = Math.max(sorted.length, 1) * rowH;
+    const height = tableTop + 44 + rowsHeight + 120;
 
-    ctx.clearRect(0, 0, width, height);
+    canvas.width = width;
+    canvas.height = height;
+
+    const primary = css("--primary"), primaryDark = css("--primary-dark"), soft = css("--primary-soft");
+    const muted = "#84918b", text = "#1d2924", line = "#e4ebe7";
+
     ctx.fillStyle = css("--bg");
     ctx.fillRect(0, 0, width, height);
-
-    ctx.fillStyle = css("--surface");
-    roundRect(ctx, 45, 45, width - 90, height - 90, 35);
+    ctx.fillStyle = "#ffffff";
+    roundRect(ctx, 30, 30, width - 60, height - 60, 35);
     ctx.fill();
 
+    // Başlık
+    ctx.textAlign = "left";
     ctx.fillStyle = primaryDark;
     ctx.font = "800 48px Manrope, sans-serif";
-    ctx.fillText("ödevio", 90, 125);
+    ctx.fillText("ödevio", 80, 110);
 
-    ctx.fillStyle = "#84918b";
+    ctx.fillStyle = muted;
     ctx.font = "600 22px DM Sans, sans-serif";
-    ctx.fillText("Ödev ilerlemem", 90, 170);
+    ctx.fillText("Ödev ilerlemem", 80, 150);
+    ctx.textAlign = "right";
+    ctx.fillText(new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" }), width - 80, 110);
+    ctx.textAlign = "left";
 
+    // Yüzde
     ctx.fillStyle = primaryDark;
     ctx.font = "800 86px Manrope, sans-serif";
-    ctx.fillText(percentage + "%", 90, 275);
+    ctx.fillText("%" + p.percent, 80, 250);
 
-    ctx.fillStyle = "#84918b";
-    ctx.font = "500 22px DM Sans, sans-serif";
-    ctx.fillText(`${completed} / ${total} ödev · ${p.doneQ}/${p.totalQ} soru · ${p.doneM}/${p.totalM} dk`, 90, 315);
+    ctx.fillStyle = muted;
+    ctx.font = "500 21px DM Sans, sans-serif";
+    ctx.fillText("soru ve dakikaya göre tamamlanan oran", 80, 285);
 
-    ctx.fillStyle = css("--primary-soft");
-    roundRect(ctx, 90, 355, width - 180, 25, 13);
+    // İlerleme çubuğu
+    ctx.fillStyle = soft;
+    roundRect(ctx, 80, 315, width - 160, 24, 12);
     ctx.fill();
-
     ctx.fillStyle = primary;
-    roundRect(ctx, 90, 355, Math.max(0.01, (width - 180) * (percentage / 100)), 25, 13);
+    roundRect(ctx, 80, 315, Math.max(24, (width - 160) * (p.percent / 100)), 24, 12);
     ctx.fill();
 
+    // Özet kutuları
+    const boxes = [
+        [p.done + " / " + p.total, "Ödev"],
+        [p.doneQ + " / " + p.totalQ, "Soru"],
+        [p.doneM + " / " + p.totalM, "Dakika"]
+    ];
+    const gap = 20, bw = (width - 160 - gap * 2) / 3;
+    boxes.forEach((b, i) => {
+        const x = 80 + i * (bw + gap);
+        ctx.fillStyle = soft;
+        roundRect(ctx, x, 375, bw, 95, 20);
+        ctx.fill();
+        ctx.textAlign = "center";
+        ctx.fillStyle = primaryDark;
+        ctx.font = "800 32px Manrope, sans-serif";
+        ctx.fillText(b[0], x + bw / 2, 421);
+        ctx.fillStyle = muted;
+        ctx.font = "600 17px DM Sans, sans-serif";
+        ctx.fillText(b[1], x + bw / 2, 449);
+    });
+    ctx.textAlign = "left";
+
+    // Tablo başlığı
+    const cols = { title: 100, subject: 410, date: 570, q: 745, m: 825, status: 910 };
     ctx.fillStyle = primary;
-    roundRect(ctx, 90, 430, 250, 135, 25);
+    roundRect(ctx, 80, tableTop, width - 160, 44, 12);
     ctx.fill();
-
     ctx.fillStyle = "#ffffff";
-    ctx.font = "600 20px DM Sans, sans-serif";
-    ctx.fillText("Kalan ödev", 120, 470);
-    ctx.font = "800 52px Manrope, sans-serif";
-    ctx.fillText(String(remaining), 120, 530);
+    ctx.font = "700 17px DM Sans, sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText("Ödev", cols.title, tableTop + 28);
+    ctx.fillText("Ders", cols.subject, tableTop + 28);
+    ctx.fillText("Teslim", cols.date, tableTop + 28);
+    ctx.textAlign = "right";
+    ctx.fillText("Soru", cols.q, tableTop + 28);
+    ctx.fillText("Süre", cols.m, tableTop + 28);
+    ctx.fillText("Durum", cols.status, tableTop + 28);
 
-    ctx.fillStyle = "#84918b";
-    ctx.font = "500 19px DM Sans, sans-serif";
-    ctx.fillText("Ödevlerini takip et.", 90, 625);
-    ctx.fillText("https://ayse-create.github.io/Homework", 90, 655);
+    // Satırlar
+    if (sorted.length === 0) {
+        ctx.textAlign = "left";
+        ctx.fillStyle = muted;
+        ctx.font = "500 20px DM Sans, sans-serif";
+        ctx.fillText("Henüz ödev eklenmedi.", cols.title, tableTop + 44 + 36);
+    }
+
+    sorted.forEach((t, i) => {
+        const y = tableTop + 44 + i * rowH;
+        const base = y + 36;
+
+        ctx.fillStyle = t.completed ? muted : text;
+        ctx.font = "700 19px DM Sans, sans-serif";
+        ctx.textAlign = "left";
+        ctx.fillText(fitText(ctx, (t.completed ? "✓ " : "") + t.title, 290), cols.title, base);
+
+        ctx.font = "500 18px DM Sans, sans-serif";
+        ctx.fillStyle = muted;
+        ctx.fillText(fitText(ctx, t.subject, 150), cols.subject, base);
+
+        ctx.fillStyle = text;
+        ctx.fillText(formatDate(t.date), cols.date, base);
+
+        ctx.textAlign = "right";
+        ctx.fillText(String(Number(t.questions) || 0), cols.q, base);
+        ctx.fillText((Number(t.minutes) || 0) + " dk", cols.m, base);
+
+        ctx.fillStyle = t.completed ? primaryDark : "#c9923a";
+        ctx.font = "700 17px DM Sans, sans-serif";
+        ctx.fillText(t.completed ? "Tamam" : "Bekliyor", cols.status, base);
+
+        ctx.fillStyle = line;
+        ctx.fillRect(100, y + rowH - 1, width - 200, 1);
+    });
+
+    // Alt bilgi
+    ctx.textAlign = "left";
+    ctx.fillStyle = muted;
+    ctx.font = "500 18px DM Sans, sans-serif";
+    ctx.fillText("Ödevlerini takip et.", 80, height - 85);
+    ctx.fillText("https://ayse-create.github.io/Homework", 80, height - 58);
 }
 
 function roundRect(ctx, x, y, width, height, radius) {
@@ -917,131 +1001,34 @@ function roundRect(ctx, x, y, width, height, radius) {
     ctx.closePath();
 }
 
-/* ---------- PDF ---------- */
-function ensurePdfLibrary() {
-    if (window.html2pdf) return Promise.resolve();
-    if (window._pdfLib) return window._pdfLib;
-    window._pdfLib = new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-        s.onload = resolve;
-        s.onerror = () => { window._pdfLib = null; reject(new Error("PDF kütüphanesi yüklenemedi.")); };
-        document.head.appendChild(s);
-    });
-    return window._pdfLib;
-}
-
 async function shareHomework() {
-    if (tasks.length === 0) {
-        alert("PDF oluşturmak için önce ödev eklemelisin.");
-        return;
-    }
+    createShareImage();
+    const canvas = document.getElementById("shareCanvas");
+    const p = calcProgress(tasks);
+    const shareText = `Ödevio ile ödev takibim: %${p.percent} tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
 
-    let sheet;
-    try {
-        await ensurePdfLibrary();
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+    if (!blob) { alert("Görsel oluşturulamadı."); return; }
+    const file = new File([blob], "odevio-ilerleme.png", { type: "image/png" });
 
-        const p = calcProgress(tasks);
-        const sorted = [...tasks].sort((a, b) => dateValue(a.date) - dateValue(b.date));
-        const css = v => getComputedStyle(document.body).getPropertyValue(v).trim();
-        const primary = css("--primary"), dark = css("--primary-dark"), soft = css("--primary-soft");
-        const todayText = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
-        const td = "padding:9px 8px;border-bottom:1px solid #e4ebe7;";
-
-        const rows = sorted.map(t => `
-            <tr style="page-break-inside:avoid;">
-                <td style="${td}font-weight:700;">${t.completed ? "✓ " : "☐ "}${escapeHTML(t.title)}</td>
-                <td style="${td}">${escapeHTML(t.subject)}</td>
-                <td style="${td}white-space:nowrap;">${formatDate(t.date)}</td>
-                <td style="${td}text-align:center;">${Number(t.questions) || 0}</td>
-                <td style="${td}text-align:center;">${Number(t.minutes) || 0} dk</td>
-                <td style="${td}text-align:center;">${t.completed ? "Tamamlandı" : "Bekliyor"}</td>
-            </tr>`).join("");
-
-        const box = (a, b, label) => `
-            <div style="flex:1;background:${soft};border-radius:12px;padding:10px;text-align:center;">
-                <b style="font-size:16px;">${a}/${b}</b><div style="font-size:10px;margin-top:2px;">${label}</div>
-            </div>`;
-
-        sheet = document.createElement("div");
-        sheet.style.cssText = "position:fixed;left:0;top:0;z-index:-1;width:794px;background:#fff;color:#1d2924;padding:40px;font-family:Arial,sans-serif;box-sizing:border-box;";
-        sheet.innerHTML = `
-            <div style="border-bottom:3px solid ${primary};padding-bottom:14px;margin-bottom:18px;">
-                <div style="font-size:28px;font-weight:800;color:${dark};">ödevio</div>
-                <div style="font-size:15px;font-weight:700;margin-top:4px;">Ödev Raporu</div>
-                <div style="font-size:11px;color:#84918b;margin-top:4px;">${todayText}</div>
-            </div>
-
-            <div style="background:${soft};border-radius:14px;padding:16px 18px;margin-bottom:14px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div style="font-size:12px;color:#5b6b64;font-weight:700;">GENEL İLERLEME</div>
-                    <div style="font-size:30px;font-weight:800;color:${dark};">%${p.percent}</div>
-                </div>
-                <div style="height:10px;background:#fff;border-radius:9px;overflow:hidden;margin-top:6px;">
-                    <div style="height:10px;width:${p.percent}%;background:${primary};"></div>
-                </div>
-            </div>
-
-            <div style="display:flex;gap:10px;margin-bottom:22px;">
-                ${box(p.done, p.total, "Ödev")}
-                ${box(p.doneQ, p.totalQ, "Soru")}
-                ${box(p.doneM, p.totalM, "Dakika")}
-            </div>
-
-            <table style="width:100%;border-collapse:collapse;font-size:12px;">
-                <thead>
-                    <tr style="background:${primary};color:#fff;text-align:left;">
-                        <th style="padding:9px 8px;">Ödev</th>
-                        <th style="padding:9px 8px;">Ders</th>
-                        <th style="padding:9px 8px;">Teslim</th>
-                        <th style="padding:9px 8px;text-align:center;">Soru</th>
-                        <th style="padding:9px 8px;text-align:center;">Süre</th>
-                        <th style="padding:9px 8px;text-align:center;">Durum</th>
-                    </tr>
-                </thead>
-                <tbody>${rows}</tbody>
-            </table>
-
-            <div style="margin-top:18px;font-size:9px;color:#84918b;text-align:center;">
-                ödevio · https://ayse-create.github.io/Homework
-            </div>`;
-        document.body.appendChild(sheet);
-
-        const filename = "odevio-odev-raporu.pdf";
-        const blob = await window.html2pdf().set({
-            margin: 10,
-            filename,
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0, windowWidth: 794 },
-            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-            pagebreak: { mode: ["css", "legacy"] }
-        }).from(sheet).outputPdf("blob");
-
-        const file = new File([blob], filename, { type: "application/pdf" });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-                title: "Ödevio",
-                text: `Ödevio ile ödev takibim: %${p.percent} tamamlandı.`,
-                files: [file]
-            });
-        } else {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            setTimeout(() => URL.revokeObjectURL(url), 5000);
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({ title: "Ödevio", text: shareText, files: [file] });
+            return;
+        } catch (error) {
+            if (error && error.name === "AbortError") return;
         }
-    } catch (error) {
-        if (error && error.name === "AbortError") return;
-        console.error(error);
-        alert("PDF oluşturulamadı: " + (error.message || "hata"));
-    } finally {
-        if (sheet && sheet.parentNode) sheet.remove();
     }
+
+    // Paylaşım desteklenmiyorsa PNG'yi indir
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "odevio-ilerleme.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
 }
 
 function shareWhatsApp() {
