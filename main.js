@@ -23,8 +23,9 @@ st.textContent = `
 .v2-drawer{position:fixed;top:0;bottom:0;left:0;width:270px;background:var(--surface);padding:24px 14px;transform:translateX(-100%);transition:.25s;z-index:450;box-shadow:var(--shadow)}
 .v2-drawer.open{transform:none}
 .v2-drawer h3{font-family:Manrope,sans-serif;font-size:22px;margin:0 10px 18px}
-.v2-item{display:block;width:100%;text-align:left;padding:14px;border:0;border-radius:13px;background:transparent;color:var(--text);font-weight:700;font-size:14px}
+.v2-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:14px;border:0;border-radius:13px;background:transparent;color:var(--text);font-weight:700;font-size:14px}
 .v2-item:hover{background:var(--primary-soft)}
+.v2-item-icon{width:24px;height:24px;object-fit:contain;flex-shrink:0}
 .v2-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .v2-sel{width:auto;flex:1;min-width:120px;padding:10px}
 .v2-card{background:var(--primary-soft);border:1px solid var(--border);border-radius:16px;padding:15px;margin-bottom:11px}
@@ -32,13 +33,17 @@ st.textContent = `
 .v2-t{font-weight:800;font-size:15px;margin-bottom:5px}
 .v2-m{color:var(--muted);font-size:12px;line-height:1.6}
 .v2-note{margin-top:7px;padding:8px 10px;background:var(--surface);border-radius:10px;font-size:12px}
-.v2-badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;background:var(--surface);color:var(--primary-dark)}
+.v2-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;background:var(--surface);color:var(--primary-dark)}
 .v2-badge.late{color:var(--danger)}
+.v2-badge-icon{width:14px;height:14px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.v2-trend-icon{width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:3px}
+.v2-trial-icon{width:20px;height:20px;object-fit:contain;vertical-align:middle;margin-right:5px}
+.v2-coach-icon{width:18px;height:18px;object-fit:contain;vertical-align:middle;margin-right:6px}
 .v2-acts{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
 .v2-btn{padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:12px;font-weight:700;color:var(--text)}
 .v2-btn.main{background:var(--primary);color:#fff;border-color:var(--primary)}
 .v2-btn.red{color:var(--danger)}
-.v2-chip{padding:9px 14px;border:1px solid var(--border);border-radius:20px;background:var(--surface);font-size:12px;font-weight:700}
+.v2-chip{display:inline-flex;align-items:center;gap:5px;padding:9px 14px;border:1px solid var(--border);border-radius:20px;background:var(--surface);font-size:12px;font-weight:700}
 .v2-chip.on{background:var(--primary);color:#fff;border-color:var(--primary)}
 .v2-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
 .v2-box{background:var(--primary-soft);border-radius:16px;padding:14px}
@@ -66,12 +71,12 @@ document.querySelector(".header-actions").prepend(burger);
 document.body.insertAdjacentHTML("beforeend", `
 <div class="v2-drawer-bg" id="v2DrawerBg" onclick="V2.closeDrawer()"></div>
 <div class="v2-drawer" id="v2Drawer"><h3>ödev<span style="color:var(--primary)">io</span></h3>
- <button class="v2-item" onclick="V2.go('home')">🏠 Ana sayfa</button>
- <button class="v2-item" onclick="V2.go('tasks')">📚 Ödevler</button>
- <button class="v2-item" onclick="V2.go('wrongs')">📕 Yanlış Defteri</button>
- <button class="v2-item" onclick="V2.go('trials')">📝 Deneme Takibi</button>
- <button class="v2-item" onclick="V2.go('stats')">📊 İstatistikler</button>
- <button class="v2-item" onclick="V2.go('plan')">📅 Haftalık Plan</button>
+ <button class="v2-item" onclick="V2.go('home')"><img class="v2-item-icon" src="images/burger1.png" alt="">Ana sayfa</button>
+ <button class="v2-item" onclick="V2.go('tasks')"><img class="v2-item-icon" src="images/burger2.png" alt="">Ödevler</button>
+ <button class="v2-item" onclick="V2.go('wrongs')"><img class="v2-item-icon" src="images/burger3.png" alt="">Yanlış Defteri</button>
+ <button class="v2-item" onclick="V2.go('trials')"><img class="v2-item-icon" src="images/burger4.png" alt="">Deneme Takibi</button>
+ <button class="v2-item" onclick="V2.go('stats')"><img class="v2-item-icon" src="images/burger5.png" alt="">İstatistikler</button>
+ <button class="v2-item" onclick="V2.go('plan')"><img class="v2-item-icon" src="images/burger6.png" alt="">Haftalık Plan</button>
 </div>
 <div class="modal-background" id="v2Modal" onclick="if(event.target===this)V2.closeModal()"><div class="modal" id="v2Box"></div></div>`);
 
@@ -212,8 +217,9 @@ function rTasks() {
   if (!l.length) return bar + `<div class="v2-empty">Bu filtrelere uyan ödev yok.</div>`;
   return bar + l.map(t => {
     const s = status(t);
+    const statusIcon = s === "Gecikti" ? "images/late.png" : s === "Tamamlandı" ? "images/done.png" : s === "Devam ediyor" ? "images/progress.png" : "images/waiting.png";
     return `<div class="v2-card ${t.completed ? "done" : ""}">
-     <div class="v2-t">${E(t.title)} <span class="v2-badge ${s === "Gecikti" ? "late" : ""}">${s}</span></div>
+     <div class="v2-t">${E(t.title)} <span class="v2-badge ${s === "Gecikti" ? "late" : ""}"><img class="v2-badge-icon" src="${statusIcon}" alt="">${s}</span></div>
      <div class="v2-m">${E(t.subject)}${t.topic ? " · " + E(t.topic) : ""} · ${DIFF[t.diff] || "🟡 Orta"}<br>
       ${t.given ? "Veriliş: " + formatDate(t.given) + " · " : ""}Teslim: ${formatDate(t.date)} (${deadlineText(t.date)}) · ${t.questions || 0} soru · ${t.minutes || 0} dk
       ${t.teacher ? "<br>Öğretmen: " + E(t.teacher) : ""}
@@ -227,7 +233,7 @@ function rTasks() {
 }
 
 function rWrongs() {
-  const chips = [["all", "Tümü"], ["pri", "🔴 Öncelikli"], ["ödev", "Ödev"], ["deneme", "Genel Deneme"]];
+  const chips = [["all", "Tümü"], ["pri", `<img class="v2-badge-icon" src="images/priority.png" alt=""> Öncelikli`], ["ödev", "Ödev"], ["deneme", "Genel Deneme"]];
   const bar = `<div class="v2-bar">${chips.map(c => `<button class="v2-chip ${WF === c[0] ? "on" : ""}" onclick="V2.wf('${c[0]}')">${c[1]}</button>`).join("")}</div>`;
   const l = wrongs.filter(w => !w.attention && (WF === "all" || (WF === "pri" && w.priority) || w.source === WF))
     .sort((a, b) => (b.priority - a.priority) || b.id - a.id);
@@ -235,7 +241,7 @@ function rWrongs() {
   const note = hidden ? `<p class="v2-m" style="margin-top:12px">Dikkat hatası olarak işaretlenen ${hidden} yanlış defterde görünmez, istatistiklerde kayıtlı.</p>` : "";
   if (!l.length) return bar + `<div class="v2-empty">Burada gösterilecek yanlış yok.</div>` + note;
   return bar + l.map(w => `<div class="v2-card">
-    <div class="v2-t">${w.priority ? "🔴 " : ""}${E(w.subject)}${w.topic ? " · " + E(w.topic) : ""}${w.count > 1 ? " ×" + w.count : ""}</div>
+    <div class="v2-t">${w.priority ? `<img class="v2-badge-icon" src="images/priority.png" alt="" style="margin-right:4px">` : ""}${E(w.subject)}${w.topic ? " · " + E(w.topic) : ""}${w.count > 1 ? " ×" + w.count : ""}</div>
     <div class="v2-m">${w.source === "deneme" ? "Genel deneme" : "Ödev"}: ${E(w.title)} · ${formatDate(w.date)}<br>Neden: <b>${E(w.reason)}</b></div>
     ${w.note ? `<div class="v2-note">${E(w.note)}</div>` : ""}
     <div class="v2-acts"><button class="v2-btn red" onclick="V2.delWrong(${w.id})">Sil</button></div></div>`).join("") + note;
@@ -259,9 +265,9 @@ function rTrials() {
       if (nums.length >= 2) {
         const d = nums[nums.length - 1] - nums[0];
         const dipped = Math.min(...nums.slice(0, -1)) < nums[0] || nums[nums.length - 2] < nums[nums.length - 3];
-        if (d >= 0.5) { tr = "📈 Yükseliş"; coach += `<div class="v2-coach">${n}: ${dipped ? "Yaşadığın düşüşten sonra tekrar yükselişe geçmen harika." : "Son denemelerde düzenli yükseliyorsun, böyle devam."}</div>`; }
-        else if (d <= -0.5) { tr = "📉 Düşüş"; coach += `<div class="v2-coach">${n}: Son denemelerde düşüş görünüyor. Bu dersteki yanlışlarının konu dağılımını incelemek iyi olabilir.</div>`; }
-        else tr = "➡️ Sabit";
+        if (d >= 0.5) { tr = `<img class="v2-trend-icon" src="images/up.png" alt="">Yükseliş`; coach += `<div class="v2-coach"><img class="v2-coach-icon" src="images/up.png" alt="">${n}: ${dipped ? "Yaşadığın düşüşten sonra tekrar yükselişe geçmen harika." : "Son denemelerde düzenli yükseliyorsun, böyle devam."}</div>`; }
+        else if (d <= -0.5) { tr = `<img class="v2-trend-icon" src="images/down.png" alt="">Düşüş`; coach += `<div class="v2-coach"><img class="v2-coach-icon" src="images/down.png" alt="">${n}: Son denemelerde düşüş görünüyor. Bu dersteki yanlışlarının konu dağılımını incelemek iyi olabilir.</div>`; }
+        else tr = `<img class="v2-trend-icon" src="images/stable.png" alt="">Sabit`;
       }
       rows += `<tr><td>${E(n)}</td>${v.map(x => `<td>${x === null ? "–" : fmt(x)}</td>`).join("")}<td>${tr}</td></tr>`;
     });
@@ -270,7 +276,7 @@ function rTrials() {
      <p class="v2-m" style="margin-top:8px">Bu analiz yalnızca genel denemeleri kullanır.</p>`;
   }
   const list = [...trials].sort((a, b) => b.date.localeCompare(a.date)).map(t => `<div class="v2-card">
-    <div class="v2-t">${t.type === "genel" ? "🔵" : "🟡"} ${E(t.name || (t.type === "genel" ? "Genel deneme" : "Mini deneme"))} · ${fmt(tNet(t))} net</div>
+    <div class="v2-t"><img class="v2-trial-icon" src="${t.type === "genel" ? "images/genel-deneme.png" : "images/mini-deneme.png"}" alt=""> ${E(t.name || (t.type === "genel" ? "Genel deneme" : "Mini deneme"))} · ${fmt(tNet(t))} net</div>
     <div class="v2-m">${formatDate(t.date)} · ${t.lessons.reduce((s, l) => s + l.total, 0)} soru<br>
      ${t.lessons.map(l => `${E(l.name)}: ${l.c}D ${l.w}Y ${l.b}B (${fmt(net(l))})`).join(" · ")}</div>
     <div class="v2-acts"><button class="v2-btn red" onclick="V2.delTrial(${t.id})">Sil</button></div></div>`).join("");
