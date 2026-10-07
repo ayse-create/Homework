@@ -403,7 +403,7 @@ button{cursor:pointer}
         <div class="share-preview">
             <canvas id="shareCanvas" width="1000" height="700"></canvas>
         </div>
-        <div class="share-link-box">https://ayse-create.github.io/Homework</div>
+        <div class="share-link-box">https://ayse-create.github.io/odevio</div>
         <div class="share-buttons">
             <button class="share-main-button" onclick="shareHomework()">Paylaş</button>
             <button class="whatsapp-button" onclick="shareWhatsApp()">WhatsApp</button>
@@ -1000,7 +1000,7 @@ function createShareImage() {
     ctx.fillStyle = muted;
     ctx.font = "500 18px DM Sans, sans-serif";
     ctx.fillText("Ödevlerini takip et.", 80, height - 85);
-    ctx.fillText("https://ayse-create.github.io/Homework", 80, height - 58);
+    ctx.fillText("https://ayse-create.github.io/odevio", 80, height - 58);
 }
 
 function roundRect(ctx, x, y, width, height, radius) {
@@ -1019,7 +1019,7 @@ async function shareHomework() {
     const canvas = document.getElementById("shareCanvas");
     const tm = getTomorrowTasks();
     const p = calcProgress(tm);
-    const shareText = `Yarın teslim edeceğim ${tm.length} ödev var (${p.totalQ} soru, ${p.totalM} dk). %${p.percent} tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
+    const shareText = `Yarın teslim edeceğim ${tm.length} ödev var (${p.totalQ} soru, ${p.totalM} dk). %${p.percent} tamamlandı.\n\nhttps://ayse-create.github.io/odevio`;
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
     if (!blob) { alert("Görsel oluşturulamadı."); return; }
@@ -1047,7 +1047,7 @@ async function shareHomework() {
 
 function shareWhatsApp() {
     const percentage = calcProgress(tasks).percent;
-    const text = `Ödev takibini kolaylaştıran bir site, bakmak ister misin?\n\nÖdevio'da ödevlerimin %${percentage}'si tamamlandı.\n\nhttps://ayse-create.github.io/Homework`;
+    const text = `Ödev takibini kolaylaştıran bir site, bakmak ister misin?\n\nÖdevio'da ödevlerimin %${percentage}'si tamamlandı.\n\nhttps://ayse-create.github.io/odevio`;
     window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
 }
 
